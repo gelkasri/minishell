@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 15:01:57 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 22:14:12 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 23:07:43 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,29 @@ char			*get_env_var(const char *var, t_list **env_list)
 	return (NULL);
 }
 
-static void		new_env_var(const char *var, const char *value, t_list **env_l)
-{
-	(void)env_l;
-	ft_printf("Add new environement variable : %s=%s\n", var, value);
-}
-
 void			set_env_var(const char *var, const char *value, t_list **env_l)
 {
+	char	*new_var;
+	t_list	*elem;
+	char	*join;
+
+	elem = *env_l;
+	new_var = ft_strjoin3(var, "=", value);
+	join = ft_strjoin(var, "=");
 	if (get_env_var(var, env_l))
 	{
-		return ;
+		while (elem)
+		{
+			if (ft_strstr(elem->content, join) == elem->content)
+			{
+				free(elem->content);
+				elem->content = new_var;
+				break ;
+			}
+			elem = elem->next;
+		}
 	}
 	else
-	{
-		new_env_var(var, value, env_l);
-	}
+		ft_lstadd_back(env_l, ft_lstnew(new_var));
+	free(join);
 }

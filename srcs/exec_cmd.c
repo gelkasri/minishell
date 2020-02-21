@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 22:37:08 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 22:49:22 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,5 @@ int				exec_line(char *line, t_list **env_list)
 		ret = exec_cmd(commands[i++], env_list);
 	free_str_arr(commands);
 	free(commands);
-	return (1);
+	return (ret);
 }

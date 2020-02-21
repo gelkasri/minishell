@@ -6,14 +6,15 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:56 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 22:05:55 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 23:18:30 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** TEMP FCT - For tests
+** TEMP FCT - For tests of env builtin
+** TODO: To move
 */
 
 int			ft_env(int argc, char **argv, t_list **env_list)
@@ -37,6 +38,8 @@ t_fct_ptr	get_fct_builtins(char *str)
 		return (ft_echo);
 	if (ft_strcmp(str, "cd") == 0)
 		return (ft_cd);
+	if (ft_strcmp(str, "env") == 0)
+		return (ft_env);
 	return (NULL);
 }
 
