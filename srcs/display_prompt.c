@@ -6,13 +6,14 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:15:04 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 14:42:54 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 15:09:15 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	display_prompt(void)
+void	display_prompt(char **envp)
 {
+	(void)envp;
 	ft_printf("%sbébéshell> %s", BLUE, WHITE);
 }
