@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 22:03:08 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 22:37:08 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,16 @@ static char		*find_path(char *cmd, t_list **env_list)
 	return (res);
 }
 
+static int		free_and_return(char ***ptr, int ret_val)
+{
+	if (ptr && *ptr)
+	{
+		free_str_arr(*ptr);
+		free(*ptr);
+	}
+	return (ret_val);
+}
+
 static int		exec_cmd(char *cmd, t_list **env_list)
 {
 	pid_t	id_child;
@@ -60,7 +70,7 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	split = ft_split(cmd, ' ');
 	ret = exec_builtins(split, env_list);
 	if (ret >= 0)
-		return (ret);
+		return (free_and_return(&split, ret));
 	path = find_path(split[0], env_list);
 	if (path && !(id_child = fork()))
 	{
@@ -71,10 +81,8 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	wait(&id_child);
 	if (!path)
 		ft_printf("unknown command \"%s\"\n", cmd);
-	free_str_arr(split);
-	free(split);
 	free(path);
-	return (ret);
+	return (free_and_return(&split, ret));
 }
 
 int				exec_line(char *line, t_list **env_list)
