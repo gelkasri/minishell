@@ -6,7 +6,7 @@
 #    By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/21 15:44:25 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/02/21 16:20:27 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -16,6 +16,7 @@ SRCS =		srcs/minishell.c \
 			srcs/exec_cmd.c \
 			srcs/builtin_env.c \
 			srcs/str_utils.c \
+			srcs/builtins/exec_builtins.c \
 
 
 OBJS =		$(SRCS:%.c=%.o)

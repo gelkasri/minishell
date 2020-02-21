@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 15:59:23 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:01:28 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char		*find_path(char *cmd, char **envp)
 	return (res);
 }
 
-static int	exec_cmd(char *cmd, char **envp)
+static int		exec_cmd(char *cmd, char **envp)
 {
 	pid_t	id_child;
 	int		ret;
@@ -58,7 +58,9 @@ static int	exec_cmd(char *cmd, char **envp)
 	char	**split;
 
 	split = ft_split(cmd, ' ');
-	ret = 0;
+	ret = exec_builtins(split, envp);
+	if (ret >= 0)
+		return (ret);
 	path = find_path(split[0], envp);
 	if (path && !(id_child = fork()))
 	{
@@ -75,15 +77,17 @@ static int	exec_cmd(char *cmd, char **envp)
 	return (ret);
 }
 
-int			exec_line(char *line, char **envp)
+int				exec_line(char *line, char **envp)
 {
 	char	**commands;
 	int		i;
+	int		ret;
 
 	commands = ft_split(line, ';');
 	i = 0;
+	ret = 0;
 	while (commands[i])
-		exec_cmd(commands[i++], envp);
+		ret = exec_cmd(commands[i++], envp);
 	free_str_arr(commands);
 	free(commands);
 	return (1);

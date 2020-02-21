@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 15:49:20 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 16:56:58 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,17 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-void		display_prompt(char **envp);
+typedef int		(*t_fct_ptr)(int, char **, char **);
 
-int			exec_line(char *line, char **envp);
+void			display_prompt(char **envp);
 
-char		*get_env_var(const char *var, char **envp);
+int				exec_line(char *line, char **envp);
 
-void		free_str_arr(char **to_free);
-char		*ft_strjoin3(char const *s1, char const *s2, char const *s3);
+char			*get_env_var(const char *var, char **envp);
+
+void			free_str_arr(char **to_free);
+char			*ft_strjoin3(char const *s1, char const *s2, char const *s3);
+
+int				exec_builtins(char **argv, char **envp);
 
 #endif
