@@ -1,53 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 12:17:24 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/21 14:24:59 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/21 14:43:08 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-/*
-** on pourra remplacer par la fonction strcmp de la libft
-*/
-
-int		ft_strcmp(char *s1, char *s2)
-{
-	int i;
-	int diff;
-
-	diff = 0;
-	i = 0;
-	while (s1[i] != '\0' || s2[i] != '\0')
-	{
-		diff = s1[i] - s2[i];
-		if (diff != 0)
-			return (diff);
-		i++;
-	}
-	return (0);
-}
-
-/*
-** on pourra remplacer par la fonction put_str ou ft_putstr_fd de la libft
-*/
-
-void	ft_putstr_fd(char *str, int fd)
-{
-	int i;
-
-	i = 0;
-	if (!str)
-		return ;
-	while (str[i])
-		i++;
-	write(fd, str, i);
-}
+#include "minishell.h"
 
 int		get_n_option(char *str)
 {
@@ -57,6 +20,12 @@ int		get_n_option(char *str)
 		return (1);
 	return (0);
 }
+
+/*
+** Mime the behavior of echo
+** ac = number of parameters
+** av = array of parameters
+*/
 
 int		ft_echo(int ac, char **av)
 {
