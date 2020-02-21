@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:59:39 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/21 19:00:24 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:44:28 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,13 @@ static int	change_directory(char *req_path, char *home_path, char **envp)
 
 int			ft_cd(int ac, char **av, char **envp)
 {
-	char *req_path;
 	char *home_path;
 
 	home_path = get_env_var("HOME", envp);
 	if (ac > 2)
-		return (handle_error(2, req_path));
+		return (handle_error(2, ""));
 	if (ac == 2)
-		return (change_directory(req_path, home_path, envp));
+		return (change_directory(av[1], home_path, envp));
 	else
 		return (change_directory(0, home_path, envp));
 }
