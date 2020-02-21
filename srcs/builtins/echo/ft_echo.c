@@ -6,13 +6,13 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 12:17:24 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/21 14:43:08 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/21 17:39:32 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		get_n_option(char *str)
+static int	get_n_option(char *str)
 {
 	if (!str)
 		return (0);
@@ -27,11 +27,12 @@ int		get_n_option(char *str)
 ** av = array of parameters
 */
 
-int		ft_echo(int ac, char **av)
+int			ft_echo(int ac, char **av, char **envp)
 {
 	int	n_option;
 	int	i;
 
+	(void)envp;
 	n_option = 0;
 	if (ac > 1)
 		n_option = get_n_option(av[1]);
