@@ -6,16 +6,32 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:56 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 16:57:52 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:08:50 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+** TEMP FCT - For tests
+*/
+
+int			ft_env(int argc, char **argv, char **envp)
+{
+	int i;
+
+	(void)argc;
+	(void)argv;
+	i = 0;
+	while (envp[i])
+		ft_putendl(envp[i++]);
+	return (0);
+}
+
 t_fct_ptr	get_fct_builtins(char *str)
 {
 	if (ft_strcmp(str, "echo") == 0)
-		return (ft_echo);
+		return (NULL);
 	return (NULL);
 }
 

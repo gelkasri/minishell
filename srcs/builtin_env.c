@@ -6,13 +6,13 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 15:01:57 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 15:30:51 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:26:28 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char		*get_env_var(const char *var, char **envp)
+char			*get_env_var(const char *var, char **envp)
 {
 	int		i;
 	char	**split;
@@ -39,4 +39,22 @@ char		*get_env_var(const char *var, char **envp)
 	}
 	free(join);
 	return (NULL);
+}
+
+static void		new_env_var(const char *var, const char *value, char ***envp)
+{
+	(void)envp;
+	ft_printf("Add new environement variable : %s=%s\n", var, value);
+}
+
+void			set_env_var(const char *var, const char *value, char ***envp)
+{
+	if (get_env_var(var, *envp))
+	{
+		return ;
+	}
+	else
+	{
+		new_env_var(var, value, envp);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 16:56:58 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 18:52:19 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void			display_prompt(char **envp);
 int				exec_line(char *line, char **envp);
 
 char			*get_env_var(const char *var, char **envp);
+void			set_env_var(const char *var, const char *value, char ***envp);
 
 void			free_str_arr(char **to_free);
 char			*ft_strjoin3(char const *s1, char const *s2, char const *s3);

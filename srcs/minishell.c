@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 14:52:12 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:05:31 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
 	if (!(line = ft_memalloc(sizeof(char *))))
 		return (MALLOC_ERROR);
 	ft_printf("%sBienvenue dans Minishell%s\n\n", GREEN, WHITE);
