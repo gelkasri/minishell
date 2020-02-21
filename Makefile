@@ -5,13 +5,14 @@
 #                                                     +:+ +:+         +:+      #
 #    By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/21 13:57:16 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/21 13:58:13 by gel-kasr         ###   ########.fr        #
+#    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
+#    Updated: 2020/02/21 14:21:07 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = 		minishell
 SRCS =		srcs/minishell.c \
+			srcs/display_prompt.c \
 
 OBJS =		$(SRCS:%.c=%.o)
 DEP = 		$(OBJS:%.o=%.d)
