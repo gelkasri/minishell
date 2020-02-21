@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:56 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 19:08:50 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:51:30 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ int			ft_env(int argc, char **argv, char **envp)
 t_fct_ptr	get_fct_builtins(char *str)
 {
 	if (ft_strcmp(str, "echo") == 0)
-		return (NULL);
+		return (ft_echo);
+	if (ft_strcmp(str, "cd") == 0)
+		return (ft_cd);
 	return (NULL);
 }
 

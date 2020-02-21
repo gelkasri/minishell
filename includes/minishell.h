@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 18:52:19 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 19:50:01 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,12 @@ void			free_str_arr(char **to_free);
 char			*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 
 int				exec_builtins(char **argv, char **envp);
+
+/*
+** Builtins
+*/
+
+int				ft_cd(int ac, char **av, char **envp);
+int				ft_echo(int ac, char **av, char **envp);
 
 #endif
