@@ -6,27 +6,40 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 15:01:57 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 19:26:28 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 22:14:12 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char			*get_env_var(const char *var, char **envp)
+t_list			**init_env_list(char **envp)
 {
 	int		i;
+	t_list	**list;
+
+	if (!(list = ft_memalloc(sizeof(t_list *))))
+		return (NULL);
+	i = 0;
+	while (envp[i])
+		ft_lstadd_back(list, ft_lstnew(ft_strdup(envp[i++])));
+	return (list);
+}
+
+char			*get_env_var(const char *var, t_list **env_list)
+{
+	t_list	*env;
 	char	**split;
 	char	*res;
 	char	*join;
 
-	i = 0;
 	if (!(join = ft_strjoin(var, "=")))
 		return (NULL);
-	while (envp[i])
+	env = *env_list;
+	while (env)
 	{
-		if (ft_strstr(envp[i], join) == envp[i])
+		if (ft_strstr(env->content, join) == env->content)
 		{
-			if (!(split = ft_split(envp[i], '=')))
+			if (!(split = ft_split(env->content, '=')))
 				return (NULL);
 			if (!(res = ft_strdup(split[1])))
 				return (NULL);
@@ -35,26 +48,26 @@ char			*get_env_var(const char *var, char **envp)
 			free(join);
 			return (res);
 		}
-		i++;
+		env = env->next;
 	}
 	free(join);
 	return (NULL);
 }
 
-static void		new_env_var(const char *var, const char *value, char ***envp)
+static void		new_env_var(const char *var, const char *value, t_list **env_l)
 {
-	(void)envp;
+	(void)env_l;
 	ft_printf("Add new environement variable : %s=%s\n", var, value);
 }
 
-void			set_env_var(const char *var, const char *value, char ***envp)
+void			set_env_var(const char *var, const char *value, t_list **env_l)
 {
-	if (get_env_var(var, *envp))
+	if (get_env_var(var, env_l))
 	{
 		return ;
 	}
 	else
 	{
-		new_env_var(var, value, envp);
+		new_env_var(var, value, env_l);
 	}
 }

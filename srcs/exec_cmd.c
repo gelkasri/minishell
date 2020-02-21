@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 17:01:28 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 22:03:08 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static char		*check_path(char *path, char *cmd, struct stat *buf)
 	return (res);
 }
 
-static char		*find_path(char *cmd, char **envp)
+static char		*find_path(char *cmd, t_list **env_list)
 {
 	char		**split;
 	int			i;
@@ -34,7 +34,7 @@ static char		*find_path(char *cmd, char **envp)
 	char		*res;
 	struct stat	*buf;
 
-	tmp = get_env_var("PATH", envp);
+	tmp = get_env_var("PATH", env_list);
 	if (!(buf = malloc(sizeof(*buf))))
 		return (NULL);
 	if (!(split = ft_split(tmp, ':')))
@@ -50,7 +50,7 @@ static char		*find_path(char *cmd, char **envp)
 	return (res);
 }
 
-static int		exec_cmd(char *cmd, char **envp)
+static int		exec_cmd(char *cmd, t_list **env_list)
 {
 	pid_t	id_child;
 	int		ret;
@@ -58,10 +58,10 @@ static int		exec_cmd(char *cmd, char **envp)
 	char	**split;
 
 	split = ft_split(cmd, ' ');
-	ret = exec_builtins(split, envp);
+	ret = exec_builtins(split, env_list);
 	if (ret >= 0)
 		return (ret);
-	path = find_path(split[0], envp);
+	path = find_path(split[0], env_list);
 	if (path && !(id_child = fork()))
 	{
 		ret = execve(path, split, NULL);
@@ -77,7 +77,7 @@ static int		exec_cmd(char *cmd, char **envp)
 	return (ret);
 }
 
-int				exec_line(char *line, char **envp)
+int				exec_line(char *line, t_list **env_list)
 {
 	char	**commands;
 	int		i;
@@ -87,7 +87,7 @@ int				exec_line(char *line, char **envp)
 	i = 0;
 	ret = 0;
 	while (commands[i])
-		ret = exec_cmd(commands[i++], envp);
+		ret = exec_cmd(commands[i++], env_list);
 	free_str_arr(commands);
 	free(commands);
 	return (1);

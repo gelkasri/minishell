@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:56 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 19:51:30 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 22:05:55 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,18 @@
 ** TEMP FCT - For tests
 */
 
-int			ft_env(int argc, char **argv, char **envp)
+int			ft_env(int argc, char **argv, t_list **env_list)
 {
-	int i;
+	t_list *env;
 
+	env = *env_list;
 	(void)argc;
 	(void)argv;
-	i = 0;
-	while (envp[i])
-		ft_putendl(envp[i++]);
+	while (env)
+	{
+		ft_putendl(env->content);
+		env = env->next;
+	}
 	return (0);
 }
 
@@ -37,7 +40,7 @@ t_fct_ptr	get_fct_builtins(char *str)
 	return (NULL);
 }
 
-int			exec_builtins(char **argv, char **envp)
+int			exec_builtins(char **argv, t_list **env_list)
 {
 	int			ret;
 	t_fct_ptr	fct;
@@ -49,6 +52,6 @@ int			exec_builtins(char **argv, char **envp)
 		argc++;
 	if (!(fct = get_fct_builtins(argv[0])))
 		return (-1);
-	ret = fct(argc, argv, envp);
+	ret = fct(argc, argv, env_list);
 	return (ret);
 }

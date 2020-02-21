@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 12:17:24 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/21 17:39:32 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/21 22:06:34 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ static int	get_n_option(char *str)
 ** av = array of parameters
 */
 
-int			ft_echo(int ac, char **av, char **envp)
+int			ft_echo(int ac, char **av, t_list **env_list)
 {
 	int	n_option;
 	int	i;
 
-	(void)envp;
+	(void)env_list;
 	n_option = 0;
 	if (ac > 1)
 		n_option = get_n_option(av[1]);
