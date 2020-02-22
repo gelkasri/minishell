@@ -6,51 +6,13 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 14:20:26 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/22 16:47:17 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <errno.h>
 #include <string.h>
-
-static char		*check_path(char *path, char *cmd, struct stat *buf)
-{
-	char	*join;
-	char	*res;
-
-	res = NULL;
-	if (!(join = ft_strjoin3(path, "/", cmd)))
-		return (NULL);
-	if (lstat(join, buf) == 0)
-		res = ft_strdup(join);
-	free(join);
-	return (res);
-}
-
-static char		*find_path(char *cmd, t_list **env_list)
-{
-	char		**split;
-	int			i;
-	char		*tmp;
-	char		*res;
-	struct stat	*buf;
-
-	tmp = get_env_var("PATH", env_list);
-	if (!(buf = malloc(sizeof(*buf))))
-		return (NULL);
-	if (!(split = ft_split(tmp, ':')))
-		return (NULL);
-	free(tmp);
-	i = -1;
-	res = NULL;
-	while (split[++i] && !res)
-		res = check_path(split[i], cmd, buf);
-	free_str_arr(split);
-	free(split);
-	free(buf);
-	return (res);
-}
 
 static int		free_and_return(char ***ptr, int ret_val)
 {
@@ -62,6 +24,23 @@ static int		free_and_return(char ***ptr, int ret_val)
 	return (ret_val);
 }
 
+static int		handle_error(int error_type, const char *cmd)
+{
+	ft_putstr_fd(cmd, 2);
+	if (error_type == 1)
+	{
+		ft_putendl_fd(": unknown command", 2);
+		return (127);
+	}
+	else
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
+		return (errno);
+	}
+}
+
 static int		exec_cmd(char *cmd, t_list **env_list)
 {
 	pid_t	id_child;
@@ -69,6 +48,7 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	char	*path;
 	char	**split;
 
+	id_child = -1;
 	split = ft_split(cmd, ' ');
 	ret = exec_builtins(split, env_list);
 	if (ret >= 0)
@@ -76,15 +56,12 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	path = find_path(split[0], env_list);
 	if (path && !(id_child = fork()))
 	{
-		ret = execve(path, split, NULL);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": ", 2);
-		ft_putendl_fd(strerror(errno), 2);
-		exit(1);
+		execve(path, split, NULL);
+		exit(handle_error(errno, path));
 	}
-	wait(&id_child);
+	waitpid(id_child, &ret, 0);
 	if (!path)
-		ft_printf("unknown command \"%s\"\n", cmd);
+		ret = handle_error(1, cmd);
 	free(path);
 	return (free_and_return(&split, ret));
 }

@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/22 12:35:52 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/02/22 16:46:45 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRCS =		srcs/minishell.c \
 			srcs/exec_cmd.c \
 			srcs/builtin_env.c \
 			srcs/str_utils.c \
+			srcs/find_exec_path.c \
 			srcs/builtins/exec_builtins.c \
 			srcs/builtins/echo/ft_echo.c \
 			srcs/builtins/cd/ft_cd.c \
