@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 18:12:01 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/22 21:38:56 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 		exit(handle_error(errno, path));
 	}
 	waitpid(id_child, &ret, 0);
+	ret = WEXITSTATUS(ret);
 	if (!path)
 		ret = handle_error(1, cmd);
 	free(path);
