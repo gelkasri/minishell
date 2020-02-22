@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 15:01:57 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 18:17:07 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 18:17:35 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,24 @@ char			**get_env_array(t_list **env_list)
 	return (res);
 }
 
+static void		multi_free(char ***array_ptr, char **str_ptr)
+{
+	if (array_ptr && *array_ptr)
+	{
+		free_str_arr(*array_ptr);
+		free(*array_ptr);
+	}
+	if (str_ptr)
+		free(*str_ptr);
+}
+
 char			*get_env_var(const char *var, t_list **env_list)
 {
 	t_list	*env;
 	char	**split;
 	char	*res;
 	char	*join;
+	int		empty_arg;
 
 	if (!(join = ft_strjoin(var, "=")))
 		return (NULL);
@@ -86,10 +98,9 @@ char			*get_env_var(const char *var, t_list **env_list)
 				return (NULL);
 			if (split[1] && !(res = ft_strdup(split[1])))
 				return (NULL);
-			free_str_arr(split);
-			free(split);
-			free(join);
-			return (!split[1] ? "" : res);
+			empty_arg = split[1] ? 0 : 1;
+			multi_free(&split, &join);
+			return (empty_arg ? ft_strdup("") : res);
 		}
 		env = env->next;
 	}
