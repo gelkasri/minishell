@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 16:47:17 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/22 18:12:01 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	path = find_path(split[0], env_list);
 	if (path && !(id_child = fork()))
 	{
-		execve(path, split, NULL);
+		execve(path, split, get_env_array(env_list));
 		exit(handle_error(errno, path));
 	}
 	waitpid(id_child, &ret, 0);
