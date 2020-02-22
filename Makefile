@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/21 19:31:10 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/02/22 12:35:52 by mle-moni         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME = 		minishell
 SRCS =		srcs/minishell.c \
@@ -19,6 +19,8 @@ SRCS =		srcs/minishell.c \
 			srcs/builtins/exec_builtins.c \
 			srcs/builtins/echo/ft_echo.c \
 			srcs/builtins/cd/ft_cd.c \
+			srcs/builtins/pwd/ft_pwd.c \
+			srcs/builtins/exit/ft_exit.c \
 
 
 OBJS =		$(SRCS:%.c=%.o)

@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:59:39 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/22 10:11:57 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/22 13:59:04 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,46 +55,69 @@ static int	handle_error(int error_type, const char *req)
 	return (1);
 }
 
-static int	change_directory(char *req_path, char *home_path, t_list **env_list)
+static int	chdir_by_path(char *req_path, char *home_path, char *cwd, int *ret)
 {
-	char	cwd_buffer[PATH_MAX];
 	char	*final_path;
-	int		ret;
 
-	if (!getcwd(cwd_buffer, PATH_MAX))
-		return (handle_error(0, req_path));
-	set_env_var("OLDPWD", cwd_buffer, env_list);
 	if (!req_path)
-		ret = chdir(home_path);
+		*ret = chdir(home_path);
 	else if (req_path[0] == '/')
-		ret = chdir(req_path);
+		*ret = chdir(req_path);
 	else
 	{
-		final_path = concat_paths(req_path, cwd_buffer);
+		final_path = concat_paths(req_path, cwd);
 		if (!final_path)
+		{
+			free(cwd);
 			return (handle_error(1, req_path));
-		ret = chdir(final_path);
+		}
+		*ret = chdir(final_path);
 		free(final_path);
 	}
-	if (!getcwd(cwd_buffer, PATH_MAX))
+	return (0);
+}
+
+static int	change_directory(char *req_path, char *home_path, t_list **env_list)
+{
+	char	*cwd;
+	int		final_ret;
+	int		ret;
+
+	if (!(cwd = getcwd(NULL, 0)))
 		return (handle_error(0, req_path));
-	set_env_var("PWD", cwd_buffer, env_list);
-	if (ret == -1)
+	set_env_var("OLDPWD", cwd, env_list);
+	ret = chdir_by_path(req_path, home_path, cwd, &final_ret);
+	if (ret != 0)
+		return (ret);
+	free(cwd);
+	if (!(cwd = getcwd(NULL, 0)))
+		return (handle_error(0, req_path));
+	set_env_var("PWD", cwd, env_list);
+	free(cwd);
+	if (final_ret == -1)
 		return (handle_error(0, req_path));
 	return (0);
 }
 
 int			ft_cd(int ac, char **av, t_list **env_list)
 {
-	char *home_path;
+	char	*home_path;
+	int		ret;
 
 	home_path = get_env_var("HOME", env_list);
+	if (!home_path)
+	{
+		ft_putstr_fd("cd: could not get env_var: $HOME\n", 2);
+		return (1);
+	}
 	if (ac > 2)
-		return (handle_error(2, ""));
+		ret = handle_error(2, "");
 	if (ac == 2)
-		return (change_directory(av[1], home_path, env_list));
+		ret = change_directory(av[1], home_path, env_list);
 	else
-		return (change_directory(0, home_path, env_list));
+		ret = change_directory(0, home_path, env_list);
+	free(home_path);
+	return (ret);
 }
 
 /*
