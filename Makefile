@@ -5,13 +5,21 @@
 #                                                     +:+ +:+         +:+      #
 #    By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/02/21 13:57:16 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/21 13:58:13 by gel-kasr         ###   ########.fr        #
+#    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
+#    Updated: 2020/02/21 19:31:10 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = 		minishell
 SRCS =		srcs/minishell.c \
+			srcs/display_prompt.c \
+			srcs/exec_cmd.c \
+			srcs/builtin_env.c \
+			srcs/str_utils.c \
+			srcs/builtins/exec_builtins.c \
+			srcs/builtins/echo/ft_echo.c \
+			srcs/builtins/cd/ft_cd.c \
+
 
 OBJS =		$(SRCS:%.c=%.o)
 DEP = 		$(OBJS:%.o=%.d)

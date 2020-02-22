@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:59:39 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/21 19:44:28 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/21 22:07:42 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	handle_error(int error_type, const char *req)
 	return (1);
 }
 
-static int	change_directory(char *req_path, char *home_path, char **envp)
+static int	change_directory(char *req_path, char *home_path, t_list **env_list)
 {
 	char	cwd_buffer[PATH_MAX];
 	char	*final_path;
@@ -77,23 +77,23 @@ static int	change_directory(char *req_path, char *home_path, char **envp)
 	}
 	if (!getcwd(cwd_buffer, PATH_MAX))
 		return (handle_error(0, req_path));
-	set_env_var("PWD", cwd_buffer, &envp);
+	set_env_var("PWD", cwd_buffer, env_list);
 	if (ret == -1)
 		return (handle_error(0, req_path));
 	return (0);
 }
 
-int			ft_cd(int ac, char **av, char **envp)
+int			ft_cd(int ac, char **av, t_list **env_list)
 {
 	char *home_path;
 
-	home_path = get_env_var("HOME", envp);
+	home_path = get_env_var("HOME", env_list);
 	if (ac > 2)
 		return (handle_error(2, ""));
 	if (ac == 2)
-		return (change_directory(av[1], home_path, envp));
+		return (change_directory(av[1], home_path, env_list));
 	else
-		return (change_directory(0, home_path, envp));
+		return (change_directory(0, home_path, env_list));
 }
 
 /*
