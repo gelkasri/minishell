@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 16:46:02 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/22 18:12:23 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void			display_prompt(t_list **env_list);
 int				exec_line(char *line, t_list **env_list);
 
 t_list			**init_env_list(char **envp);
+char			**get_env_array(t_list **env_list);
 char			*get_env_var(const char *var, t_list **env_list);
 void			set_env_var(const char *var, const char *value, t_list **env_l);
 
