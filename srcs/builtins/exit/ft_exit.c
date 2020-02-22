@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:43:09 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/22 12:11:14 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/22 12:27:19 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_exit(int ac, char **av, t_list **env_list)
 	last_ret_str = get_env_var("?", env_list);
 	if (!last_ret_str)
 	{
-		ft_putstr_fd("exit: could not get env_var: \$?\n", 2);
+		ft_putstr_fd("exit: could not get env_var: $?\n", 2);
 		return (1);
 	}
 	last_ret = ft_atoi(last_ret_str);
