@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:56 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 23:18:30 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/22 12:34:55 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ t_fct_ptr	get_fct_builtins(char *str)
 		return (ft_cd);
 	if (ft_strcmp(str, "env") == 0)
 		return (ft_env);
+	if (ft_strcmp(str, "pwd") == 0)
+		return (ft_pwd);
+	if (ft_strcmp(str, "exit") == 0)
+		return (ft_exit);
 	return (NULL);
 }
 
