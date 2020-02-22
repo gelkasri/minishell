@@ -11,8 +11,9 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <fcntl.h>
 
-static int	main_loop(char **line, t_list **env_list)
+static int	main_loop(char **line, t_list **env_list, int fd)
 {
 	int		i;
 	char	*res;
@@ -20,8 +21,9 @@ static int	main_loop(char **line, t_list **env_list)
 	while (1)
 	{
 		*line = NULL;
-		display_prompt(env_list);
-		i = get_next_line(0, line);
+		if (!fd)
+			display_prompt(env_list);
+		i = get_next_line(fd, line);
 		if (i <= 0)
 			break ;
 		i = exec_line(*line, env_list);
@@ -33,19 +35,41 @@ static int	main_loop(char **line, t_list **env_list)
 	return (0);
 }
 
+static int	open_file(char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putendl_fd(": No such file", 2);
+	}
+	return (fd);
+}
+
 int			main(int argc, char **argv, char **envp)
 {
 	char	**line;
 	t_list	**env_list;
+	int		fd;
 
-	(void)argc;
-	(void)argv;
+	if (argc > 1)
+	{
+		fd = open_file(argv[1]);
+		if (fd < 0)
+			return (127);
+	}
+	else
+		fd = 0;
 	if (!(env_list = init_env_list(envp)))
 		return (MALLOC_ERROR);
 	if (!(line = ft_memalloc(sizeof(char *))))
 		return (MALLOC_ERROR);
-	ft_printf("%sBienvenue dans Minishell%s\n\n", GREEN, WHITE);
-	main_loop(line, env_list);
+	if (!fd)
+		ft_printf("%sBienvenue dans Minishell%s\n\n", GREEN, WHITE);
+	main_loop(line, env_list, fd);
 	if (*line)
 		free(*line);
 	free(line);
