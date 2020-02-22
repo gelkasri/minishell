@@ -6,12 +6,11 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:28:58 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/22 11:38:55 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/22 12:01:00 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "unistd.h"
 #include <errno.h>
 #define PATH_MAX 256
 
