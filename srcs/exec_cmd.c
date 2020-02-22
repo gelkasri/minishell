@@ -6,11 +6,13 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 22:49:22 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/22 14:20:26 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
+#include <string.h>
 
 static char		*check_path(char *path, char *cmd, struct stat *buf)
 {
@@ -75,7 +77,9 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	if (path && !(id_child = fork()))
 	{
 		ret = execve(path, split, NULL);
-		ft_printf("fail to execute command \"%s\"\n", path);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 		exit(1);
 	}
 	wait(&id_child);
