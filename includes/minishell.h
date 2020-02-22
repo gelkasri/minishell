@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 12:33:58 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/22 16:46:02 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void			free_str_arr(char **to_free);
 char			*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 
 int				exec_builtins(char **argv, t_list **env_list);
+
+char			*find_path(char *cmd, t_list **env_list);
 
 /*
 ** Builtins
