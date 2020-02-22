@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:59:39 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/21 22:07:42 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/22 10:11:57 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int	change_directory(char *req_path, char *home_path, t_list **env_list)
 
 	if (!getcwd(cwd_buffer, PATH_MAX))
 		return (handle_error(0, req_path));
+	set_env_var("OLDPWD", cwd_buffer, env_list);
 	if (!req_path)
 		ret = chdir(home_path);
 	else if (req_path[0] == '/')
