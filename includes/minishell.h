@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/21 22:11:34 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/22 12:33:58 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int				exec_builtins(char **argv, t_list **env_list);
 
 int				ft_cd(int ac, char **av, t_list **env_list);
 int				ft_echo(int ac, char **av, t_list **env_list);
+int				ft_pwd(int ac, char **av, t_list **env_list);
+int				ft_exit(int ac, char **av, t_list **env_list);
 
 #endif
