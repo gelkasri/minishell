@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 15:01:57 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 16:49:17 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 18:17:07 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ char			*get_env_var(const char *var, t_list **env_list)
 		{
 			if (!(split = ft_split(env->content, '=')))
 				return (NULL);
-			if (!(res = ft_strdup(split[1])))
+			if (split[1] && !(res = ft_strdup(split[1])))
 				return (NULL);
 			free_str_arr(split);
 			free(split);
 			free(join);
-			return (res);
+			return (!split[1] ? "" : res);
 		}
 		env = env->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 14:18:34 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 18:16:57 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,7 @@ int				ft_cd(int ac, char **av, t_list **env_list);
 int				ft_echo(int ac, char **av, t_list **env_list);
 int				ft_pwd(int ac, char **av, t_list **env_list);
 int				ft_exit(int ac, char **av, t_list **env_list);
+int				ft_export(int ac, char **av, t_list **env_list);
+int				ft_env(int ac, char **av, t_list **env_list);
 
 #endif
