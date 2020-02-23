@@ -17,6 +17,7 @@ SRCS =		srcs/minishell.c \
 			srcs/builtin_env.c \
 			srcs/str_utils.c \
 			srcs/find_exec_path.c \
+			srcs/parser.c \
 			srcs/builtins/exec_builtins.c \
 			srcs/builtins/echo/ft_echo.c \
 			srcs/builtins/cd/ft_cd.c \

@@ -73,7 +73,7 @@ int				exec_line(char *line, t_list **env_list)
 	int		i;
 	int		ret;
 
-	commands = ft_split(line, ';');
+	commands = parse_line(line);
 	i = 0;
 	ret = 0;
 	while (commands[i])
