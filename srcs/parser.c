@@ -21,11 +21,7 @@ static int	nb_cmd(char *line)
 	while (line[i])
 	{
 		if (line[i] == ';' && !in_quote && !in_dquote)
-		{
 			n_cmd++;
-			in_quote = 0;
-			in_dquote = 0;
-		}
 		else if (line[i] == '"' && !in_quote)
 			in_dquote = (in_dquote + 1) % 2;
 		else if (line[i] == '\'' && !in_dquote)
@@ -42,23 +38,33 @@ static int	nb_cmd(char *line)
 ** - line : char * of one or more commands, separated by ';'
 ** Return value:
 ** - char **, each elem of this array is an independant command to exec
+**   array terminated by null value
 */
 
 char		**parse_line(char *line)
 {
 	char	**res;
 	int		i;
-	int		n_cmd;
+	int		j;
+	int		prev_delim;
 
 	i = 0;
-	n_cmd = nb_cmd(line);
-	if (n_cmd < 0)
+	j = 0;
+	prev_delim = 0;
+	if (nb_cmd(line) < 0 ||
+		!(res = ft_memalloc((nb_cmd(line) + 1) * sizeof(char *))))
 		return (NULL);
-	ft_printf("nb_cmd=%d\n", n_cmd);
 	while (line[i])
 	{
+		if (line[i] == ';')
+		{
+			res[j++] = ft_substr(line, prev_delim, i - prev_delim);
+			prev_delim = i + 1;
+		}
+		else if (line[i] == '"' || line[i] == '\'')
+			i += ft_index(line + i + 1, line[i]) + 1;
 		i++;
 	}
-	res = ft_split(line, ';');
+	res[j] = ft_substr(line, prev_delim, i - prev_delim);
 	return (res);
 }
