@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/02/23 17:50:05 by gel-kasr          #+#    #+#             */
+/*   Updated: 2020/02/23 17:52:35 by gel-kasr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	raise_error()
+static int	raise_error(void)
 {
-	ft_putendl_fd("minishell: parsing error, please close quote or double quote", 2);
+	ft_putendl_fd("minishell: parsing error, please close quote \
+					or double quote", 2);
 	return (-1);
 }
 
