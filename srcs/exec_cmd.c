@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 13:30:31 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:10:40 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	char	**split;
 
 	id_child = -1;
-	split = ft_split(cmd, ' ');
+	split = parse_command(cmd);
 	if (split[0] == NULL)
 		return (free_and_return(&split, 0));
 	ret = exec_builtins(split, env_list);
@@ -83,7 +83,7 @@ int				exec_line(char *line, t_list **env_list)
 		return (1);
 	i = 0;
 	ret = 0;
-	while (commands[i])
+	while (commands[i] && ft_strlen(commands[i]))
 		ret = exec_cmd(commands[i++], env_list);
 	free_str_arr(commands);
 	free(commands);

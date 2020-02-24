@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 13:36:37 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:08:58 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	main_loop(char **line, t_list **env_list, int fd)
 {
 	int		i;
 	char	*res;
+	char	*trim;
 
 	while (1)
 	{
@@ -28,9 +29,11 @@ static int	main_loop(char **line, t_list **env_list, int fd)
 		i = get_next_line(fd, line);
 		if (i <= 0)
 			break ;
-		i = exec_line(*line, env_list);
+		trim = ft_strtrim(*line, " ");
+		i = exec_line(trim, env_list);
 		res = ft_itoa(i);
 		set_env_var("?", res, env_list);
+		free(trim);
 		free(*line);
 		free(res);
 	}
