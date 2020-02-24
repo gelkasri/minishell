@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 14:29:53 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/24 13:50:51 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/02/24 15:33:33 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,6 +95,7 @@ SRCS =		srcs/ft_putchar_fd.c \
 			srcs/ft_lstiter_bonus.c \
 			srcs/ft_lstmap_bonus.c \
 			srcs/ft_list_sort.c \
+			srcs/ft_list_remove_if.c \
 			srcs/ft_printf/srcs/fct_utils.c \
 			srcs/ft_printf/srcs/ft_printf.c \
 			srcs/ft_printf/srcs/print_fct_hexa.c \

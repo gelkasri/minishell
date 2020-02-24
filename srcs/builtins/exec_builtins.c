@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:56 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 16:16:18 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:37:12 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ t_fct_ptr	get_fct_builtins(char *str)
 		return (ft_exit);
 	if (ft_strcmp(str, "export") == 0)
 		return (ft_export);
+	if (ft_strcmp(str, "unset") == 0)
+		return (ft_unset);
 	return (NULL);
 }
 

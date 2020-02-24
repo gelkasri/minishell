@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:32:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 13:49:43 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:32:09 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,7 @@ void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 								void (*del)(void *));
 void	ft_list_sort(t_list **begin_list, int (*cmp)());
+void	ft_list_remove_if(t_list **begin_list, void *data_ref, int (*cmp)(),
+void (*free_fct)(void *));
 
 #endif
