@@ -50,6 +50,8 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 
 	id_child = -1;
 	split = ft_split(cmd, ' ');
+	if (split[0] == NULL)
+		return (free_and_return(&split, 0));
 	ret = exec_builtins(split, env_list);
 	if (ret >= 0)
 		return (free_and_return(&split, ret));
