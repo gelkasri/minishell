@@ -32,6 +32,8 @@ typedef int		(*t_fct_ptr)(int, char **, t_list **);
 
 void			display_prompt(t_list **env_list);
 
+char			**parse_line(char *line);
+
 int				exec_line(char *line, t_list **env_list);
 
 t_list			**init_env_list(char **envp);

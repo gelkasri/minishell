@@ -75,7 +75,9 @@ int				exec_line(char *line, t_list **env_list)
 	int		i;
 	int		ret;
 
-	commands = ft_split(line, ';');
+	commands = parse_line(line);
+	if (!commands)
+		return (1);
 	i = 0;
 	ret = 0;
 	while (commands[i])
