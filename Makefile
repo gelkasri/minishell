@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/24 19:25:20 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/02/24 19:25:48 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS =		srcs/minishell.c \
 			srcs/builtins/pwd/ft_pwd.c \
 			srcs/builtins/exit/ft_exit.c \
 			srcs/builtins/export/ft_export.c \
+			srcs/builtins/export/export_no_param.c \
 			srcs/builtins/env/ft_env.c \
 
 

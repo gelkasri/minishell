@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 14:32:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2019/11/17 02:25:45 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 13:49:43 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,6 @@ void				ft_lstclear(t_list **lst, void (*del)(void *));
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
 								void (*del)(void *));
+void	ft_list_sort(t_list **begin_list, int (*cmp)());
 
 #endif

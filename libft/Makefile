@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/04 14:29:53 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/01/11 17:47:11 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/02/24 13:50:51 by mle-moni         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME =		libft.a
 SRCS =		srcs/ft_putchar_fd.c \
@@ -94,6 +94,7 @@ SRCS =		srcs/ft_putchar_fd.c \
 			srcs/ft_lstclear_bonus.c \
 			srcs/ft_lstiter_bonus.c \
 			srcs/ft_lstmap_bonus.c \
+			srcs/ft_list_sort.c \
 			srcs/ft_printf/srcs/fct_utils.c \
 			srcs/ft_printf/srcs/ft_printf.c \
 			srcs/ft_printf/srcs/print_fct_hexa.c \

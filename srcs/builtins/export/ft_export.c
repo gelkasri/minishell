@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 14:39:53 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/24 13:27:15 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 14:24:02 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,7 @@ int			ft_export(int ac, char **av, t_list **env_list)
 	i = 1;
 	ret = 0;
 	if (ac == 1)
-	{
-		ft_env(ac, av, env_list);
-		return (0);
-	}
+		return (export_no_param(env_list));
 	while (ac > i)
 	{
 		ret |= parse_and_export(av[i], env_list);
