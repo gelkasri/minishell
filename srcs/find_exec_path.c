@@ -6,23 +6,29 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:44:41 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 17:03:41 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/23 18:49:27 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char		*check_path(char *path, char *cmd, struct stat *buf)
+char			*check_path(char *path, char *cmd)
 {
-	char	*join;
-	char	*res;
+	char		*join;
+	char		*res;
+	struct stat	*buf;
 
+	if (!(buf = malloc(sizeof(*buf))))
+		return (NULL);
 	res = NULL;
 	if (!(join = ft_strjoin3(path, "/", cmd)))
 		return (NULL);
-	if (lstat(join, buf) == 0)
+	if (path && lstat(join, buf) == 0)
 		res = ft_strdup(join);
+	else if (!path && lstat(cmd, buf) == 0)
+		res = ft_strdup(cmd);
 	free(join);
+	free(buf);
 	return (res);
 }
 
@@ -42,20 +48,16 @@ char			*find_path(char *cmd, t_list **env_list)
 	int			i;
 	char		*tmp;
 	char		*res;
-	struct stat	*buf;
 
 	tmp = get_env_var("PATH", env_list);
-	if (!(buf = malloc(sizeof(*buf))))
-		return (NULL);
 	if (!(split = ft_split(tmp, ':')))
 		return (NULL);
 	free(tmp);
 	i = -1;
 	res = NULL;
 	while (split[++i] && !res)
-		res = check_path(split[i], cmd, buf);
+		res = check_path(split[i], cmd);
 	free_str_arr(split);
 	free(split);
-	free(buf);
 	return (res);
 }
