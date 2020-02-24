@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 15:01:57 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 18:29:54 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 16:49:17 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void			set_env_var(const char *var, const char *value, t_list **env_l)
 	elem = *env_l;
 	new_var = ft_strjoin3(var, "=", value);
 	join = ft_strjoin(var, "=");
-	if ((old_var = get_env_var(var, env_l)))
+	if (join && (old_var = get_env_var(var, env_l)))
 	{
 		while (elem)
 		{
@@ -119,9 +119,9 @@ void			set_env_var(const char *var, const char *value, t_list **env_l)
 			}
 			elem = elem->next;
 		}
+		free(old_var);
 	}
-	else
+	else if (new_var)
 		ft_lstadd_back(env_l, ft_lstnew(new_var));
-	free(old_var);
 	free(join);
 }
