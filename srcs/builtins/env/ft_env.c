@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:17:30 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/22 17:29:53 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 14:55:35 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int			ft_env(int ac, char **av, t_list **env_list)
 			return (1);
 		if (split[1])
 			ft_putendl(env->content);
+		free_str_arr(split);
+		free(split);
 		env = env->next;
 	}
 	return (0);
