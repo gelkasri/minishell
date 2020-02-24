@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 18:18:56 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 18:19:11 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ char			*find_path(char *cmd, t_list **env_list);
 ** Builtins
 */
 
+int				export_no_param(t_list **env_list);
+char			**split_in_2(char *str, char sep);
+
 int				ft_cd(int ac, char **av, t_list **env_list);
 int				ft_echo(int ac, char **av, t_list **env_list);
 int				ft_pwd(int ac, char **av, t_list **env_list);
 int				ft_exit(int ac, char **av, t_list **env_list);
 int				ft_export(int ac, char **av, t_list **env_list);
-int				export_no_param(t_list **env_list);
 int				ft_env(int ac, char **av, t_list **env_list);
 int				ft_unset(int ac, char **av, t_list **env_list);
 

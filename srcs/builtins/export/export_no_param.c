@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:43:53 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/24 14:48:38 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 17:44:15 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int		print_list(t_list *list)
 
 	while (list)
 	{
-		split = ft_split(list->content, '=');
+		split = split_in_2(list->content, '=');
 		if (!split)
 			return (1);
 		ft_putstr(split[0]);
