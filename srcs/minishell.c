@@ -6,12 +6,14 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 13:17:56 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 13:36:37 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
+#include <string.h>
+#include <errno.h>
 
 static int	main_loop(char **line, t_list **env_list, int fd)
 {
@@ -44,7 +46,8 @@ static int	open_file(char *path)
 	{
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(path, 2);
-		ft_putendl_fd(": No such file", 2);
+		ft_putstr_fd(": ", 2);
+		ft_putendl_fd(strerror(errno), 2);
 	}
 	return (fd);
 }
