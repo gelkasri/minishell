@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 14:39:53 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/24 12:30:49 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 13:27:15 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,17 @@ int			parse_and_export(char *str, t_list **env_list)
 {
 	char	**split;
 
+	if (str[0] == '=')
+		return (check_errors("", str));
 	split = ft_split(str, '=');
 	if (!split)
 		return (1);
 	if (check_errors(split[0], str))
+	{
+		free_str_arr(split);
+		free(split);
 		return (1);
+	}
 	if (split[0] && split[1])
 		set_env_var(split[0], split[1], env_list);
 	else if (split[0])
