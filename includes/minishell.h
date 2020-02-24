@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/23 18:38:20 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 14:18:34 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef int		(*t_fct_ptr)(int, char **, t_list **);
 void			display_prompt(t_list **env_list);
 
 char			**parse_line(char *line);
+char			**parse_command(char *cmd);
 
 int				exec_line(char *line, t_list **env_list);
 
