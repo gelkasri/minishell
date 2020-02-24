@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 16:56:06 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 13:17:56 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int			main(int argc, char **argv, char **envp)
 		fd = 0;
 	if (!(env_list = init_env_list(envp)))
 		return (MALLOC_ERROR);
+	set_env_var("?", "0", env_list);
 	if (!(line = ft_memalloc(sizeof(char *))))
 		return (MALLOC_ERROR);
 	if (!fd)
