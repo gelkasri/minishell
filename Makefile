@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/22 16:46:45 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/02/24 18:48:54 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ CC =		gcc
 CFLAGS =	-Wall -Wextra -Werror
 MAKE = 		make
 HFLAGS =	-I $(INC_DIR) -I $(LIBFT_INC)
+DEBUG =		-Wall -Wextra -Werror -g3 -fsanitize=address
 
 LIBFT_DIR =	libft/
 LIBFT_INC = $(LIBFT_DIR)includes/
@@ -44,7 +45,7 @@ LIBFT_H = 	$(LIBFT_INC)libft.h
 all:		$(NAME)
 
 $(NAME):	$(OBJS) $(LIBFT)
-			$(CC) $(OBJS) $(LIBFT) -o $(NAME)
+			$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 .c.o:
 			$(CC) -c $(CFLAGS) -MMD -MP $(HFLAGS) $< -o $(<:.c=.o)
