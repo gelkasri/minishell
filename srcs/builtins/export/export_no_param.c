@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:43:53 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/24 17:44:15 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 19:52:58 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static t_list	*ft_list_cp_sort(t_list *list)
 	t_list	*new_list;
 	t_list	*new_el;
 
+	new_list = NULL;
 	while (list)
 	{
 		new_el = ft_lstnew(list->content);
