@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/23 18:47:17 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 13:07:27 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ int				exec_line(char *line, t_list **env_list)
 	int		i;
 	int		ret;
 
+	if (ft_strlen(line) == 0)
+		return (0);
 	commands = parse_line(line);
 	if (!commands)
 		return (1);
