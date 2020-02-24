@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 13:07:27 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/24 13:30:31 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	ret = exec_builtins(split, env_list);
 	if (ret >= 0)
 		return (free_and_return(&split, ret));
-	path = find_path(split[0], env_list);
-	if (!path)
+	if (!(path = find_path(split[0], env_list)))
 		path = check_path(NULL, split[0]);
 	if (path && !(id_child = fork()))
 	{
