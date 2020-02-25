@@ -6,16 +6,11 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:56 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 15:37:12 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/25 20:46:05 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-** TEMP FCT - For tests of env builtin
-** TODO: To move
-*/
 
 t_fct_ptr	get_fct_builtins(char *str)
 {
