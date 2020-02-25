@@ -14,4 +14,4 @@ jobs:
     - name: Test `make re`
       run: make re
     - name: Test basic command in input
-      run: echo -e "Test ligne 1\nTest ligne 2" | ./minishell
+      run: echo -e "ls;ls -la; error; cat Makefile ; env \n ls -la ; export a=a ; env ; export" | ./minishell
