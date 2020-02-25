@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/25 20:33:04 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/25 20:55:01 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,17 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
+#include <signal.h>
+
+t_list		***g_env_list;
+
+void		handle_sigint(int sig)
+{
+	(void)sig;
+	set_env_var("?", "1", *g_env_list);
+	ft_putstr("\n");
+	display_prompt(*g_env_list);
+}
 
 static int	main_loop(char **line, t_list **env_list, int fd)
 {
@@ -26,6 +37,8 @@ static int	main_loop(char **line, t_list **env_list, int fd)
 		*line = NULL;
 		if (!fd)
 			display_prompt(env_list);
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
 		i = get_next_line(fd, line);
 		if (i <= 0)
 			ft_exit(1, NULL, env_list);
@@ -72,6 +85,7 @@ int			main(int argc, char **argv, char **envp)
 	if (!(env_list = init_env_list(envp)))
 		return (MALLOC_ERROR);
 	set_env_var("?", "0", env_list);
+	g_env_list = &env_list;
 	if (!(line = ft_memalloc(sizeof(char *))))
 		return (MALLOC_ERROR);
 	if (!fd)
