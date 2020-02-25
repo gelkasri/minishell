@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 16:10:40 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/25 17:44:49 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ static int		free_and_return(char ***ptr, int ret_val)
 
 static int		handle_error(int error_type, const char *cmd)
 {
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(cmd, 2);
 	if (error_type == 1)
 	{
-		ft_putendl_fd(": unknown command", 2);
+		ft_putendl_fd(": command not found", 2);
 		return (127);
 	}
 	else
@@ -65,7 +66,7 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	waitpid(id_child, &ret, 0);
 	ret = WEXITSTATUS(ret);
 	if (!path)
-		ret = handle_error(1, cmd);
+		ret = handle_error(1, split[0]);
 	free(path);
 	return (free_and_return(&split, ret));
 }

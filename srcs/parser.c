@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 17:50:05 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 16:24:29 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/25 11:45:31 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,24 +92,12 @@ static char	*ft_substr_trim(char *str, int start, int len)
 {
 	char	*substr;
 	int		i;
-	char	quote;
 	char	*res;
 
 	i = 0;
 	if (!(substr = ft_substr(str, start, len)))
 		return (NULL);
-	quote = (substr[0] == '\'' || substr[0] == '"') ? substr[0] : 0;
-	if (!quote)
-	{
-		if (ft_strlen(substr) == 0)
-		{
-			free(substr);
-			return (NULL);
-		}
-		return (substr);
-	}
-	if (!(res = ft_strtrim(substr, &quote)))
-		return (NULL);
+	res = trim_quotes(substr);
 	free(substr);
 	return (res);
 }
