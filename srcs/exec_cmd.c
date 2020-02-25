@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/25 17:44:49 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/25 18:27:46 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,19 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	return (free_and_return(&split, ret));
 }
 
+static int		get_exit_status(t_list **env_list)
+{
+	char	*str;
+	int		res;
+
+	if ((str = get_env_var("?", env_list)))
+		res = ft_atoi(str);
+	else
+		res = 0;
+	free(str);
+	return (res);
+}
+
 int				exec_line(char *line, t_list **env_list)
 {
 	char	**commands;
@@ -78,7 +91,7 @@ int				exec_line(char *line, t_list **env_list)
 	int		ret;
 
 	if (ft_strlen(line) == 0)
-		return (0);
+		return (get_exit_status(env_list));
 	commands = parse_line(line);
 	if (!commands)
 		return (1);
