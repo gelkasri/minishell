@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 16:19:56 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 12:34:55 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/24 15:37:12 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 ** TEMP FCT - For tests of env builtin
 ** TODO: To move
 */
-
-int			ft_env(int argc, char **argv, t_list **env_list)
-{
-	t_list *env;
-
-	env = *env_list;
-	(void)argc;
-	(void)argv;
-	while (env)
-	{
-		ft_putendl(env->content);
-		env = env->next;
-	}
-	return (0);
-}
 
 t_fct_ptr	get_fct_builtins(char *str)
 {
@@ -44,6 +29,10 @@ t_fct_ptr	get_fct_builtins(char *str)
 		return (ft_pwd);
 	if (ft_strcmp(str, "exit") == 0)
 		return (ft_exit);
+	if (ft_strcmp(str, "export") == 0)
+		return (ft_export);
+	if (ft_strcmp(str, "unset") == 0)
+		return (ft_unset);
 	return (NULL);
 }
 
