@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 15:42:22 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/26 09:04:21 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 10:35:05 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static char	*replace_env_var(char *str, int index, t_list **env_list)
 	i = index + 1;
 	while (ft_isalpha(str[i]) || ft_isdigit(str[i]))
 		i++;
-	if (i == index + 1)
-		return (str);
+	if (str[index + 1] == '?')
+		i++;
 	substr = ft_substr(str, index + 1, i - (index + 1));
 	var = get_env_var(substr, env_list);
 	if (!var)
@@ -74,7 +74,8 @@ static int	get_next_match(char *str)
 			in_quote = (in_quote + 1) % 2;
 		else if (str[i] == '$' && !in_quote)
 		{
-			if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]))
+			if (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1]) ||
+			str[i + 1] == '?')
 				return (i);
 		}
 		i++;
@@ -94,10 +95,7 @@ char		*apply_env_var(char *str, t_list **env_list)
 
 	last_index = 0;
 	if (ft_strlen(str) == 0)
-	{
-		free(str);
 		return (NULL);
-	}
 	final = ft_strdup(str);
 	if (!final)
 		return (NULL);
@@ -105,7 +103,7 @@ char		*apply_env_var(char *str, t_list **env_list)
 	{
 		final = replace_env_var(final, last_index, env_list);
 		if (!final)
-			return (ft_strdup(""));
+			return (NULL);
 	}
 	return (final);
 }

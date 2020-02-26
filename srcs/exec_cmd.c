@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 11:14:51 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 11:15:44 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	char	**split;
 
 	cmd = apply_env_var(cmd, env_list);
+	if (!cmd)
+		return (1);
 	id_child = -1;
 	split = parse_command(cmd);
 	free(cmd); // on est obligé de le faire la puisque char *cmd a changé
