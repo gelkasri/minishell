@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 11:16:02 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:06:10 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ static int		handle_error(int error_type, const char *cmd)
 	}
 }
 
+static void		sub_exec(char *cmd_path, char **argv, char **envp)
+{
+	reset_signals();
+	execve(cmd_path, argv, envp);
+	exit(handle_error(errno, cmd_path));
+}
+
 static int		exec_cmd(char *cmd, t_list **env_list)
 {
 	pid_t	id_child;
@@ -59,29 +66,14 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	if (!(path = find_path(split[0], env_list)))
 		path = check_path(NULL, split[0]);
 	if (path && !(id_child = fork()))
-	{
-		execve(path, split, get_env_array(env_list));
-		exit(handle_error(errno, path));
-	}
+		sub_exec(path, split, get_env_array(env_list));
+	ignore_signals();
 	waitpid(id_child, &ret, 0);
-	ret = WEXITSTATUS(ret);
+	ret = get_child_exit_status(ret);
 	if (!path)
 		ret = handle_error(1, split[0]);
 	free(path);
 	return (free_and_return(&split, ret));
-}
-
-static int		get_exit_status(t_list **env_list)
-{
-	char	*str;
-	int		res;
-
-	if ((str = get_env_var("?", env_list)))
-		res = ft_atoi(str);
-	else
-		res = 0;
-	free(str);
-	return (res);
 }
 
 int				exec_line(char *line, t_list **env_list)

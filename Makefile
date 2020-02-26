@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/25 18:14:23 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/02/26 11:38:18 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = 		minishell
 SRCS =		srcs/minishell.c \
 			srcs/display_prompt.c \
 			srcs/exec_cmd.c \
+			srcs/signals.c \
 			srcs/builtin_env.c \
 			srcs/str_utils.c \
 			srcs/find_exec_path.c \
