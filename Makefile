@@ -44,6 +44,9 @@ CFLAGS =	-Wall -Wextra -Werror
 MAKE = 		make
 HFLAGS =	-I $(INC_DIR) -I $(LIBFT_INC)
 DEBUG =		-Wall -Wextra -Werror -g3 -fsanitize=address
+LINUX =		-Wall -Wextra
+
+CURRENT_FLAGS = $(LINUX)
 
 LIBFT_DIR =	libft/
 LIBFT_INC = $(LIBFT_DIR)includes/
@@ -53,10 +56,10 @@ LIBFT_H = 	$(LIBFT_INC)libft.h
 all:		$(NAME)
 
 $(NAME):	$(OBJS) $(LIBFT)
-			$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+			$(CC) $(CURRENT_FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
 
 .c.o:
-			$(CC) -c $(CFLAGS) -MMD -MP $(HFLAGS) $< -o $(<:.c=.o)
+			$(CC) -c $(CURRENT_FLAGS) -MMD -MP $(HFLAGS) $< -o $(<:.c=.o)
 
 $(LIBFT):
 			make -C $(LIBFT_DIR)
