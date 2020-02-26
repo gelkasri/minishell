@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:43:09 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/24 11:45:01 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:23:05 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,11 @@ static void	exit_error(const char *param, const char *err, int ret)
 	exit(ret);
 }
 
-int			ft_exit(int ac, char **av, t_list **env_list)
+int			exit_body(int ac, char **av, t_list **env_list)
 {
 	char	*last_ret_str;
 	int		last_ret;
 
-	ft_putendl("exit");
 	if (ac >= 2)
 	{
 		if (!ft_str_is_numeric(av[1]))
@@ -58,4 +57,15 @@ int			ft_exit(int ac, char **av, t_list **env_list)
 	last_ret = ft_atoi(last_ret_str);
 	free(last_ret_str);
 	exit(last_ret);
+}
+
+int			ft_exit(int ac, char **av, t_list **env_list)
+{
+	char	*interactive;
+
+	interactive = get_env_var("INTERACTIVE", env_list);
+	if (!(interactive && !ft_strcmp(interactive, "NO")))
+		ft_putendl("exit");
+	free(interactive);
+	return (exit_body(ac, av, env_list));
 }
