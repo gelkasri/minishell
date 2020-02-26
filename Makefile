@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/25 11:26:23 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/02/25 18:14:23 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS =		srcs/minishell.c \
 			srcs/str_utils.c \
 			srcs/find_exec_path.c \
 			srcs/parser.c \
+			srcs/env_var.c \
 			srcs/quotes.c \
 			srcs/builtins/exec_builtins.c \
 			srcs/builtins/split_in_2.c \

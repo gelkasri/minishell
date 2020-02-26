@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/25 18:27:46 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/26 11:14:51 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	char	*path;
 	char	**split;
 
+	cmd = apply_env_var(cmd, env_list);
 	id_child = -1;
 	split = parse_command(cmd);
+	free(cmd); // on est obligé de le faire la puisque char *cmd a changé
 	if (split[0] == NULL)
 		return (free_and_return(&split, 0));
 	ret = exec_builtins(split, env_list);
