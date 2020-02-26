@@ -19,6 +19,7 @@ SRCS =		srcs/minishell.c \
 			srcs/str_utils.c \
 			srcs/find_exec_path.c \
 			srcs/parser.c \
+			srcs/env_var.c \
 			srcs/quotes.c \
 			srcs/builtins/exec_builtins.c \
 			srcs/builtins/split_in_2.c \

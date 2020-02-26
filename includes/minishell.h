@@ -35,6 +35,7 @@ void			display_prompt(t_list **env_list);
 
 char			**parse_line(char *line);
 char			**parse_command(char *cmd);
+char			*apply_env_var(char *str, t_list **env_list);
 char			*trim_quotes(char *substr);
 
 int				exec_line(char *line, t_list **env_list);

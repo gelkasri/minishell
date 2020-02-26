@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
 /*   Updated: 2020/02/26 12:06:10 by gel-kasr         ###   ########.fr       */
@@ -81,6 +81,7 @@ int				exec_line(char *line, t_list **env_list)
 	char	**commands;
 	int		i;
 	int		ret;
+	char	*tmp;
 
 	if (ft_strlen(line) == 0)
 		return (get_exit_status(env_list));
@@ -90,7 +91,14 @@ int				exec_line(char *line, t_list **env_list)
 	i = 0;
 	ret = 0;
 	while (commands[i] && ft_strlen(commands[i]))
-		ret = exec_cmd(commands[i++], env_list);
+	{
+		tmp = apply_env_var(commands[i++], env_list);
+		if (!tmp)
+			ret = 1;
+		else
+			ret = exec_cmd(tmp, env_list);
+		free(tmp);
+	}
 	free_str_arr(commands);
 	free(commands);
 	return (ret);
