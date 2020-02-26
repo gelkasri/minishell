@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 15:01:57 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/24 18:17:35 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:28:55 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char			*get_env_var(const char *var, t_list **env_list)
 	{
 		if (ft_strstr(env->content, join) == env->content)
 		{
-			if (!(split = ft_split(env->content, '=')))
+			if (!(split = split_in_2(env->content, '=')))
 				return (NULL);
 			if (split[1] && !(res = ft_strdup(split[1])))
 				return (NULL);
