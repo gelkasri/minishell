@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 11:36:36 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 12:05:59 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/26 14:35:52 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int		get_child_exit_status(int status)
 		{
 			ft_putstr("Quit: ");
 			ft_putnbr(SIGQUIT);
-			ft_putendl("");
 		}
+		ft_putendl("");
 		return (128 + WTERMSIG(status));
 	}
 	return (0);
