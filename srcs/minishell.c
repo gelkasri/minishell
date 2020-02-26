@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 11:41:22 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/26 15:12:55 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,15 @@ void		handle_sigint(int sig)
 {
 	(void)sig;
 	set_env_var("?", "1", *g_env_list);
+	ft_putstr("\e[2D\e[J");
 	ft_putstr("\n");
 	display_prompt(*g_env_list);
+}
+
+void		handle_sigquit(int sig)
+{
+	(void)sig;
+	ft_putstr("\e[2D\e[J");
 }
 
 static int	main_loop(char **line, t_list **env_list, int fd)
@@ -37,7 +44,7 @@ static int	main_loop(char **line, t_list **env_list, int fd)
 		if (!fd)
 			display_prompt(env_list);
 		signal(SIGINT, handle_sigint);
-		signal(SIGQUIT, SIG_IGN);
+		signal(SIGQUIT, handle_sigquit);
 		i = get_next_line(fd, line);
 		if (i <= 0)
 			ft_exit(1, NULL, env_list);
