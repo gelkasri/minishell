@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 15:12:55 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:11:29 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	main_loop(char **line, t_list **env_list, int fd)
 	return (0);
 }
 
-static int	open_file(char *path)
+static int	open_file(char *path, t_list **env_list)
 {
 	int	fd;
 
@@ -71,6 +71,8 @@ static int	open_file(char *path)
 		ft_putstr_fd(": ", 2);
 		ft_putendl_fd(strerror(errno), 2);
 	}
+	else
+		set_env_var("INTERACTIVE", "YES", env_list);
 	return (fd);
 }
 
@@ -80,16 +82,16 @@ int			main(int argc, char **argv, char **envp)
 	t_list	**env_list;
 	int		fd;
 
+	if (!(env_list = init_env_list(envp)))
+		return (MALLOC_ERROR);
 	if (argc > 1)
 	{
-		fd = open_file(argv[1]);
+		fd = open_file(argv[1], env_list);
 		if (fd < 0)
 			return (127);
 	}
 	else
 		fd = 0;
-	if (!(env_list = init_env_list(envp)))
-		return (MALLOC_ERROR);
 	set_env_var("?", "0", env_list);
 	g_env_list = &env_list;
 	if (!(line = ft_memalloc(sizeof(char *))))
