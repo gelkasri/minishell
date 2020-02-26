@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 16:11:29 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:18:53 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	open_file(char *path, t_list **env_list)
 		ft_putendl_fd(strerror(errno), 2);
 	}
 	else
-		set_env_var("INTERACTIVE", "YES", env_list);
+		set_env_var("INTERACTIVE", "NO", env_list);
 	return (fd);
 }
 
