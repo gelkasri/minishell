@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/25 11:31:39 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 12:00:56 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <signal.h>
 
 typedef int		(*t_fct_ptr)(int, char **, t_list **);
 
@@ -37,6 +38,11 @@ char			**parse_command(char *cmd);
 char			*trim_quotes(char *substr);
 
 int				exec_line(char *line, t_list **env_list);
+
+int				get_child_exit_status(int status);
+void			reset_signals();
+void			ignore_signals();
+int				get_exit_status(t_list **env_list);
 
 t_list			**init_env_list(char **envp);
 char			**get_env_array(t_list **env_list);

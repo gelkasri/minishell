@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/25 20:55:01 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/26 11:41:22 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
-#include <signal.h>
 
 t_list		***g_env_list;
 
