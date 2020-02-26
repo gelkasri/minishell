@@ -6,13 +6,11 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 15:42:22 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/26 10:35:05 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 11:01:07 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#include <stdio.h>
 
 static char	*replace_at_pos(char *str, int pos, int oldlen, char *var)
 {
