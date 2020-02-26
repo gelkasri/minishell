@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:43:09 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/26 16:19:06 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 16:23:05 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			ft_exit(int ac, char **av, t_list **env_list)
 	char	*interactive;
 
 	interactive = get_env_var("INTERACTIVE", env_list);
-	if (!(interactive && ft_strcmp(interactive, "NO")))
+	if (!(interactive && !ft_strcmp(interactive, "NO")))
 		ft_putendl("exit");
 	free(interactive);
 	return (exit_body(ac, av, env_list));
