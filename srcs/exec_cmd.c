@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 11:15:44 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/26 11:16:02 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,8 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	char	*path;
 	char	**split;
 
-	cmd = apply_env_var(cmd, env_list);
-	if (!cmd)
-		return (1);
 	id_child = -1;
 	split = parse_command(cmd);
-	free(cmd); // on est obligé de le faire la puisque char *cmd a changé
 	if (split[0] == NULL)
 		return (free_and_return(&split, 0));
 	ret = exec_builtins(split, env_list);
@@ -93,6 +89,7 @@ int				exec_line(char *line, t_list **env_list)
 	char	**commands;
 	int		i;
 	int		ret;
+	char	*tmp;
 
 	if (ft_strlen(line) == 0)
 		return (get_exit_status(env_list));
@@ -102,7 +99,14 @@ int				exec_line(char *line, t_list **env_list)
 	i = 0;
 	ret = 0;
 	while (commands[i] && ft_strlen(commands[i]))
-		ret = exec_cmd(commands[i++], env_list);
+	{
+		tmp = apply_env_var(commands[i++], env_list);
+		if (!tmp)
+			ret = 1;
+		else
+			ret = exec_cmd(tmp, env_list);
+		free(tmp);
+	}
 	free_str_arr(commands);
 	free(commands);
 	return (ret);
