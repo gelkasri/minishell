@@ -20,7 +20,7 @@ grep "a=a=a" "${1}/his.log" >> $hisfile
 grep "OLDPWD=$OLDPWD" "${1}/our.log" >> $myfile
 grep "OLDPWD=$OLDPWD" "${1}/his.log" >> $hisfile
 
-# grep "?=" "${1}/our.log" >> $myfile
-# grep "?=" "${1}/his.log" >> $hisfile
+grep "?=" "${1}/our.log" >> $myfile
+grep "?=" "${1}/his.log" >> $hisfile
 
 diff $myfile $hisfile
