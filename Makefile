@@ -46,7 +46,7 @@ HFLAGS =	-I $(INC_DIR) -I $(LIBFT_INC)
 DEBUG =		-Wall -Wextra -Werror -g3 -fsanitize=address
 LINUX =		-Wall -Wextra
 
-CURRENT_FLAGS = $(LINUX)
+CURRENT_FLAGS = $(CFLAGS)
 
 LIBFT_DIR =	libft/
 LIBFT_INC = $(LIBFT_DIR)includes/

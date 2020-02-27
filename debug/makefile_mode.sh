@@ -10,20 +10,18 @@ MODE="NORMAL"
 
 function change_mode () {
 	REPLACE=$(cat Makefile | grep "CURRENT_FLAGS = ")
-	sed -i "s/$REPLACE/$1/g" Makefile
+	sed -i '' "s/$REPLACE/$1/g" Makefile
 	REPLACE=$(cat libft/Makefile | grep "CURRENT_FLAGS = ")
-	sed -i "s/$REPLACE/$1/g" libft/Makefile
+	sed -i '' "s/$REPLACE/$1/g" libft/Makefile
 }
 
-cat Makefile > ok.txt 2> /dev/null
-if [[ $(cat ok.txt) == "" ]]
+cat Makefile > old_makefile.txt 2> /dev/null
+if [[ $(cat old_makefile.txt) == "" ]]
 then
 	echo "❌ ${RED}Vous devez appeller ce script sur le dossier ou se site votre Makefile${NORMAL}"
-	rm -f ok.txt
+	rm -f old_makefile.txt
 	exit
 fi
-
-cat Makefile > old.txt
 
 if [ $1 = "debug" ]
 then
@@ -41,15 +39,13 @@ else
 	change_mode $FLAGS
 fi
 
-cat Makefile > new.txt
-diff old.txt new.txt > diff.txt
-
 clear
 echo "✅ ${GREEN} ${MODE} MODE SET${NORMAL}"
 
 ERROR="0"
+diff old_makefile.txt Makefile > /dev/null
 
-if [[ $(cat diff.txt) != "" ]]
+if [[ $? != "" ]]
 then
 	echo -n "\e[s"
 	echo "${YELLOW}Compiling ..."
@@ -71,4 +67,4 @@ then
 	rm -f compilation.log
 fi
 
-rm -f old.txt new.txt diff.txt ok.txt
+rm -f old_makefile.txt

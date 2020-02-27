@@ -121,7 +121,7 @@ MAIN =		main_exec
 DEBUG =		-Wall -Wextra -Werror -g3 -fsanitize=address
 LINUX =		-Wall -Wextra
 
-CURRENT_FLAGS = $(LINUX)
+CURRENT_FLAGS = $(CFLAGS)
 
 all:		$(NAME)
 

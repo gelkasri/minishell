@@ -18,7 +18,7 @@ rm -f ok.txt
 
 echo -n "\e[s"
 echo "${YELLOW}Building minishell ..."
-make re > /dev/null
+make > /dev/null
 echo -n "\e[u\e[J"
 echo "✅  ${GREEN}Build ok${NORMAL}"
 
