@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 14:39:53 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/24 16:57:40 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/27 11:08:58 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,22 @@ static int	check_errors(const char *str, const char *error_param)
 int			parse_and_export(char *str, t_list **env_list)
 {
 	char	**split;
+	char	*old_value;
 
 	if (str[0] == '=')
 		return (check_errors("", str));
-	split = split_in_2(str, '=');
-	if (!split)
+	if (!(split = split_in_2(str, '=')))
 		return (1);
 	if (check_errors(split[0], str))
 	{
 		free_str_arr(split);
 		free(split);
 		return (1);
+	}
+	if ((old_value = get_env_var(split[0], env_list)))
+	{
+		free(old_value);
+		return (0);
 	}
 	if (split[0] && split[1])
 		set_env_var(split[0], split[1], env_list);
@@ -71,7 +76,7 @@ int			parse_and_export(char *str, t_list **env_list)
 }
 
 /*
-** ft_export set the environment variables with all strings in char **av
+** ft_export sets the environment variables with all strings in char **av
 ** if ac=1, it displays the environment variables
 */
 
