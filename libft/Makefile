@@ -118,6 +118,10 @@ HEADERS = 	includes/libft.h
 CC = 		gcc
 CFLAGS = 	-Wall -Wextra -Werror
 MAIN =		main_exec
+DEBUG =		-Wall -Wextra -Werror -g3 -fsanitize=address
+LINUX =		-Wall -Wextra
+
+CURRENT_FLAGS = $(CFLAGS)
 
 all:		$(NAME)
 
@@ -125,7 +129,7 @@ $(NAME):	$(OBJS)
 			ar rcs $(NAME) $(OBJS)
 
 .c.o:
-			$(CC) $(CFLAGS) -c -I $(HEADERS) $< -o $(<:.c=.o)
+			$(CC) $(CURRENT_FLAGS) -c -I $(HEADERS) $< -o $(<:.c=.o)
 
 clean:
 			rm -f $(OBJS) $(OBJS_B)
@@ -139,7 +143,7 @@ norm:
 			norminette $(SRCS) $(SRCS_B) $(HEADERS) 
 
 $(MAIN):	main.c $(NAME)
-			$(CC) $(CFLAGS) main.c $(NAME) -o $(MAIN)
+			$(CC) $(CURRENT_FLAGS) main.c $(NAME) -o $(MAIN)
 
 mclean:
 			rm -f $(MAIN)
