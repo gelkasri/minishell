@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/24 13:43:53 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/27 11:56:32 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/27 12:12:04 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ static int		print_list(t_list *list)
 		if (!ft_strcmp(split[0], "?"))
 		{
 			list = list->next;
+			free_str_arr(split);
+			free(split);
 			continue ;
 		}
 		ft_putstr(split[0]);

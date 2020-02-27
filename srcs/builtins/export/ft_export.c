@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 14:39:53 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/27 11:08:58 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/02/27 12:22:39 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static int	check_errors(const char *str, const char *error_param)
 ** parse_and_export takes a string formatted as follow:
 ** KEY[=VALUE]
 ** (=VALUE is facultative)
+** var KEY is set if there is no env var named KEY OR =VALUE is given
 */
 
 int			parse_and_export(char *str, t_list **env_list)
@@ -61,17 +62,16 @@ int			parse_and_export(char *str, t_list **env_list)
 		free(split);
 		return (1);
 	}
-	if ((old_value = get_env_var(split[0], env_list)))
+	if (!(old_value = get_env_var(split[0], env_list)) || split[1])
 	{
-		free(old_value);
-		return (0);
+		if (split[0] && split[1])
+			set_env_var(split[0], split[1], env_list);
+		else if (split[0])
+			set_env_var(split[0], "", env_list);
 	}
-	if (split[0] && split[1])
-		set_env_var(split[0], split[1], env_list);
-	else if (split[0])
-		set_env_var(split[0], "", env_list);
 	free_str_arr(split);
 	free(split);
+	free(old_value);
 	return (0);
 }
 
