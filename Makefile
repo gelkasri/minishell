@@ -31,6 +31,7 @@ SRCS =		srcs/minishell.c \
 			srcs/builtins/export/export_no_param.c \
 			srcs/builtins/env/ft_env.c \
 			srcs/builtins/unset/ft_unset.c \
+			srcs/term.c \
 
 
 OBJS =		$(SRCS:%.c=%.o)
@@ -38,6 +39,7 @@ DEP = 		$(OBJS:%.o=%.d)
 
 INC_DIR = 	includes/
 HEADER = 	$(INC_DIR)minishell.h \
+			$(INC_DIR)term_bonus.h \
 
 CC =		gcc
 CFLAGS =	-Wall -Wextra -Werror
@@ -56,7 +58,7 @@ LIBFT_H = 	$(LIBFT_INC)libft.h
 all:		$(NAME)
 
 $(NAME):	$(OBJS) $(LIBFT)
-			$(CC) $(CURRENT_FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+			$(CC) $(CURRENT_FLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lncurses
 
 .c.o:
 			$(CC) -c $(CURRENT_FLAGS) -MMD -MP $(HFLAGS) $< -o $(<:.c=.o)

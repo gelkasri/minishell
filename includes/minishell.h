@@ -24,6 +24,7 @@
 # define DEBUG 0
 
 # include "libft.h"
+# include "term_bonus.h"
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -72,5 +73,11 @@ int				ft_exit(int ac, char **av, t_list **env_list);
 int				ft_export(int ac, char **av, t_list **env_list);
 int				ft_env(int ac, char **av, t_list **env_list);
 int				ft_unset(int ac, char **av, t_list **env_list);
+
+/*
+** Bonus
+*/
+
+int				get_pos(int *y, int *x);
 
 #endif

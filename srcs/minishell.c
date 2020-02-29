@@ -14,6 +14,8 @@
 #include <fcntl.h>
 #include <string.h>
 #include <errno.h>
+#include <curses.h>
+#include <term.h>
 
 t_list		***g_env_list;
 
@@ -32,15 +34,38 @@ void		handle_sigquit(int sig)
 	ft_putstr("\e[2D\e[J");
 }
 
+static int ft_putchar2(int c)
+{
+	write (1, &c, 1);
+	return (1);
+}
+
 static int	main_loop(char **line, t_list **env_list, int fd)
 {
 	int		i;
 	char	*res;
 	char	*trim;
-
+	char	*term_type;
+	int ret;
+	
+	t_coord c;
+	
+	term_type = get_env_var("TERM", env_list);
+	ret = tgetent(NULL, term_type);
+	if (ret <= 0)
+		return (1);
+	ft_printf("ret = %d\n", ret);
+	ft_printf("x=%d, y=%d\n", c.x, c.y);
+	c = get_cur_pos();
+	ft_printf("x=%d, y=%d\n", c.x, c.y);
+	char *cm_cap = tgetstr("cm", NULL);
+	tputs(tgoto(cm_cap, 5, 5), 1, ft_putchar2);
+	c = get_cur_pos();
+	ft_printf("x=%d, y=%d\n", c.x, c.y);
 	while (1)
 	{
 		*line = NULL;
+		continue ;
 		if (!fd)
 			display_prompt(env_list);
 		signal(SIGINT, handle_sigint);
