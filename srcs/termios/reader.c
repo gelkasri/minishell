@@ -79,6 +79,17 @@ static int		add_to_editor_buffer(t_editor *editor, char c)
 	return (0);
 }
 
+static int		delete_char_in_buffer(t_editor *editor)
+{
+	int		len;
+//	char	*new_buffer;
+
+	len = ft_strlen(editor->buf);
+	if (len > 0)
+		editor->buf[len - 1] = 0;
+	return (0);
+}
+
 /*
 ** Manage a single key press
 ** - read the pressed key
@@ -105,6 +116,8 @@ static int		process_key_press(t_editor *editor)
 		editor->init_pos = get_cur_pos();
 	if (ft_isprint(c))
 		add_to_editor_buffer(editor, c);
+	if (c == DEL_KEY)
+		delete_char_in_buffer(editor);
 	else if (c == ENTER_KEY)
 	{
 		ft_putendl("");
