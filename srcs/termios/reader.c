@@ -9,9 +9,10 @@ static void		arrow_key_press(char c, t_editor *editor)
 		editor->pos.y--;
 	if (c == DOWN_KEY)
 		editor->pos.y++;
-	if (c == RIGHT_KEY)
+	if (c == RIGHT_KEY &&
+		editor->pos.x < editor->init_pos.x + (int)ft_strlen(editor->buf))
 		editor->pos.x++;
-	if (c == LEFT_KEY)
+	if (c == LEFT_KEY && editor->pos.x > editor->init_pos.x)
 		editor->pos.x--;
 	set_cur_pos(editor->pos.x, editor->pos.y);
 }
@@ -73,10 +74,7 @@ static int		process_key_press(t_editor *editor)
 	if (c == ctrl_key('d'))
 		return (-1);
 	if (ft_strlen(editor->buf) == 0)
-	{
-		editor->pos = get_cur_pos();
-		editor->init_pos = editor->pos;
-	}
+		editor->init_pos = get_cur_pos();
 	if (ft_isprint(c))
 	{
 		add_to_editor_buffer(editor, c);
@@ -97,6 +95,7 @@ int				termios_read_line(char **line, t_editor *editor)
 	int		read_n;
 
 	*line = NULL;
+	editor->init_pos = get_cur_pos();
 	while (1)
 	{
 		if ((read_n = process_key_press(editor)) < 0)
