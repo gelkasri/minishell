@@ -1,7 +1,15 @@
 
 #include "minishell.h"
 
-static void		arrow_key_press(char c, t_editor *editor)
+/*
+** Manage arrow keys.
+**
+** Return values:
+**   1 if buffer was updated (UP_KEY or DOWN_KEY)
+**   0 if cursor moved (RIGHT_KEY or LEFT_KEY)
+*/
+
+static int			arrow_key_press(char c, t_editor *editor)
 {
 	editor->pos = get_cur_pos();
 	(void)editor;
@@ -15,12 +23,19 @@ static void		arrow_key_press(char c, t_editor *editor)
 	if (c == LEFT_KEY && editor->pos.x > editor->init_pos.x)
 		editor->pos.x--;
 	set_cur_pos(editor->pos.x, editor->pos.y);
+	if (c == UP_KEY || c == DOWN_KEY)
+		return (1);
+	return (0);
 }
 
 /*
 ** Fonction that read keys pressed on keyboard
 ** \x1b = escape code for special presses (arrow keys)
 ** arrows keys are on 3 bytes : \x1b + '[' + 'A|B|C|D'
+**
+** Return values:
+**   1 if editor->buf has changed
+**   0 else
 */
 
 static char		read_key(t_editor *editor)
@@ -37,12 +52,12 @@ static char		read_key(t_editor *editor)
 	if (c == '\x1b')
 	{
 		if (read(STDIN_FILENO, &seq[0], 1) != 1)
-			return ('\x1b');
+			return (0);
 		if (read(STDIN_FILENO, &seq[1], 1) != 1)
-			return ('\x1b');
+			return (0);
 		if (seq[0] == '[')
-			arrow_key_press(seq[1], editor);
-		return ('\x1b');
+			return (arrow_key_press(seq[1], editor));
+		return (0);
 	}
 	else
 		return (c);
@@ -95,9 +110,12 @@ static int		process_key_press(t_editor *editor)
 		ft_putendl("");
 		return (1);
 	}
-	set_cur_pos(editor->init_pos.x, editor->init_pos.y);
-	ft_putstr("\x1b[K");
-	ft_putstr(editor->buf);
+	if (c)
+	{
+		set_cur_pos(editor->init_pos.x, editor->init_pos.y);
+		ft_putstr("\x1b[K");
+		ft_putstr(editor->buf);
+	}
 	return (0);
 }
 
