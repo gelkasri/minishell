@@ -53,7 +53,9 @@ t_editor		init_editor(t_list **env_list)
 	if (tcgetattr(STDIN_FILENO, &(editor.orig_termios)) == -1)
 		editor_error("init_editor");
 	editor.buf = ft_strdup("");
-
+	editor.histo = ft_memalloc(sizeof(t_list *));
+	editor.histo_pos = NULL;
+	editor.buf_save = ft_strdup("");
 	enable_raw_mode(editor.orig_termios);
 	return (editor);
 }

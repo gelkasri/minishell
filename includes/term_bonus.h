@@ -20,6 +20,9 @@ typedef struct			s_editor
 	t_coord				init_pos;
 	char				*buf;
 	struct termios		orig_termios;
+	t_list				**histo;
+	t_list				*histo_pos;
+	char				*buf_save;
 }						t_editor;
 
 /*
@@ -47,5 +50,12 @@ void					set_cur_pos(int x, int y);
 */
 
 int						ctrl_key(char c);
+
+/*
+** histo.c
+*/
+
+char					*put_next_histo_in_buf(t_editor *editor);
+char					*put_prev_histo_in_buf(t_editor *editor);
 
 #endif

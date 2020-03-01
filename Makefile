@@ -35,6 +35,7 @@ SRCS =		srcs/minishell.c \
 			srcs/termios/term_utils.c \
 			srcs/termios/cursor.c \
 			srcs/termios/reader.c \
+			srcs/termios/histo.c \
 
 
 OBJS =		$(SRCS:%.c=%.o)

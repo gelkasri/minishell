@@ -6,9 +6,9 @@ static void		arrow_key_press(char c, t_editor *editor)
 	editor->pos = get_cur_pos();
 	(void)editor;
 	if (c == UP_KEY)
-		editor->pos.y--;
+		put_next_histo_in_buf(editor);
 	if (c == DOWN_KEY)
-		editor->pos.y++;
+		put_prev_histo_in_buf(editor);
 	if (c == RIGHT_KEY &&
 		editor->pos.x < editor->init_pos.x + (int)ft_strlen(editor->buf))
 		editor->pos.x++;
@@ -64,6 +64,19 @@ static int		add_to_editor_buffer(t_editor *editor, char c)
 	return (0);
 }
 
+/*
+** Manage a single key press
+** - read the pressed key
+** - depending on its value, perform action
+**
+** Return values:
+**   0 if empty key or printable key
+**   1 if \n
+**   -1 if eof (ctrl+d)
+**
+** ft_putstr("\x1b[K"): to erase current line after cursor
+*/
+
 static int		process_key_press(t_editor *editor)
 {
 	char	c;
@@ -76,23 +89,22 @@ static int		process_key_press(t_editor *editor)
 	if (ft_strlen(editor->buf) == 0)
 		editor->init_pos = get_cur_pos();
 	if (ft_isprint(c))
-	{
 		add_to_editor_buffer(editor, c);
-		set_cur_pos(editor->init_pos.x, editor->init_pos.y);
-		ft_putstr(editor->buf);
-		return (0);
-	}
-	if (c == ENTER_KEY)
+	else if (c == ENTER_KEY)
 	{
 		ft_putendl("");
 		return (1);
 	}
+	set_cur_pos(editor->init_pos.x, editor->init_pos.y);
+	ft_putstr("\x1b[K");
+	ft_putstr(editor->buf);
 	return (0);
 }
 
 int				termios_read_line(char **line, t_editor *editor)
 {
 	int		read_n;
+	t_list	*histo;
 
 	*line = NULL;
 	editor->init_pos = get_cur_pos();
@@ -106,6 +118,12 @@ int				termios_read_line(char **line, t_editor *editor)
 			*line = ft_strdup(editor->buf);
 			free(editor->buf);
 			editor->buf = ft_strdup("");
+			if (ft_strlen(*line))
+			{
+				histo = ft_lstnew(ft_strdup(*line));
+				ft_lstadd_front(editor->histo, histo);
+				editor->histo_pos = NULL;
+			}
 			return (read_n);
 		}
 	}
