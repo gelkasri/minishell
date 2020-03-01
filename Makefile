@@ -31,7 +31,10 @@ SRCS =		srcs/minishell.c \
 			srcs/builtins/export/export_no_param.c \
 			srcs/builtins/env/ft_env.c \
 			srcs/builtins/unset/ft_unset.c \
-			srcs/term.c \
+			srcs/termios/term.c \
+			srcs/termios/term_utils.c \
+			srcs/termios/cursor.c \
+			srcs/termios/reader.c \
 
 
 OBJS =		$(SRCS:%.c=%.o)

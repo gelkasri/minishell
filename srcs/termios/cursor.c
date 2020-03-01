@@ -1,21 +1,21 @@
 
 #include "minishell.h"
-#include <termios.h>
 
 /*
 ** Return current cursor position. 
 ** Write position in a buffer, format <ESC>[10;15R
+** where y = 10 and x = 15
 */
 
 t_coord		get_cur_pos(void)
 {
-	char			buf[30]={0};
-	int				i, pow;
+	char			buf[30];
+	int				i;
 	struct termios	term;
 	struct termios	restore;
-	t_coord c;
-	
-	c = (t_coord){0, 0};
+	t_coord			c;
+
+	ft_bzero(buf, 30);
 	tcgetattr(0, &term);
 	tcgetattr(0, &restore);
 	term.c_lflag &= ~(ICANON|ECHO);
@@ -24,20 +24,19 @@ t_coord		get_cur_pos(void)
 	i = 0;
 	while (i == 0 || buf[i - 1] != 'R')
 		read(0, &buf[i++], 1);
-	i -= 2;
-	pow = 1;
-	while (buf[i] != ';')
-	{
-		c.x = c.x + (buf[i--] - '0') * pow;
-		pow *= 10;
-	}
-	i--;
-	pow = 1;
-	while (buf[i] != '[')
-	{
-		c.y = c.y + (buf[i--] - '0' ) * pow;
-		pow *= 10;
-	}
+	i = ft_index(buf, '[') + 1;
+	c.y = ft_atoi(buf + i);
+	i = ft_index(buf, ';') + 1;
+	c.x = ft_atoi(buf + i);
 	tcsetattr(0, TCSANOW, &restore);
 	return (c);
+}
+
+void		set_cur_pos(int x, int y)
+{
+	ft_putstr("\x1b[");
+	ft_putnbr(y);
+	ft_putstr(";");
+	ft_putnbr(x);
+	ft_putstr("H");
 }

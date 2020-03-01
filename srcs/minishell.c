@@ -34,43 +34,23 @@ void		handle_sigquit(int sig)
 	ft_putstr("\e[2D\e[J");
 }
 
-static int ft_putchar2(int c)
+static int	main_loop(char **line, t_list **env_list, int fd, t_editor *editor)
 {
-	write (1, &c, 1);
-	return (1);
-}
+	int			i;
+	char		*res;
+	char		*trim;
 
-static int	main_loop(char **line, t_list **env_list, int fd)
-{
-	int		i;
-	char	*res;
-	char	*trim;
-	char	*term_type;
-	int ret;
-	
-	t_coord c;
-	
-	term_type = get_env_var("TERM", env_list);
-	ret = tgetent(NULL, term_type);
-	if (ret <= 0)
-		return (1);
-	ft_printf("ret = %d\n", ret);
-	ft_printf("x=%d, y=%d\n", c.x, c.y);
-	c = get_cur_pos();
-	ft_printf("x=%d, y=%d\n", c.x, c.y);
-	char *cm_cap = tgetstr("cm", NULL);
-	tputs(tgoto(cm_cap, 5, 5), 1, ft_putchar2);
-	c = get_cur_pos();
-	ft_printf("x=%d, y=%d\n", c.x, c.y);
 	while (1)
 	{
 		*line = NULL;
-		continue ;
 		if (!fd)
 			display_prompt(env_list);
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, handle_sigquit);
-		i = get_next_line(fd, line);
+		if (!fd)
+			i = termios_read_line(line, editor);
+		else
+			i = get_next_line(fd, line);
 		if (i <= 0)
 			ft_exit(1, NULL, env_list);
 		trim = ft_strtrim(*line, " ");
@@ -103,9 +83,10 @@ static int	open_file(char *path, t_list **env_list)
 
 int			main(int argc, char **argv, char **envp)
 {
-	char	**line;
-	t_list	**env_list;
-	int		fd;
+	char		**line;
+	t_list		**env_list;
+	int			fd;
+	t_editor	editor;
 
 	if (!(env_list = init_env_list(envp)))
 		return (MALLOC_ERROR);
@@ -121,9 +102,10 @@ int			main(int argc, char **argv, char **envp)
 	g_env_list = &env_list;
 	if (!(line = ft_memalloc(sizeof(char *))))
 		return (MALLOC_ERROR);
+	editor = init_editor(env_list);
 	if (!fd)
 		ft_printf("%sBienvenue dans Minishell%s\n\n", GREEN, WHITE);
-	main_loop(line, env_list, fd);
+	main_loop(line, env_list, fd, &editor);
 	if (*line)
 		free(*line);
 	free(line);
