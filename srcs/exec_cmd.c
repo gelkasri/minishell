@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 11:51:18 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:35:40 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	return (free_and_return(&split, ret));
 }
 
-static void		trim_path(t_cmdlist	*commands)
+static void		trim_path(t_cmdlist *commands)
 {
 	int		i;
 	char	*path;
@@ -117,7 +117,7 @@ static int		set_write_fd(t_cmdlist *command, int defaultfd)
 		writefd = defaultfd;
 	if (writefd == -1)
 	{
-		// printf("fd error: %s\n", strerror(errno));
+		ft_putendl_fd(strerror(errno), 2);
 		exit(1);
 	}
 	return (writefd);
@@ -143,7 +143,8 @@ static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
 	child_in = -42;
 	while (cmds)
 	{
-		// printf("command is : %s\n", cmds->command);
+		if (DEBUG)
+			printf("command is : %s\n", cmds->command);
 		pipe(pipefd);
 		pid = fork();
 		if (pid == 0)

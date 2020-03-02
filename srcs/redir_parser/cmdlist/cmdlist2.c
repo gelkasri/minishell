@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:50:12 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 12:04:15 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:27:07 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		cmdlist_print(t_cmdlist *lst)
 {
-	printf("displaying cmdlist:\n");
+	ft_putstr("displaying cmdlist:\n");
 	while (lst)
 	{
 		ft_putstr("cmd = ");
@@ -23,11 +23,10 @@ void		cmdlist_print(t_cmdlist *lst)
 		ft_putnbr(lst->type);
 		ft_putstr(", fd = ");
 		ft_putnbr(lst->fd);
-		printf("cmd = %s, type = %d, fd = %d-->\n",
-		lst->command, lst->type, lst->fd);
+		ft_putstr("-->\n");
 		lst = lst->next;
 	}
-	printf("%s\n", "(NULL)");
+	ft_putstr("(NULL)");
 }
 
 void		cmdlist_add_back(t_cmdlist **alst, t_cmdlist *new)

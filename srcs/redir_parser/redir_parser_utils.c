@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:46:04 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 11:49:36 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 12:27:38 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		str_contains(const char *str, const char *lst)
 		while (lst[j])
 		{
 			if (str[i] == lst[j])
-				return (1); 
+				return (1);
 			j++;
 		}
 		i++;
