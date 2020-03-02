@@ -71,17 +71,20 @@ static char		read_key(t_editor *editor)
 
 static int		add_to_editor_buffer(t_editor *editor, char c)
 {
-	char	*tmp;
+	char	*new_buffer;
 	int		src_len;
+	int		index;
 
 	src_len = ft_strlen(editor->buf);
-	tmp = ft_memalloc((src_len + 2) * sizeof(char));
-	if (!tmp)
+	new_buffer = ft_memalloc((src_len + 2) * sizeof(char));
+	if (!new_buffer)
 		return (0);
-	ft_strcpy(tmp, editor->buf);
-	tmp[src_len] = c;
+	index = editor->pos.x - editor->init_pos.x;
+	ft_strncpy(new_buffer, editor->buf, index);
+	new_buffer[index] = c;
+	ft_strcat(new_buffer, editor->buf + index);
 	free(editor->buf);
-	editor->buf = tmp;
+	editor->buf = new_buffer;
 	return (1);
 }
 
@@ -138,7 +141,7 @@ static int		process_key_press(t_editor *editor)
 	c = read_key(editor);
 	editor->pos = get_cur_pos();
 	old_cur_pos = get_cur_pos();
-	action_res = 1;
+	action_res = 0;
 	if (c == 0)
 		return (0);
 	if (c == ctrl_key('d'))
@@ -154,11 +157,13 @@ static int		process_key_press(t_editor *editor)
 		ft_putendl("");
 		return (1);
 	}
-	if (c && action_res)
+	if (c)
 	{
 		set_cur_pos(editor->init_pos.x, editor->init_pos.y, editor);
 		ft_putstr("\x1b[K");
 		ft_putstr(editor->buf);
+		if (action_res)
+			set_cur_pos(old_cur_pos.x + 1, old_cur_pos.y, editor);
 	}
 	if (c == DEL_KEY)
 		set_cur_pos(old_cur_pos.x - 1, old_cur_pos.y, editor);
