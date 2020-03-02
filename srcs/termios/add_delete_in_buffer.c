@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:24:03 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 11:30:30 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 13:38:08 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int		add_to_editor_buffer(t_editor *editor, char c)
 	if (!new_buffer)
 		return (0);
 	index = editor->pos.x - editor->init_pos.x;
+	if (index < 0)
+		return (0);
 	ft_strncpy(new_buffer, editor->buf, index);
 	new_buffer[index] = c;
 	ft_strcat(new_buffer, editor->buf + index);
