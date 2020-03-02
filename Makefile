@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/02 11:37:21 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/03/02 16:58:24 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,8 @@ DEP = 		$(OBJS:%.o=%.d)
 INC_DIR = 	includes/
 HEADER = 	$(INC_DIR)minishell.h \
 			$(INC_DIR)term_bonus.h \
+			$(INC_DIR)keys.h \
+
 
 CC =		gcc
 CFLAGS =	-Wall -Wextra -Werror

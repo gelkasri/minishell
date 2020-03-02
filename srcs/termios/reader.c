@@ -6,18 +6,18 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 15:25:35 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:27:33 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** Manage arrow keys.
+** Manage arrow keys and HOME/END keys
 **
 ** Return values:
 **   1 if buffer was updated (UP_KEY or DOWN_KEY)
-**   0 if cursor moved (RIGHT_KEY or LEFT_KEY)
+**   0 if cursor moved (RIGHT_KEY or LEFT_KEY or HOME_KEY or END_KEY)
 */
 
 static int		arrow_key_press(char c, t_editor *editor)
@@ -32,15 +32,49 @@ static int		arrow_key_press(char c, t_editor *editor)
 		set_cur_pos(editor->pos.x + 1, editor->pos.y, editor);
 	if (c == LEFT_KEY)
 		set_cur_pos(editor->pos.x - 1, editor->pos.y, editor);
+	if (c == HOME_KEY)
+		set_cur_pos(editor->init_pos.x, editor->pos.y, editor);
+	if (c == END_KEY)
+		set_cur_pos(editor->init_pos.x + ft_strlen(editor->buf),
+					editor->pos.y, editor);
 	if (c == UP_KEY || c == DOWN_KEY)
 		return (1);
 	return (0);
 }
 
 /*
+** Manage reading of escape sequences
+**   Used when typing arrows keys (or home/end) with format "<esc>[A"
+**                 or ctrl-arrow                with format "<esc>[1;5C"
+**   see includes/keys.h for macro defined
+**
+** Return values:
+**   1 if editor->buf has changed (UP_KEY of DOWM_KEY only)
+**   0 else
+*/
+
+static int		read_esc_seq(t_editor *editor)
+{
+	char	seq[10];
+	int		i;
+
+	i = 0;
+	ft_bzero(seq, 10);
+	while (i < 2 && read(STDIN_FILENO, &seq[i], 1) >= 0)
+	{
+		if (seq[i] == 0 || seq[i] == ESC_KEY)
+			break ;
+		i++;
+	}
+	if (seq[0] == '[')
+		return (arrow_key_press(seq[1], editor));
+	return (0);
+}
+
+/*
 ** Fonction that read keys pressed on keyboard
 ** \x1b = escape code for special presses (arrow keys)
-** arrows keys are on 3 bytes : \x1b + '[' + 'A|B|C|D'
+** arrows keys are on 3 bytes : ESC_KEY + '[' + 'A|B|C|D'
 **
 ** Return values:
 **   1 if editor->buf has changed
@@ -51,23 +85,14 @@ static char		read_key(t_editor *editor)
 {
 	int		nread;
 	char	c;
-	char	seq[3];
 
 	while ((nread = read(STDIN_FILENO, &c, 1)) != 1)
 		if (nread < 0)
 			editor_error("read_key");
 	if (nread == 0)
 		return (0);
-	if (c == '\x1b')
-	{
-		if (read(STDIN_FILENO, &seq[0], 1) != 1)
-			return (0);
-		if (read(STDIN_FILENO, &seq[1], 1) != 1)
-			return (0);
-		if (seq[0] == '[')
-			return (arrow_key_press(seq[1], editor));
-		return (0);
-	}
+	if (c == ESC_KEY)
+		return (read_esc_seq(editor));
 	else
 		return (c);
 }
