@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 17:27:33 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/03 12:11:54 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,63 @@
 static int		arrow_key_press(char c, t_editor *editor)
 {
 	editor->pos = get_cur_pos();
-	(void)editor;
 	if (c == UP_KEY)
 		put_next_histo_in_buf(editor);
-	if (c == DOWN_KEY)
+	else if (c == DOWN_KEY)
 		put_prev_histo_in_buf(editor);
-	if (c == RIGHT_KEY)
+	else if (c == RIGHT_KEY)
 		set_cur_pos(editor->pos.x + 1, editor->pos.y, editor);
-	if (c == LEFT_KEY)
+	else if (c == LEFT_KEY)
 		set_cur_pos(editor->pos.x - 1, editor->pos.y, editor);
-	if (c == HOME_KEY)
+	else if (c == HOME_KEY)
 		set_cur_pos(editor->init_pos.x, editor->pos.y, editor);
-	if (c == END_KEY)
+	else if (c == END_KEY)
 		set_cur_pos(editor->init_pos.x + ft_strlen(editor->buf),
 					editor->pos.y, editor);
 	if (c == UP_KEY || c == DOWN_KEY)
 		return (1);
+	return (0);
+}
+
+static void		move_word(int dir, t_editor *editor)
+{
+	int len;
+	int index;
+
+	len = ft_strlen(editor->buf);
+	index = get_cur_pos().x - editor->init_pos.x;
+	while (index < len + 1 && index >= 0 && !ft_isalnum(editor->buf[index]))
+		index += dir;
+	while (index < len + 1 && index >= 0 && ft_isalnum(editor->buf[index]))
+		index += dir;
+	set_cur_pos(editor->init_pos.x + index, editor->pos.y, editor);
+}
+
+static int		ctrl_arrow_key_press(t_editor *editor)
+{
+	char	c;
+	char	seq[3];
+	int		i;
+
+	i = 0;
+	ft_bzero(seq, 3);
+	while (i < 3 && read(STDIN_FILENO, &seq[i], 1) >= 0)
+	{
+		if (seq[i] == 0 || seq[i] == ESC_KEY)
+		{
+			seq[i] = 0;
+			break ;
+		}
+		i++;
+	}
+	if (seq[0] != ';' || seq[1] != '5' || seq[2] == 0)
+		return (0);
+	c = seq[2];
+	editor->pos = get_cur_pos();
+	if (c == RIGHT_KEY)
+		move_word(1, editor);
+	else if (c == LEFT_KEY)
+		move_word(-1, editor);
 	return (0);
 }
 
@@ -55,11 +96,11 @@ static int		arrow_key_press(char c, t_editor *editor)
 
 static int		read_esc_seq(t_editor *editor)
 {
-	char	seq[10];
+	char	seq[2];
 	int		i;
 
 	i = 0;
-	ft_bzero(seq, 10);
+	ft_bzero(seq, 2);
 	while (i < 2 && read(STDIN_FILENO, &seq[i], 1) >= 0)
 	{
 		if (seq[i] == 0 || seq[i] == ESC_KEY)
@@ -67,7 +108,12 @@ static int		read_esc_seq(t_editor *editor)
 		i++;
 	}
 	if (seq[0] == '[')
-		return (arrow_key_press(seq[1], editor));
+	{
+		if (seq[1] != '1')
+			return (arrow_key_press(seq[1], editor));
+		else
+			return (ctrl_arrow_key_press(editor));
+	}
 	return (0);
 }
 
