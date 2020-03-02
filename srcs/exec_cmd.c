@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/28 11:07:11 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 10:08:08 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,9 @@ static int		pipe_loop(char **cmds, int nb_pipes, t_list **env_list)
 		{
 			close(pipefd[0]);
 			if (i != 0)
-				dup2(outputfd, 0);
+				dup2(outputfd, STDIN_FILENO);
 			if (nb_pipes != i + 1)
-				dup2(pipefd[1], 1);
+				dup2(pipefd[1], STDOUT_FILENO);
 			close(pipefd[1]);
 			close(outputfd);
 			exit(exec_cmd(cmds[i], env_list));
