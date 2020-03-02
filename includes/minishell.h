@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 12:00:56 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 11:50:28 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <signal.h>
+# include "cmdlist.h"
 
 typedef int		(*t_fct_ptr)(int, char **, t_list **);
 
@@ -37,6 +38,9 @@ char			**parse_line(char *line);
 char			**parse_command(char *cmd);
 char			*apply_env_var(char *str, t_list **env_list);
 char			*trim_quotes(char *substr);
+
+t_cmdlist		*cmdparser(char *line);
+int				str_contains(const char *str, const char *lst);
 
 int				exec_line(char *line, t_list **env_list);
 

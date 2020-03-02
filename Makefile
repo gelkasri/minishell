@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/28 11:43:48 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/03/02 11:45:37 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,10 @@ SRCS =		srcs/minishell.c \
 			srcs/builtins/export/export_no_param.c \
 			srcs/builtins/env/ft_env.c \
 			srcs/builtins/unset/ft_unset.c \
+			srcs/redir_parser/cmdlist/cmdlist.c \
+			srcs/redir_parser/cmdlist/cmdlist2.c \
+			srcs/redir_parser/redir_parser.c \
+			srcs/redir_parser/redir_parser_utils.c \
 
 
 OBJS =		$(SRCS:%.c=%.o)
