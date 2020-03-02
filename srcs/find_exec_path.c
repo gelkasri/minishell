@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 16:44:41 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/23 18:49:27 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/02/27 13:38:59 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ char			*find_path(char *cmd, t_list **env_list)
 	char		*tmp;
 	char		*res;
 
+	if (!cmd)
+		return (NULL);
 	tmp = get_env_var("PATH", env_list);
 	if (!(split = ft_split(tmp, ':')))
 		return (NULL);

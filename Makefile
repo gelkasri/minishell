@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/26 11:38:18 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/02/28 11:43:48 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,9 +86,12 @@ normall:
 			norminette $(SRCS) $(HEADER)
 			make norm -C $(LIBFT_DIR)
 
+test:		$(NAME)
+			./debug/tests/tester.sh
+
 main:		$(NAME)
 			./$(NAME)
 
-.PHONY:		all re norm normall clean fclean main save fcleanall reall
+.PHONY:		all re norm normall clean fclean main save fcleanall reall test
 
 -include 	$(DEP)
