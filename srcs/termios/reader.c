@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 11:25:00 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 13:54:53 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int				termios_read_line(char **line, t_editor *editor)
 	int		read_n;
 	t_list	*histo;
 
+	enable_raw_mode();
 	*line = NULL;
 	editor->init_pos = get_cur_pos();
 	while (1)
@@ -150,6 +151,7 @@ int				termios_read_line(char **line, t_editor *editor)
 				ft_lstadd_front(editor->histo, histo);
 				editor->histo_pos = NULL;
 			}
+			disable_raw_mode();
 			return (read_n);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:51:24 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 11:07:01 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:15:32 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <curses.h>
 #include <term.h>
 
-struct termios	orig_termios;
+struct termios	g_orig_termios;
 
 void			editor_error(const char *str)
 {
@@ -25,9 +25,9 @@ void			editor_error(const char *str)
 	exit(1);
 }
 
-static void		disable_raw_mode(void)
+void			disable_raw_mode(void)
 {
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &g_orig_termios) == -1)
 		editor_error("disable_raw_mode");
 }
 
@@ -40,13 +40,11 @@ static void		disable_raw_mode(void)
 ** VMIN - VTIME: timeout for read
 */
 
-static void		enable_raw_mode(struct termios orig)
+void			enable_raw_mode(void)
 {
 	struct termios raw;
 
-	raw = orig;
-	orig_termios = orig;
-	atexit(disable_raw_mode);
+	raw = g_orig_termios;
 	raw.c_iflag &= ~(ICRNL | IXON);
 	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw.c_cc[VMIN] = 0;
@@ -62,10 +60,11 @@ t_editor		init_editor(t_list **env_list)
 	editor.term_type = get_env_var("TERM", env_list);
 	if (tcgetattr(STDIN_FILENO, &(editor.orig_termios)) == -1)
 		editor_error("init_editor");
+	g_orig_termios = editor.orig_termios;
 	editor.buf = ft_strdup("");
 	editor.histo = ft_memalloc(sizeof(t_list *));
 	editor.histo_pos = NULL;
 	editor.buf_save = ft_strdup("");
-	enable_raw_mode(editor.orig_termios);
+	enable_raw_mode();
 	return (editor);
 }

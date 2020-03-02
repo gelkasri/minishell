@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:57:51 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 11:23:48 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 13:47:22 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef struct			s_editor
 ** term.c
 */
 
+void					disable_raw_mode(void);
+void					enable_raw_mode(void);
 void					editor_error(const char *str);
 t_editor				init_editor(t_list **env_list);
 
