@@ -107,11 +107,11 @@ static int		delete_char_in_buffer(t_editor *editor)
 	len = ft_strlen(editor->buf);
 	if (len == 0)
 		return (0);
-	if (!(new_buffer = ft_memalloc(len * sizeof(char))))
-		return (-1);
 	index = editor->pos.x - editor->init_pos.x;
 	if (index <= 0)
 		return (0);
+	if (!(new_buffer = ft_memalloc(len * sizeof(char))))
+		return (-1);
 	ft_strncpy(new_buffer, editor->buf, index - 1);
 	ft_strcat(new_buffer, editor->buf + index);
 	free(editor->buf);
