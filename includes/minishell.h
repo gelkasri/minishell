@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/26 12:00:56 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 10:40:16 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,13 @@ char			*trim_quotes(char *substr);
 
 int				exec_line(char *line, t_list **env_list);
 
+/*
+** signals.c
+*/
+
 int				get_child_exit_status(int status);
-void			reset_signals();
-void			ignore_signals();
+void			reset_signals(void);
+void			ignore_signals(void);
 int				get_exit_status(t_list **env_list);
 
 t_list			**init_env_list(char **envp);

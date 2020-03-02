@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   term_bonus.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/02 10:57:51 by gel-kasr          #+#    #+#             */
+/*   Updated: 2020/03/02 11:23:48 by gel-kasr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef _TERM_BONUS_H
 # define _TERM_BONUS_H
@@ -37,6 +48,13 @@ t_editor				init_editor(t_list **env_list);
 */
 
 int						termios_read_line(char **line, t_editor *editor);
+
+/*
+** add_delete_in_buffer.c
+*/
+
+int						add_to_editor_buffer(t_editor *editor, char c);
+int						delete_char_in_buffer(t_editor *editor);
 
 /*
 ** cursor.c

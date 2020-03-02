@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   term.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/02 10:51:24 by gel-kasr          #+#    #+#             */
+/*   Updated: 2020/03/02 11:07:01 by gel-kasr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include <termios.h>
@@ -14,7 +25,7 @@ void			editor_error(const char *str)
 	exit(1);
 }
 
-static void		disable_raw_mode()
+static void		disable_raw_mode(void)
 {
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &orig_termios) == -1)
 		editor_error("disable_raw_mode");
@@ -25,7 +36,7 @@ static void		disable_raw_mode()
 ** ECHO: disable printing on terminal
 ** ICANON: turn off canonical mode (read byte by bute)
 ** IXON - IEXTEN - ICRNL: disable ctrl-S ctrl-Q ctrl-V ctrl-O ctrl-M
-** OPOST: disable output processing 
+** OPOST: disable output processing
 ** VMIN - VTIME: timeout for read
 */
 
@@ -37,7 +48,6 @@ static void		enable_raw_mode(struct termios orig)
 	orig_termios = orig;
 	atexit(disable_raw_mode);
 	raw.c_iflag &= ~(ICRNL | IXON);
-//	raw.c_oflag &= ~(OPOST);
 	raw.c_lflag &= ~(ECHO | ICANON | IEXTEN);
 	raw.c_cc[VMIN] = 0;
 	raw.c_cc[VTIME] = 1;

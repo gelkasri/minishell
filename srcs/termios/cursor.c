@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cursor.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/02 10:54:40 by gel-kasr          #+#    #+#             */
+/*   Updated: 2020/03/02 10:55:49 by gel-kasr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-** Return current cursor position. 
+** Return current cursor position.
 ** Write position in a buffer, format <ESC>[10;15R
 ** where y = 10 and x = 15
 */
@@ -18,7 +29,7 @@ t_coord		get_cur_pos(void)
 	ft_bzero(buf, 30);
 	tcgetattr(0, &term);
 	tcgetattr(0, &restore);
-	term.c_lflag &= ~(ICANON|ECHO);
+	term.c_lflag &= ~(ICANON | ECHO);
 	tcsetattr(0, TCSANOW, &term);
 	write(0, "\033[6n", 4);
 	i = 0;

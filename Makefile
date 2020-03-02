@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/02/28 11:43:48 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/03/02 11:37:21 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS =		srcs/minishell.c \
 			srcs/termios/term_utils.c \
 			srcs/termios/cursor.c \
 			srcs/termios/reader.c \
+			srcs/termios/add_delete_in_buffer.c \
 			srcs/termios/histo.c \
 
 

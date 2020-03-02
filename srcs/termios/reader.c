@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   reader.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
+/*   Updated: 2020/03/02 11:25:00 by gel-kasr         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -9,7 +20,7 @@
 **   0 if cursor moved (RIGHT_KEY or LEFT_KEY)
 */
 
-static int			arrow_key_press(char c, t_editor *editor)
+static int		arrow_key_press(char c, t_editor *editor)
 {
 	editor->pos = get_cur_pos();
 	(void)editor;
@@ -61,62 +72,25 @@ static char		read_key(t_editor *editor)
 		return (c);
 }
 
-/*
-** Add a char in editor->buffer
-**
-** Return:
-**  1 if a char has been added to buffer
-**  0 else
-*/
-
-static int		add_to_editor_buffer(t_editor *editor, char c)
+static void		key_action(char c, t_coord old_cur_pos, t_editor *editor)
 {
-	char	*new_buffer;
-	int		src_len;
-	int		index;
+	int action_res;
 
-	src_len = ft_strlen(editor->buf);
-	new_buffer = ft_memalloc((src_len + 2) * sizeof(char));
-	if (!new_buffer)
-		return (0);
-	index = editor->pos.x - editor->init_pos.x;
-	ft_strncpy(new_buffer, editor->buf, index);
-	new_buffer[index] = c;
-	ft_strcat(new_buffer, editor->buf + index);
-	free(editor->buf);
-	editor->buf = new_buffer;
-	return (1);
-}
-
-/*
-** Delete a char in editor->buf
-** The deleted char is the one present just before the cursor
-**
-** Return:
-**  -1 if error
-**  1 if a char has been deleted
-**  0 else
-*/
-
-static int		delete_char_in_buffer(t_editor *editor)
-{
-	int		len;
-	char	*new_buffer;
-	int		index;
-
-	len = ft_strlen(editor->buf);
-	if (len == 0)
-		return (0);
-	index = editor->pos.x - editor->init_pos.x;
-	if (index <= 0)
-		return (0);
-	if (!(new_buffer = ft_memalloc(len * sizeof(char))))
-		return (-1);
-	ft_strncpy(new_buffer, editor->buf, index - 1);
-	ft_strcat(new_buffer, editor->buf + index);
-	free(editor->buf);
-	editor->buf = new_buffer;
-	return (1);
+	action_res = 0;
+	if (ft_isprint(c))
+		action_res = add_to_editor_buffer(editor, c);
+	if (c == DEL_KEY)
+		action_res = delete_char_in_buffer(editor);
+	if (c)
+	{
+		set_cur_pos(editor->init_pos.x, editor->init_pos.y, editor);
+		ft_putstr("\x1b[K");
+		ft_putstr(editor->buf);
+		if (action_res)
+			set_cur_pos(old_cur_pos.x + 1, old_cur_pos.y, editor);
+	}
+	if (c == DEL_KEY)
+		set_cur_pos(old_cur_pos.x - 1, old_cur_pos.y, editor);
 }
 
 /*
@@ -136,37 +110,20 @@ static int		process_key_press(t_editor *editor)
 {
 	char	c;
 	t_coord	old_cur_pos;
-	int		action_res;
 
 	c = read_key(editor);
 	editor->pos = get_cur_pos();
 	old_cur_pos = get_cur_pos();
-	action_res = 0;
 	if (c == 0)
 		return (0);
-	if (c == ctrl_key('d'))
+	else if (c == ctrl_key('d'))
 		return (-1);
-	if (ft_strlen(editor->buf) == 0)
-		editor->init_pos = get_cur_pos();
-	if (ft_isprint(c))
-		action_res = add_to_editor_buffer(editor, c);
-	if (c == DEL_KEY)
-		action_res = delete_char_in_buffer(editor);
 	else if (c == ENTER_KEY)
 	{
 		ft_putendl("");
 		return (1);
 	}
-	if (c)
-	{
-		set_cur_pos(editor->init_pos.x, editor->init_pos.y, editor);
-		ft_putstr("\x1b[K");
-		ft_putstr(editor->buf);
-		if (action_res)
-			set_cur_pos(old_cur_pos.x + 1, old_cur_pos.y, editor);
-	}
-	if (c == DEL_KEY)
-		set_cur_pos(old_cur_pos.x - 1, old_cur_pos.y, editor);
+	key_action(c, old_cur_pos, editor);
 	return (0);
 }
 
