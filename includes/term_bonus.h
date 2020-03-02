@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:57:51 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 13:47:22 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:24:03 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int						ctrl_key(char c);
 ** histo.c
 */
 
+void					add_line_in_histo(char *line, t_editor *editor);
 char					*put_next_histo_in_buf(t_editor *editor);
 char					*put_prev_histo_in_buf(t_editor *editor);
 

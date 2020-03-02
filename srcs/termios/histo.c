@@ -6,11 +6,23 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:56:18 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 10:57:22 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/02 15:26:15 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	add_line_in_histo(char *line, t_editor *editor)
+{
+	t_list	*histo;
+
+	if (ft_strlen(line))
+	{
+		histo = ft_lstnew(ft_strdup(line));
+		ft_lstadd_front(editor->histo, histo);
+		editor->histo_pos = NULL;
+	}
+}
 
 /*
 ** Get next older line in cmds historic
