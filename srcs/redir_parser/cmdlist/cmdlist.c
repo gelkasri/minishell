@@ -6,13 +6,13 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:46:16 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 11:09:58 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:53:09 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_cmdlist	*cmdlist_new(void *command, int type, int fd)
+t_cmdlist	*cmdlist_new(void *command)
 {
 	t_cmdlist	*new;
 
@@ -20,29 +20,10 @@ t_cmdlist	*cmdlist_new(void *command, int type, int fd)
 	if (!new)
 		return (NULL);
 	new->command = command;
-	new->fd = fd;
-	new->type = type;
+	new->fd_in = NULL;
+	new->fd_out = NULL;
 	new->next = NULL;
 	return (new);
-}
-
-void		cmdlist_add_front(t_cmdlist **alst, t_cmdlist *new)
-{
-	new->next = *alst;
-	*alst = new;
-}
-
-int			cmdlist_size(t_cmdlist *lst)
-{
-	int	i;
-
-	i = 0;
-	while (lst)
-	{
-		lst = lst->next;
-		i++;
-	}
-	return (i);
 }
 
 void		cmdlist_clear(t_cmdlist **lst, void (*del)(void *))
@@ -57,9 +38,46 @@ void		cmdlist_clear(t_cmdlist **lst, void (*del)(void *))
 	{
 		temp = iter->next;
 		del(iter->command);
+		fdlist_clear(iter->fd_in, free);
+		fdlist_clear(iter->fd_out, free);
+		fdlist_clear(iter->fd_out_err, free);
 		free(iter);
 		iter = temp;
 	}
 	*lst = NULL;
 	lst = NULL;
+}
+
+void		cmdlist_print(t_cmdlist *lst)
+{
+	ft_putstr("displaying cmdlist:\n");
+	while (lst)
+	{
+		ft_putstr("cmd = ");
+		ft_putstr(lst->command);
+		ft_putstr("\nfd_in = : ");
+		fdlist_print(lst->fd_in);
+		ft_putstr("\nfd_out = : ");
+		fdlist_print(lst->fd_out);
+		ft_putstr("\nfd_out_err = : ");
+		fdlist_print(lst->fd_out_err);
+		ft_putstr("\n-->\n");
+		lst = lst->next;
+	}
+	ft_putstr("(NULL)");
+}
+
+void		list_add_back(void **alst, void *new)
+{
+	t_cmdlist	*lst;
+
+	lst = *alst;
+	if (!lst)
+		*alst = new;
+	else
+	{
+		while (lst->next)
+			lst = lst->next;
+		lst->next = new;
+	}
 }

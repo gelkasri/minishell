@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 10:55:38 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:53:35 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 #include <stdio.h>
 
+/*
 static int			set_type_and_index(char *src, int i, t_cmdlist *new)
 {
 	while (src[i])
@@ -42,6 +43,7 @@ static int			set_type_and_index(char *src, int i, t_cmdlist *new)
 	}
 	return (-1);
 }
+*/
 
 static t_cmdlist	*end_parser(t_cmdlist *cmdlist)
 {
@@ -49,6 +51,7 @@ static t_cmdlist	*end_parser(t_cmdlist *cmdlist)
 	return (NULL);
 }
 
+/*
 t_cmdlist			*cmdparser(char *line)
 {
 	t_cmdlist	*final;
@@ -77,5 +80,38 @@ t_cmdlist			*cmdparser(char *line)
 	if (!(new->command))
 		return (end_parser(final));
 	cmdlist_add_back(&final, new);
+	return (final);
+}
+*/
+
+t_cmdlist		*get_cmd_params(char *cmd)
+{
+	t_cmdlist	*new;
+
+	return (new);
+}
+
+t_cmdlist		*cmdparser(char *line)
+{
+	char		**split;
+	int			i;
+	t_cmdlist	*final;
+	t_cmdlist	*new;
+
+	i = 0;
+	final = NULL;
+	split = ft_split(line, '|');
+	if (!split)
+		return (NULL);
+	while (split[i])
+	{
+		new = get_cmd_params(split[i]);
+		if (!new)
+			return (end_parser(final));
+		list_add_back((void **)&final, (void *)new);
+		i++;
+	}
+	free_str_arr(split);
+	free(split);
 	return (final);
 }

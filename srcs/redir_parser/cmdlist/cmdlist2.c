@@ -6,52 +6,49 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:50:12 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 12:27:07 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 17:43:41 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void		cmdlist_print(t_cmdlist *lst)
+t_fdlist	*fdlist_new(int fd)
 {
-	ft_putstr("displaying cmdlist:\n");
+	t_fdlist	*new;
+
+	new = (t_fdlist *)malloc(sizeof(t_fdlist));
+	if (!new)
+		return (NULL);
+	new->fd = fd;
+	new->next = NULL;
+	return (new);
+}
+
+void		fdlist_clear(t_fdlist **lst, void (*del)(void *))
+{
+	t_fdlist	*temp;
+	t_fdlist	*iter;
+
+	if (!lst || !(*lst))
+		return ;
+	iter = *lst;
+	while (iter)
+	{
+		temp = iter->next;
+		free(iter);
+		iter = temp;
+	}
+	*lst = NULL;
+	lst = NULL;
+}
+
+void		fdlist_print(t_fdlist *lst)
+{
 	while (lst)
 	{
-		ft_putstr("cmd = ");
-		ft_putstr(lst->command);
-		ft_putstr(", type = ");
-		ft_putnbr(lst->type);
-		ft_putstr(", fd = ");
 		ft_putnbr(lst->fd);
 		ft_putstr("-->\n");
 		lst = lst->next;
 	}
-	ft_putstr("(NULL)");
-}
-
-void		cmdlist_add_back(t_cmdlist **alst, t_cmdlist *new)
-{
-	if (!(*alst))
-		*alst = new;
-	else
-		cmdlist_last(*alst)->next = new;
-}
-
-t_cmdlist	*cmdlist_last(t_cmdlist *lst)
-{
-	if (!lst)
-		return (NULL);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-void		cmdlist_set(t_cmdlist *item, char *cmd, int type, int fd)
-{
-	if ((int)cmd != -42)
-		item->command = cmd;
-	if (type != -42)
-		item->type = type;
-	if (fd != -42)
-		item->fd = fd;
+	ft_putstr("(NULL)\n");
 }
