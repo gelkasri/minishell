@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:50:12 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 17:43:41 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:04:23 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_fdlist	*fdlist_new(int fd)
 	return (new);
 }
 
-void		fdlist_clear(t_fdlist **lst, void (*del)(void *))
+void		fdlist_clear(t_fdlist **lst)
 {
 	t_fdlist	*temp;
 	t_fdlist	*iter;
@@ -35,6 +35,7 @@ void		fdlist_clear(t_fdlist **lst, void (*del)(void *))
 	while (iter)
 	{
 		temp = iter->next;
+		close(iter->fd);
 		free(iter);
 		iter = temp;
 	}

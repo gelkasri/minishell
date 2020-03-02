@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:46:16 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 17:53:09 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:23:54 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void		cmdlist_clear(t_cmdlist **lst, void (*del)(void *))
 	{
 		temp = iter->next;
 		del(iter->command);
-		fdlist_clear(iter->fd_in, free);
-		fdlist_clear(iter->fd_out, free);
-		fdlist_clear(iter->fd_out_err, free);
+		fdlist_clear(&(iter->fd_in));
+		fdlist_clear(&(iter->fd_out));
+		fdlist_clear(&(iter->fd_out_err));
 		free(iter);
 		iter = temp;
 	}

@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 16:02:12 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 18:21:11 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ static void		trim_path(t_cmdlist *commands)
 	}
 }
 
+/*
 static int		set_write_fd(t_cmdlist *command, int defaultfd)
 {
 	t_cmdlist	*next;
@@ -122,14 +123,13 @@ static int		set_write_fd(t_cmdlist *command, int defaultfd)
 	}
 	return (writefd);
 }
+*/
 
-static int		is_last(t_cmdlist *cmd)
+static int		get_last_fd(t_fdlist *list)
 {
-	if (cmd->type == LAST)
-		return (1);
-	else if (cmd->type == FROM_FILE)
-		return (is_last(cmd->next));
-	return (0);
+	while (list && list->next)
+		list = list->next;
+	return (list->fd);
 }
 
 static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
@@ -156,23 +156,21 @@ static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
 		if (pid == 0)
 		{
 			close(pipefd[0]);
-			if (cmds->type == FROM_FILE)
-				child_in = open(((t_cmdlist*)cmds->next)->command, O_RDONLY);
-			if (child_in == -1)
-			{
-				ft_putstr_fd(strerror(errno), 2);
-				exit(1);
-			}
+			if (cmds->fd_in)
+				child_in = get_last_fd(cmds->fd_in);
 			if (child_in != -42)
 			{
 				dup2(child_in, STDIN_FILENO);
 				close(child_in);
 			}
-			child_out = set_write_fd(cmds, pipefd[1]);
-			if (!is_last(cmds))
+			child_out = (!(cmds->fd_out)) ? pipefd[1] : get_last_fd(cmds->fd_out);
+			if (cmds->next)
 				dup2(child_out, STDOUT_FILENO);
 			close(pipefd[1]);
 			close(child_out);
+			if (cmds->fd_out_err)
+				dup2(get_last_fd(cmds->fd_out_err), STDERR_FILENO);
+			close(get_last_fd(cmds->fd_out_err));
 			exit(exec_cmd(cmds->command, env_list));
 		}
 		close(pipefd[1]);
@@ -180,8 +178,6 @@ static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
 		close(pipefd[0]);
 		waitpid(pid, &ret, 0);
 		ret = get_child_exit_status(ret);
-		if (cmds->type >= TO_FILE && cmds->type <= FROM_FILE)
-			cmds = cmds->next;
 		cmds = cmds->next;
 	}
 	return (ret);
