@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 12:35:40 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/02 14:02:46 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
 	while (cmds)
 	{
 		if (DEBUG)
-			printf("command is : %s\n", cmds->command);
+			ft_printf("command is : %s\n", cmds->command);
 		pipe(pipefd);
 		pid = fork();
 		if (pid == 0)
