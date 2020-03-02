@@ -43,7 +43,7 @@ int						termios_read_line(char **line, t_editor *editor);
 */
 
 t_coord					get_cur_pos(void);
-void					set_cur_pos(int x, int y);
+void					set_cur_pos(int x, int y, t_editor *editor);
 
 /*
 ** term_utils.c

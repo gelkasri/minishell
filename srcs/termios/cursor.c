@@ -32,8 +32,13 @@ t_coord		get_cur_pos(void)
 	return (c);
 }
 
-void		set_cur_pos(int x, int y)
+void		set_cur_pos(int x, int y, t_editor *editor)
 {
+	if (x > editor->init_pos.x + (int)ft_strlen(editor->buf) ||
+		x < editor->init_pos.x)
+		return ;
+	editor->pos.x = x;
+	editor->pos.y = y;
 	ft_putstr("\x1b[");
 	ft_putnbr(y);
 	ft_putstr(";");

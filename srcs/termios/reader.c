@@ -17,12 +17,10 @@ static int			arrow_key_press(char c, t_editor *editor)
 		put_next_histo_in_buf(editor);
 	if (c == DOWN_KEY)
 		put_prev_histo_in_buf(editor);
-	if (c == RIGHT_KEY &&
-		editor->pos.x < editor->init_pos.x + (int)ft_strlen(editor->buf))
-		editor->pos.x++;
-	if (c == LEFT_KEY && editor->pos.x > editor->init_pos.x)
-		editor->pos.x--;
-	set_cur_pos(editor->pos.x, editor->pos.y);
+	if (c == RIGHT_KEY)
+		set_cur_pos(editor->pos.x + 1, editor->pos.y, editor);
+	if (c == LEFT_KEY)
+		set_cur_pos(editor->pos.x - 1, editor->pos.y, editor);
 	if (c == UP_KEY || c == DOWN_KEY)
 		return (1);
 	return (0);
@@ -63,6 +61,14 @@ static char		read_key(t_editor *editor)
 		return (c);
 }
 
+/*
+** Add a char in editor->buffer
+**
+** Return:
+**  1 if a char has been added to buffer
+**  0 else
+*/
+
 static int		add_to_editor_buffer(t_editor *editor, char c)
 {
 	char	*tmp;
@@ -71,23 +77,43 @@ static int		add_to_editor_buffer(t_editor *editor, char c)
 	src_len = ft_strlen(editor->buf);
 	tmp = ft_memalloc((src_len + 2) * sizeof(char));
 	if (!tmp)
-		return (-1);
+		return (0);
 	ft_strcpy(tmp, editor->buf);
 	tmp[src_len] = c;
 	free(editor->buf);
 	editor->buf = tmp;
-	return (0);
+	return (1);
 }
+
+/*
+** Delete a char in editor->buf
+** The deleted char is the one present just before the cursor
+**
+** Return:
+**  -1 if error
+**  1 if a char has been deleted
+**  0 else
+*/
 
 static int		delete_char_in_buffer(t_editor *editor)
 {
 	int		len;
-//	char	*new_buffer;
+	char	*new_buffer;
+	int		index;
 
 	len = ft_strlen(editor->buf);
-	if (len > 0)
-		editor->buf[len - 1] = 0;
-	return (0);
+	if (len == 0)
+		return (0);
+	if (!(new_buffer = ft_memalloc(len * sizeof(char))))
+		return (-1);
+	index = editor->pos.x - editor->init_pos.x;
+	if (index <= 0)
+		return (0);
+	ft_strncpy(new_buffer, editor->buf, index - 1);
+	ft_strcat(new_buffer, editor->buf + index);
+	free(editor->buf);
+	editor->buf = new_buffer;
+	return (1);
 }
 
 /*
@@ -106,8 +132,13 @@ static int		delete_char_in_buffer(t_editor *editor)
 static int		process_key_press(t_editor *editor)
 {
 	char	c;
+	t_coord	old_cur_pos;
+	int		action_res;
 
 	c = read_key(editor);
+	editor->pos = get_cur_pos();
+	old_cur_pos = get_cur_pos();
+	action_res = 1;
 	if (c == 0)
 		return (0);
 	if (c == ctrl_key('d'))
@@ -115,20 +146,22 @@ static int		process_key_press(t_editor *editor)
 	if (ft_strlen(editor->buf) == 0)
 		editor->init_pos = get_cur_pos();
 	if (ft_isprint(c))
-		add_to_editor_buffer(editor, c);
+		action_res = add_to_editor_buffer(editor, c);
 	if (c == DEL_KEY)
-		delete_char_in_buffer(editor);
+		action_res = delete_char_in_buffer(editor);
 	else if (c == ENTER_KEY)
 	{
 		ft_putendl("");
 		return (1);
 	}
-	if (c)
+	if (c && action_res)
 	{
-		set_cur_pos(editor->init_pos.x, editor->init_pos.y);
+		set_cur_pos(editor->init_pos.x, editor->init_pos.y, editor);
 		ft_putstr("\x1b[K");
 		ft_putstr(editor->buf);
 	}
+	if (c == DEL_KEY)
+		set_cur_pos(old_cur_pos.x - 1, old_cur_pos.y, editor);
 	return (0);
 }
 
