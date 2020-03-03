@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/03 13:30:38 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 21:33:10 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,12 +145,6 @@ static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
 	{
 		if (DEBUG)
 			ft_printf("command is : %s\n", cmds->command);
-		if (DEBUG)
-		{
-			cmds = cmds->next;
-			ret = 0;
-			continue ;
-		}
 		pipe(pipefd);
 		pid = fork();
 		if (pid == 0)
@@ -169,8 +163,10 @@ static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
 			close(pipefd[1]);
 			close(child_out);
 			if (cmds->fd_out_err)
+			{
 				dup2(get_last_fd(cmds->fd_out_err), STDERR_FILENO);
-			close(get_last_fd(cmds->fd_out_err));
+				close(get_last_fd(cmds->fd_out_err));
+			}
 			exit(exec_cmd(cmds->command, env_list));
 		}
 		close(pipefd[1]);

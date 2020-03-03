@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 20:05:41 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 21:28:46 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void		get_fd_from_path(int *fd, char *cmd, int type)
 		return ;
 	len = get_path_len(&cmd);
 	cmd = ft_substr(cmd, 0, len);
-	ft_printf("path: %s|\n", cmd);
+	// ft_printf("path: %s|\n", cmd);
 	if (!cmd)
 		return ;
 	if (type == '<')
@@ -72,59 +72,55 @@ static int		set_fds(char *cmd, int index, t_cmdlist *new)
 	set_which_fd(cmd, index, &which_fd);
 	while (cmd[index] == '<' || cmd[index] == '>')
 		index++;
-	ft_printf("here: %s|\n", cmd + index);
 	if (cmd[index] == '&')
 		get_fd_flat(&fd, cmd, &index);
 	i = index;
 	if (cmd[redir] == '<')
 	{
-		ft_printf("redir: <\nfd: %d\n", fd);
 		get_fd_from_path(&fd, cmd + index, '<');
-		ft_printf("now, fd is: %d\n", fd);
 		set_fd(new, &fd, which_fd);
 	}
 	else if (cmd[redir] == '>')
 	{
 		if (cmd[redir + 1] == '>')
 		{
-			ft_printf("redir: >>\nfd: %d\n", fd);
 			get_fd_from_path(&fd, cmd + index, '>' + 1);
-			ft_printf("now, fd is: %d\n", fd);
 			set_fd(new, &fd, which_fd);
 		}
 		else
 		{
-			ft_printf("redir: >\nfd: %d\n", fd);
 			get_fd_from_path(&fd, cmd + index, '>');
-			ft_printf("now, fd is: %d\n", fd);
 			set_fd(new, &fd, which_fd);
 		}
 	}
 	return (fd);
 }
 
-t_cmdlist		*get_cmd_params(char *cmd)
+t_cmdlist		*get_cmd_params(char *cmd_from_arr)
 {
 	t_cmdlist	*new;
 	int			i;
 	int			err;
+	char		*cmd;
 
+	cmd = ft_strdup(cmd_from_arr);
 	new = cmdlist_new(NULL);
-	while (new && (i = str_contains(cmd, "<>")))
+	if (!new)
+		return (NULL);
+	while ((i = str_contains(cmd, "<>")) != -1)
 	{
 		err = set_fds(cmd, i, new);
-		ft_printf("err is : %d\n", err);
 		if (err < 0)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putendl_fd(strerror(errno), 2);
 			exit(1);
 		}
-		// if (!(cmd = remove_param(cmd, i)))
-		// 	return (NULL);
-		cmdlist_print(new);
-		exit(1);
+		if (!(cmd = remove_param(cmd, i)))
+			return (NULL); // we have to clear list !!!
 	}
+	new->command = cmd;
+	cmdlist_print(new);
 	return (new);
 }
 
@@ -137,7 +133,7 @@ t_cmdlist		*cmdparser(char *line)
 
 	i = 0;
 	final = NULL;
-	split = ft_split(line, '|');
+	split = ft_split(line, '|'); // replace split to take care of pipes that are in ""
 	if (!split)
 		return (NULL);
 	while (split[i])

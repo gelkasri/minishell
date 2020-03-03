@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/02 11:45:37 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/03/03 20:14:37 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRCS =		srcs/minishell.c \
 			srcs/redir_parser/cmdlist/cmdlist2.c \
 			srcs/redir_parser/redir_parser.c \
 			srcs/redir_parser/redir_parser_utils.c \
+			srcs/redir_parser/remove_param.c \
 
 
 OBJS =		$(SRCS:%.c=%.o)

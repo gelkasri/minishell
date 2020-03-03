@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:50:12 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 19:26:46 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 21:18:52 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		fdlist_print(t_fdlist *lst)
 	while (lst)
 	{
 		ft_putnbr(lst->fd);
-		ft_putstr("-->\n");
+		ft_putstr("-->");
 		lst = lst->next;
 	}
 	ft_putstr("(NULL)\n");

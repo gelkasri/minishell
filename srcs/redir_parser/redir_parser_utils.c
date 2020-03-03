@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:46:04 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 20:07:35 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 21:35:14 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,12 @@ void		set_fd(t_cmdlist *new, int *fd, int which_fd)
 	if (*fd < 0)
 		return ;
 	list = NULL;
-	ft_printf("then fd is: %d\n", *fd);
-	ft_printf("which_fd is: %d\n", which_fd);
 	new_fd = fdlist_new(*fd);
 	if (!new_fd)
 	{
 		*fd = -42;
 		return ;
 	}
-	ft_printf("FINAL FD: %d\n", new_fd->fd);
-	fdlist_print(new_fd);
 	if (which_fd == 0)
 		list = &(new->fd_in);
 	else if (which_fd == 1)
