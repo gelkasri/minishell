@@ -6,13 +6,13 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:56:18 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 15:26:15 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/03 14:12:46 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	add_line_in_histo(char *line, t_editor *editor)
+void			add_line_in_histo(char *line, t_editor *editor)
 {
 	t_list	*histo;
 
@@ -31,7 +31,7 @@ void	add_line_in_histo(char *line, t_editor *editor)
 ** Returns: new buf
 */
 
-char	*put_next_histo_in_buf(t_editor *editor)
+char			*put_next_histo_in_buf(t_editor *editor)
 {
 	char	*res;
 
@@ -42,6 +42,8 @@ char	*put_next_histo_in_buf(t_editor *editor)
 	{
 		editor->histo_pos = *(editor->histo);
 		res = (char *)((*(editor->histo))->content);
+		free(editor->buf_save);
+		editor->buf_save = ft_strdup(editor->buf);
 	}
 	else if (editor->histo_pos->next)
 	{
@@ -56,6 +58,15 @@ char	*put_next_histo_in_buf(t_editor *editor)
 	return (res);
 }
 
+static void		replace_editor_buf(char *res, t_editor *editor)
+{
+	if (res)
+	{
+		free(editor->buf);
+		editor->buf = ft_strdup(res);
+	}
+}
+
 /*
 ** Get next recent line in cmds historic
 ** and put it in editor->buf
@@ -66,7 +77,7 @@ char	*put_next_histo_in_buf(t_editor *editor)
 ** Returns: new buf
 */
 
-char	*put_prev_histo_in_buf(t_editor *editor)
+char			*put_prev_histo_in_buf(t_editor *editor)
 {
 	char	*res;
 	t_list	*iter;
@@ -76,7 +87,10 @@ char	*put_prev_histo_in_buf(t_editor *editor)
 	if (!*(editor->histo) || !editor->histo_pos)
 		return (NULL);
 	if (iter == editor->histo_pos)
-		return (NULL);
+	{
+		editor->histo_pos = NULL;
+		res = editor->buf_save;
+	}
 	while (iter->next && !res)
 	{
 		if (iter->next == editor->histo_pos)
@@ -86,10 +100,6 @@ char	*put_prev_histo_in_buf(t_editor *editor)
 		}
 		iter = iter->next;
 	}
-	if (res)
-	{
-		free(editor->buf);
-		editor->buf = ft_strdup(res);
-	}
+	replace_editor_buf(res, editor);
 	return (res);
 }
