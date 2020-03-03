@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/03 21:33:10 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 21:46:44 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
 				close(child_in);
 			}
 			child_out = (!(cmds->fd_out)) ? pipefd[1] : get_last_fd(cmds->fd_out);
-			if (cmds->next)
+			if (cmds->next || cmds->fd_out)
 				dup2(child_out, STDOUT_FILENO);
 			close(pipefd[1]);
 			close(child_out);

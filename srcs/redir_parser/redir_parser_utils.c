@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:46:04 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 21:35:14 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 21:57:21 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void		set_which_fd(char *cmd, int index, int *which_fd)
 			else
 			{
 				ft_putstr_fd("minishell: you can only redirect stdin and stdout\n", 2);
-				exit(1);
+				*which_fd = -21;
 			}
 		}
 	}

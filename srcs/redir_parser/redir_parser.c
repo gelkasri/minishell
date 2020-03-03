@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 21:28:46 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 21:58:51 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ static int		set_fds(char *cmd, int index, t_cmdlist *new)
 	redir = index;
 	fd = -42;
 	set_which_fd(cmd, index, &which_fd);
+	if (which_fd < 0)
+		return (which_fd);
 	while (cmd[index] == '<' || cmd[index] == '>')
 		index++;
 	if (cmd[index] == '&')
@@ -110,6 +112,8 @@ t_cmdlist		*get_cmd_params(char *cmd_from_arr)
 	while ((i = str_contains(cmd, "<>")) != -1)
 	{
 		err = set_fds(cmd, i, new);
+		if (err == -21)
+			return (NULL); // we have to clear list !!!
 		if (err < 0)
 		{
 			ft_putstr_fd("minishell: ", 2);
@@ -120,7 +124,8 @@ t_cmdlist		*get_cmd_params(char *cmd_from_arr)
 			return (NULL); // we have to clear list !!!
 	}
 	new->command = cmd;
-	cmdlist_print(new);
+	if (DEBUG)
+		cmdlist_print(new);
 	return (new);
 }
 
