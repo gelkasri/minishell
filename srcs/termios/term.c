@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:51:24 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 15:15:32 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/03 14:47:49 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_editor		init_editor(t_list **env_list)
 	editor.histo = ft_memalloc(sizeof(t_list *));
 	editor.histo_pos = NULL;
 	editor.buf_save = ft_strdup("");
+	editor.copy_buf = ft_strdup("");
 	enable_raw_mode();
 	return (editor);
 }

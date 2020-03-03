@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:57:51 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/03 12:50:40 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/03 14:57:31 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct			s_editor
 	t_list				**histo;
 	t_list				*histo_pos;
 	char				*buf_save;
+	char				*copy_buf;
 }						t_editor;
 
 /*
@@ -85,4 +86,10 @@ char					*put_prev_histo_in_buf(t_editor *editor);
 
 int						read_esc_seq(t_editor *editor);
 
+/*
+** copy_paste.c
+*/
+
+void					cut_copy_after_cursor(int cut, t_editor *editor);
+void					paste_after_cursor(t_editor *editor);
 #endif

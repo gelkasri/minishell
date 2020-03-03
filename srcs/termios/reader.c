@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/03 12:34:16 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/03 16:06:24 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ static void		key_action(char c, t_coord old_cur_pos, t_editor *editor)
 	}
 	if (c == DEL_KEY)
 		set_cur_pos(old_cur_pos.x - 1, old_cur_pos.y, editor);
+	if (c == ctrl_key('y'))
+		set_cur_pos(old_cur_pos.x + ft_strlen(editor->copy_buf),
+					old_cur_pos.y, editor);
 }
 
 /*
@@ -84,6 +87,12 @@ static int		process_key_press(t_editor *editor)
 		return (0);
 	else if (c == ctrl_key('d'))
 		return (-1);
+	else if (c == ctrl_key('k'))
+		cut_copy_after_cursor(1, editor);
+	else if (c == ctrl_key('j'))
+		cut_copy_after_cursor(0, editor);
+	else if (c == ctrl_key('y'))
+		paste_after_cursor(editor);
 	else if (c == ENTER_KEY)
 	{
 		ft_putendl("");

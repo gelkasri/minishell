@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/03 12:51:25 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/03/03 14:41:59 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS =		srcs/minishell.c \
 			srcs/termios/add_delete_in_buffer.c \
 			srcs/termios/histo.c \
 			srcs/termios/arrow_keys_actions.c \
+			srcs/termios/copy_paste.c \
 
 
 OBJS =		$(SRCS:%.c=%.o)
