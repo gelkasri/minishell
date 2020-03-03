@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 18:21:11 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 13:30:38 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,7 +188,7 @@ static int		exec_pipe(char *cmd, t_list **env_list)
 	int			ret;
 	t_cmdlist	*commands;
 
-	if (!str_contains(cmd, "|<>"))
+	if (str_contains(cmd, "|<>") == -1)
 	{
 		ret = exec_cmd(cmd, env_list);
 		return (ret);

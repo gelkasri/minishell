@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:46:16 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 18:23:54 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 19:35:10 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_cmdlist	*cmdlist_new(void *command)
 	new->command = command;
 	new->fd_in = NULL;
 	new->fd_out = NULL;
+	new->fd_out_err = NULL;
 	new->next = NULL;
 	return (new);
 }
@@ -61,13 +62,13 @@ void		cmdlist_print(t_cmdlist *lst)
 		fdlist_print(lst->fd_out);
 		ft_putstr("\nfd_out_err = : ");
 		fdlist_print(lst->fd_out_err);
-		ft_putstr("\n-->\n");
+		ft_putstr("\n-->");
 		lst = lst->next;
 	}
-	ft_putstr("(NULL)");
+	ft_putstr("(NULL)\n");
 }
 
-void		list_add_back(void **alst, void *new)
+void		cmdlist_add_back(t_cmdlist **alst, t_cmdlist *new)
 {
 	t_cmdlist	*lst;
 

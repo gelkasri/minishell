@@ -6,44 +6,16 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/02 17:53:35 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/03 20:05:41 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <errno.h>
+#include <string.h>
+#include <fcntl.h>
 
 #include <stdio.h>
-
-/*
-static int			set_type_and_index(char *src, int i, t_cmdlist *new)
-{
-	while (src[i])
-	{
-		if (src[i] == '<')
-		{
-			new->type = FROM_FILE;
-			return (i);
-		}
-		else if (src[i] == '>')
-		{
-			if (src[i + 1] == '>')
-			{
-				new->type = TO_FILE_APPEND;
-				return (i);
-			}
-			new->type = TO_FILE;
-			return (i);
-		}
-		else if (src[i] == '|')
-		{
-			new->type = PIPE;
-			return (i);
-		}
-		i++;
-	}
-	return (-1);
-}
-*/
 
 static t_cmdlist	*end_parser(t_cmdlist *cmdlist)
 {
@@ -51,43 +23,108 @@ static t_cmdlist	*end_parser(t_cmdlist *cmdlist)
 	return (NULL);
 }
 
-/*
-t_cmdlist			*cmdparser(char *line)
+static void		get_fd_flat(int *fd, char *cmd, int *index)
 {
-	t_cmdlist	*final;
 	int			i;
-	int			new_i;
-	t_cmdlist	*new;
+	struct stat	buf;
 
-	i = 0;
-	final = NULL;
-	while (line[i])
+	*index += 1;
+	i = *index;
+	while (ft_isdigit(cmd[i]))
+		i++;
+	if (ft_isspace(cmd[i]) || cmd[i] == '\0')
 	{
-		new = cmdlist_new(NULL, -1, -1);
-		if (!new)
-			return (end_parser(final));
-		new_i = set_type_and_index(line, i, new);
-		if (new_i == -1)
-			break ;
-		cmdlist_set(new, ft_substr(line, i, new_i - i), -42, 1);
-		if (!(new->command))
-			return (end_parser(final));
-		i = new_i + ((new->type == TO_FILE_APPEND) ? 2 : 1);
-		cmdlist_add_back(&final, new);
+		*fd = ft_atoi(cmd + (*index));
+		if (fstat(*fd, &buf) == -1)
+			*fd = -10;
 	}
-	new_i = ft_strlen(line);
-	cmdlist_set(new, ft_substr(line, i, new_i - i), LAST, 1);
-	if (!(new->command))
-		return (end_parser(final));
-	cmdlist_add_back(&final, new);
-	return (final);
 }
-*/
+
+static void		get_fd_from_path(int *fd, char *cmd, int type)
+{
+	int		len;
+
+	if (*fd != -42)
+		return ;
+	len = get_path_len(&cmd);
+	cmd = ft_substr(cmd, 0, len);
+	ft_printf("path: %s|\n", cmd);
+	if (!cmd)
+		return ;
+	if (type == '<')
+		*fd = open(cmd, O_RDONLY);
+	else if (type == '>')
+		*fd = open(cmd, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+	else if (type == '>' + 1)
+		*fd = open(cmd, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+	free(cmd);
+}
+
+static int		set_fds(char *cmd, int index, t_cmdlist *new)
+{
+	int			i;
+	int			fd;
+	int			which_fd;
+	int			redir;
+
+	redir = index;
+	fd = -42;
+	set_which_fd(cmd, index, &which_fd);
+	while (cmd[index] == '<' || cmd[index] == '>')
+		index++;
+	ft_printf("here: %s|\n", cmd + index);
+	if (cmd[index] == '&')
+		get_fd_flat(&fd, cmd, &index);
+	i = index;
+	if (cmd[redir] == '<')
+	{
+		ft_printf("redir: <\nfd: %d\n", fd);
+		get_fd_from_path(&fd, cmd + index, '<');
+		ft_printf("now, fd is: %d\n", fd);
+		set_fd(new, &fd, which_fd);
+	}
+	else if (cmd[redir] == '>')
+	{
+		if (cmd[redir + 1] == '>')
+		{
+			ft_printf("redir: >>\nfd: %d\n", fd);
+			get_fd_from_path(&fd, cmd + index, '>' + 1);
+			ft_printf("now, fd is: %d\n", fd);
+			set_fd(new, &fd, which_fd);
+		}
+		else
+		{
+			ft_printf("redir: >\nfd: %d\n", fd);
+			get_fd_from_path(&fd, cmd + index, '>');
+			ft_printf("now, fd is: %d\n", fd);
+			set_fd(new, &fd, which_fd);
+		}
+	}
+	return (fd);
+}
 
 t_cmdlist		*get_cmd_params(char *cmd)
 {
 	t_cmdlist	*new;
+	int			i;
+	int			err;
 
+	new = cmdlist_new(NULL);
+	while (new && (i = str_contains(cmd, "<>")))
+	{
+		err = set_fds(cmd, i, new);
+		ft_printf("err is : %d\n", err);
+		if (err < 0)
+		{
+			ft_putstr_fd("minishell: ", 2);
+			ft_putendl_fd(strerror(errno), 2);
+			exit(1);
+		}
+		// if (!(cmd = remove_param(cmd, i)))
+		// 	return (NULL);
+		cmdlist_print(new);
+		exit(1);
+	}
 	return (new);
 }
 
@@ -108,7 +145,7 @@ t_cmdlist		*cmdparser(char *line)
 		new = get_cmd_params(split[i]);
 		if (!new)
 			return (end_parser(final));
-		list_add_back((void **)&final, (void *)new);
+		cmdlist_add_back(&final, new);
 		i++;
 	}
 	free_str_arr(split);
