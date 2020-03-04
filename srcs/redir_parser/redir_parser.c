@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 15:14:16 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:21:01 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,6 @@
 #include <fcntl.h>
 
 #include <stdio.h>
-
-static t_cmdlist	*end_parser(t_cmdlist *cmdlist)
-{
-	cmdlist_clear(&cmdlist, free);
-	return (NULL);
-}
 
 static void		get_fd_flat(int *fd, char *cmd, int *index)
 {
@@ -48,15 +42,16 @@ static void		get_fd_from_path(int *fd, char *cmd, int type)
 		return ;
 	len = get_path_len(&cmd);
 	cmd = ft_substr(cmd, 0, len);
-	// ft_printf("path: %s|\n", cmd);
 	if (!cmd)
 		return ;
 	if (type == '<')
 		*fd = open(cmd, O_RDONLY);
 	else if (type == '>')
-		*fd = open(cmd, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		*fd = open(cmd, O_WRONLY | O_CREAT | O_TRUNC,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (type == '>' + 1)
-		*fd = open(cmd, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
+		*fd = open(cmd, O_WRONLY | O_CREAT | O_APPEND,
+		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	free(cmd);
 }
 
@@ -113,21 +108,25 @@ t_cmdlist		*get_cmd_params(char *cmd_from_arr)
 	{
 		err = set_fds(cmd, i, new);
 		if (err == -21)
-			return (NULL); // we have to clear new !!!
+			return ((t_cmdlist*)free_return((void*)new, (void*)cmd, NULL));
 		if (err < 0)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putendl_fd(strerror(errno), 2);
-			return (NULL); // we have to clear list !!!
+			return ((t_cmdlist*)free_return((void*)new, (void*)cmd, NULL));
 		}
 		if (!(cmd = remove_param(cmd, i)))
-			return (NULL); // we have to clear list !!!
+			return ((t_cmdlist*)free_return((void*)new, NULL, NULL));
 	}
 	new->command = cmd;
 	if (DEBUG)
 		cmdlist_print(new);
 	return (new);
 }
+
+/*
+** replace split(line, '|') to take care of pipes that are in quotes
+*/
 
 t_cmdlist		*cmdparser(char *line)
 {
@@ -138,14 +137,18 @@ t_cmdlist		*cmdparser(char *line)
 
 	i = 0;
 	final = NULL;
-	split = ft_split(line, '|'); // replace split to take care of pipes that are in ""
+	split = ft_split(line, '|');
 	if (!split)
 		return (NULL);
 	while (split[i])
 	{
 		new = get_cmd_params(split[i]);
 		if (!new)
+		{
+			free_str_arr(split);
+			free(split);
 			return (end_parser(final));
+		}
 		cmdlist_add_back(&final, new);
 		i++;
 	}

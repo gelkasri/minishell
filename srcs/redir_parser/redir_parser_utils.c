@@ -6,11 +6,17 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:46:04 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 11:38:05 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:16:36 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_cmdlist	*end_parser(t_cmdlist *cmdlist)
+{
+	cmdlist_clear(&cmdlist, free);
+	return (NULL);
+}
 
 int			str_contains(const char *str, const char *lst)
 {
@@ -89,15 +95,14 @@ void		set_which_fd(char *cmd, int index, int *which_fd)
 	{
 		if (output_to_redir == 0 || ft_isspace(cmd[output_to_redir - 1]))
 		{
-			if (cmd[output_to_redir] == '1')
-				*which_fd = 1;
-			else if (cmd[output_to_redir] == '2')
-				*which_fd = 2;
-			else
+			if (cmd[output_to_redir] == '1' || cmd[output_to_redir] == '2')
 			{
-				ft_putstr_fd("minishell: you can only redirect stdin and stdout\n", 2);
-				*which_fd = -21;
+				*which_fd = cmd[output_to_redir] - '0';
+				return ;
 			}
+			ft_putstr_fd("minishell: you can only redirect stdin and stdout\n",
+			2);
+			*which_fd = -21;
 		}
 	}
 }

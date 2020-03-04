@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 11:01:42 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 20:15:22 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:16:47 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ void		set_fd(t_cmdlist *new, int *fd, int which_fd);
 void		set_which_fd(char *cmd, int index, int *which_fd);
 
 char		*remove_param(char *cmd, int i);
+void		*free_return(void *ptr, void *ptr2, void *ret_val);
+t_cmdlist	*end_parser(t_cmdlist *cmdlist);
 
 #endif
