@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:24:03 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 13:38:08 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:16:51 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int		add_to_editor_buffer(t_editor *editor, char c)
 	int		src_len;
 	int		index;
 
+	if ((int)ft_strlen(editor->buf) + editor->init_pos.x > editor->win_size.x)
+		return (0);
 	src_len = ft_strlen(editor->buf);
 	new_buffer = ft_memalloc((src_len + 2) * sizeof(char));
 	if (!new_buffer)

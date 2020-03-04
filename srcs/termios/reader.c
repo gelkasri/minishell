@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/03 16:06:24 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:23:36 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static char		read_key(t_editor *editor)
 	while ((nread = read(STDIN_FILENO, &c, 1)) != 1)
 		if (nread < 0)
 			editor_error("read_key");
+	get_window_size(editor);
 	if (nread == 0)
 		return (0);
 	if (c == ESC_KEY)

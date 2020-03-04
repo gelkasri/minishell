@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:57:51 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/03 14:57:31 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:19:52 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct			s_coord
 typedef struct			s_editor
 {
 	char				*term_type;
+	t_coord				win_size;
 	t_coord				pos;
 	t_coord				init_pos;
 	char				*buf;
@@ -71,6 +72,7 @@ void					set_cur_pos(int x, int y, t_editor *editor);
 */
 
 int						ctrl_key(char c);
+int						get_window_size(t_editor *editor);
 
 /*
 ** histo.c
