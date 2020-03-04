@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/04 17:12:32 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/03/04 17:34:30 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = 		minishell
 SRCS =		srcs/minishell.c \
 			srcs/display_prompt.c \
 			srcs/exec_cmd.c \
+			srcs/exec_cmd_utils.c \
 			srcs/signals.c \
 			srcs/builtin_env.c \
 			srcs/str_utils.c \
@@ -38,12 +39,12 @@ SRCS =		srcs/minishell.c \
 			srcs/redir_parser/remove_param.c \
 			srcs/redir_parser/fd_setter.c \
 
-
 OBJS =		$(SRCS:%.c=%.o)
 DEP = 		$(OBJS:%.o=%.d)
 
 INC_DIR = 	includes/
 HEADER = 	$(INC_DIR)minishell.h \
+			$(INC_DIR)cmdlist.h \
 
 CC =		gcc
 CFLAGS =	-Wall -Wextra -Werror

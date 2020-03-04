@@ -6,56 +6,12 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/04 15:43:59 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 17:04:16 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <errno.h>
-#include <string.h>
 #include <fcntl.h>
-
-static int		free_and_return(char ***ptr, int ret_val)
-{
-	if (ptr && *ptr)
-	{
-		free_str_arr(*ptr);
-		free(*ptr);
-	}
-	return (ret_val);
-}
-
-static int		handle_error(int error_type, const char *cmd)
-{
-	if (cmd)
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(cmd, 2);
-	}
-	if (error_type == 1)
-	{
-		if (cmd)
-			ft_putendl_fd(": command not found", 2);
-		return (127);
-	}
-	else
-	{
-		if (cmd)
-		{
-			ft_putstr_fd(cmd, 2);
-			ft_putstr_fd(": ", 2);
-			ft_putendl_fd(strerror(errno), 2);
-		}
-		return (errno);
-	}
-}
-
-static void		sub_exec(char *cmd_path, char **argv, char **envp)
-{
-	reset_signals();
-	execve(cmd_path, argv, envp);
-	exit(handle_error(errno, cmd_path));
-}
 
 static int		exec_cmd(char *cmd, t_list **env_list)
 {
@@ -79,44 +35,44 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	waitpid(id_child, &ret, 0);
 	ret = get_child_exit_status(ret);
 	if (!path)
-		ret = handle_error(1, split[0]);
+		ret = handle_cmd_error(1, split[0]);
 	free(path);
 	return (free_and_return(&split, ret));
 }
 
-static void		trim_path(t_cmdlist *commands)
+static void		child_exec(t_cmdlist *cmds, int *pipefd,
+								int *child_fd, t_list **env_list)
 {
-	int		i;
-	char	*path;
-
-	if (!commands)
-		return ;
-	i = 0;
-	while (commands)
+	close(pipefd[0]);
+	if (cmds->fd_in)
+		child_fd[0] = get_last_fd(cmds->fd_in);
+	if (child_fd[0] != -42)
 	{
-		path = ft_strtrim(commands->command, " ");
-		free(commands->command);
-		commands->command = path;
-		commands = commands->next;
+		dup2(child_fd[0], STDIN_FILENO);
+		close(child_fd[0]);
 	}
-}
-
-static int		get_last_fd(t_fdlist *list)
-{
-	while (list && list->next)
-		list = list->next;
-	return (list->fd);
+	child_fd[1] = (!(cmds->fd_out)) ? pipefd[1] :
+		get_last_fd(cmds->fd_out);
+	if (cmds->next || cmds->fd_out)
+		dup2(child_fd[1], STDOUT_FILENO);
+	close(pipefd[1]);
+	close(child_fd[1]);
+	if (cmds->fd_out_err)
+	{
+		dup2(get_last_fd(cmds->fd_out_err), STDERR_FILENO);
+		close(get_last_fd(cmds->fd_out_err));
+	}
+	exit(exec_cmd(cmds->command, env_list));
 }
 
 static int		pipe_loop(t_cmdlist *cmds, t_list **env_list)
 {
-	int		child_in;
-	int		child_out;
+	int		child_fd[2];
 	pid_t	pid;
 	int		pipefd[2];
 	int		ret;
 
-	child_in = -42;
+	child_fd[0] = -42;
 	while (cmds)
 	{
 		if (DEBUG)
@@ -124,29 +80,9 @@ static int		pipe_loop(t_cmdlist *cmds, t_list **env_list)
 		pipe(pipefd);
 		pid = fork();
 		if (pid == 0)
-		{
-			close(pipefd[0]);
-			if (cmds->fd_in)
-				child_in = get_last_fd(cmds->fd_in);
-			if (child_in != -42)
-			{
-				dup2(child_in, STDIN_FILENO);
-				close(child_in);
-			}
-			child_out = (!(cmds->fd_out)) ? pipefd[1] : get_last_fd(cmds->fd_out);
-			if (cmds->next || cmds->fd_out)
-				dup2(child_out, STDOUT_FILENO);
-			close(pipefd[1]);
-			close(child_out);
-			if (cmds->fd_out_err)
-			{
-				dup2(get_last_fd(cmds->fd_out_err), STDERR_FILENO);
-				close(get_last_fd(cmds->fd_out_err));
-			}
-			exit(exec_cmd(cmds->command, env_list));
-		}
+			child_exec(cmds, pipefd, child_fd, env_list);
 		close(pipefd[1]);
-		child_in = dup(pipefd[0]);
+		child_fd[0] = dup(pipefd[0]);
 		close(pipefd[0]);
 		waitpid(pid, &ret, 0);
 		ret = get_child_exit_status(ret);
@@ -180,7 +116,6 @@ int				exec_line(char *line, t_list **env_list)
 	int		i;
 	int		ret;
 	char	*tmp;
-	char	*ret_var;
 
 	if (ft_strlen(line) == 0)
 		return (get_exit_status(env_list));
@@ -197,9 +132,7 @@ int				exec_line(char *line, t_list **env_list)
 		else
 			ret = exec_pipe(tmp, env_list);
 		free(tmp);
-		ret_var = ft_itoa(ret);
-		set_env_var("?", ret_var, env_list);
-		free(ret_var);
+		set_exit_status_var(ret, env_list);
 	}
 	free_str_arr(commands);
 	free(commands);
