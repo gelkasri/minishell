@@ -6,18 +6,11 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 20:13:20 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 16:20:17 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 17:16:30 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void		*free_return(void *ptr, void *ptr2, void *ret_val)
-{
-	free(ptr);
-	free(ptr2);
-	return (ret_val);
-}
 
 static int	has_out_fd(char *cmd, int index)
 {

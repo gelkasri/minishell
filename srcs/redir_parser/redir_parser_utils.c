@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:46:04 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 16:16:36 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 17:21:52 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,29 +53,6 @@ int			get_path_len(char **str_ptr)
 	while (str[i] && !ft_isspace(str[i]))
 		i++;
 	return (i);
-}
-
-void		set_fd(t_cmdlist *new, int *fd, int which_fd)
-{
-	t_fdlist	*new_fd;
-	t_fdlist	**list;
-
-	if (*fd < 0)
-		return ;
-	list = NULL;
-	new_fd = fdlist_new(*fd);
-	if (!new_fd)
-	{
-		*fd = -42;
-		return ;
-	}
-	if (which_fd == 0)
-		list = &(new->fd_in);
-	else if (which_fd == 1)
-		list = &(new->fd_out);
-	else if (which_fd == 2)
-		list = &(new->fd_out_err);
-	fdlist_add_back(list, new_fd);
 }
 
 void		set_which_fd(char *cmd, int index, int *which_fd)

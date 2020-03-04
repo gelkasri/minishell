@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 11:01:42 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 16:16:47 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 17:23:12 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ typedef struct		s_cmdlist
 	struct s_cmdlist	*next;
 }					t_cmdlist;
 
+typedef struct		s_fdsetter
+{
+	int				fd;
+	int				which;
+	int				redir;
+}					t_fdsetter;
+
 t_cmdlist	*cmdlist_new(void *command);
 void		cmdlist_clear(t_cmdlist **lst, void (*del)(void *));
 void		cmdlist_print(t_cmdlist *lst);
@@ -39,11 +46,10 @@ void		fdlist_print(t_fdlist *lst);
 void		fdlist_add_back(t_fdlist **alst, t_fdlist *new);
 
 int			get_path_len(char **str);
-void		set_fd(t_cmdlist *new, int *fd, int which_fd);
 void		set_which_fd(char *cmd, int index, int *which_fd);
 
 char		*remove_param(char *cmd, int i);
-void		*free_return(void *ptr, void *ptr2, void *ret_val);
 t_cmdlist	*end_parser(t_cmdlist *cmdlist);
+void		fd_setter(t_cmdlist *new, t_fdsetter *fd, char *cmd, int type);
 
 #endif

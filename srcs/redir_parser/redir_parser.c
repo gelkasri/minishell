@@ -6,16 +6,20 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 16:21:01 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 17:18:52 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <errno.h>
 #include <string.h>
-#include <fcntl.h>
 
-#include <stdio.h>
+static void		*free_return(void *ptr, void *ptr2, void *ret_val)
+{
+	free(ptr);
+	free(ptr2);
+	return (ret_val);
+}
 
 static void		get_fd_flat(int *fd, char *cmd, int *index)
 {
@@ -34,63 +38,29 @@ static void		get_fd_flat(int *fd, char *cmd, int *index)
 	}
 }
 
-static void		get_fd_from_path(int *fd, char *cmd, int type)
-{
-	int		len;
-
-	if (*fd != -42)
-		return ;
-	len = get_path_len(&cmd);
-	cmd = ft_substr(cmd, 0, len);
-	if (!cmd)
-		return ;
-	if (type == '<')
-		*fd = open(cmd, O_RDONLY);
-	else if (type == '>')
-		*fd = open(cmd, O_WRONLY | O_CREAT | O_TRUNC,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	else if (type == '>' + 1)
-		*fd = open(cmd, O_WRONLY | O_CREAT | O_APPEND,
-		S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-	free(cmd);
-}
-
 static int		set_fds(char *cmd, int index, t_cmdlist *new)
 {
-	int			i;
-	int			fd;
-	int			which_fd;
-	int			redir;
+	t_fdsetter	fd;
 
-	redir = index;
-	fd = -42;
-	set_which_fd(cmd, index, &which_fd);
-	if (which_fd < 0)
-		return (which_fd);
+	fd.redir = index;
+	fd.fd = -42;
+	set_which_fd(cmd, index, &(fd.which));
+	if (fd.which < 0)
+		return (fd.which);
 	while (cmd[index] == '<' || cmd[index] == '>')
 		index++;
 	if (cmd[index] == '&')
-		get_fd_flat(&fd, cmd, &index);
-	i = index;
-	if (cmd[redir] == '<')
+		get_fd_flat(&(fd.fd), cmd, &index);
+	if (cmd[fd.redir] == '<')
+		fd_setter(new, &fd, cmd + index, '<');
+	else if (cmd[fd.redir] == '>')
 	{
-		get_fd_from_path(&fd, cmd + index, '<');
-		set_fd(new, &fd, which_fd);
-	}
-	else if (cmd[redir] == '>')
-	{
-		if (cmd[redir + 1] == '>')
-		{
-			get_fd_from_path(&fd, cmd + index, '>' + 1);
-			set_fd(new, &fd, which_fd);
-		}
+		if (cmd[fd.redir + 1] == '>')
+			fd_setter(new, &fd, cmd + index, '>' + 1);
 		else
-		{
-			get_fd_from_path(&fd, cmd + index, '>');
-			set_fd(new, &fd, which_fd);
-		}
+			fd_setter(new, &fd, cmd + index, '>');
 	}
-	return (fd);
+	return (fd.fd);
 }
 
 t_cmdlist		*get_cmd_params(char *cmd_from_arr)
@@ -119,8 +89,6 @@ t_cmdlist		*get_cmd_params(char *cmd_from_arr)
 			return ((t_cmdlist*)free_return((void*)new, NULL, NULL));
 	}
 	new->command = cmd;
-	if (DEBUG)
-		cmdlist_print(new);
 	return (new);
 }
 
