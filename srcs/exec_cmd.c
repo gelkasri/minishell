@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/03 21:46:44 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 15:43:59 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,30 +101,6 @@ static void		trim_path(t_cmdlist *commands)
 	}
 }
 
-/*
-static int		set_write_fd(t_cmdlist *command, int defaultfd)
-{
-	t_cmdlist	*next;
-	int			writefd;
-
-	next = (t_cmdlist*)command->next;
-	if (command->type == TO_FILE)
-		writefd = open(next->command, O_WRONLY | O_CREAT | O_TRUNC,
-		S_IRUSR | S_IWUSR);
-	else if (command->type == TO_FILE_APPEND)
-		writefd = open(next->command, O_WRONLY | O_CREAT | O_APPEND,
-		S_IRUSR | S_IWUSR);
-	else
-		writefd = defaultfd;
-	if (writefd == -1)
-	{
-		ft_putendl_fd(strerror(errno), 2);
-		exit(1);
-	}
-	return (writefd);
-}
-*/
-
 static int		get_last_fd(t_fdlist *list)
 {
 	while (list && list->next)
@@ -132,7 +108,7 @@ static int		get_last_fd(t_fdlist *list)
 	return (list->fd);
 }
 
-static int		pipe_loop(t_cmdlist* cmds, t_list **env_list)
+static int		pipe_loop(t_cmdlist *cmds, t_list **env_list)
 {
 	int		child_in;
 	int		child_out;
@@ -191,7 +167,7 @@ static int		exec_pipe(char *cmd, t_list **env_list)
 	}
 	commands = cmdparser(cmd);
 	if (!commands)
-		return (MALLOC_ERROR);
+		return (1);
 	trim_path(commands);
 	ret = pipe_loop(commands, env_list);
 	cmdlist_clear(&commands, free);
@@ -204,6 +180,7 @@ int				exec_line(char *line, t_list **env_list)
 	int		i;
 	int		ret;
 	char	*tmp;
+	char	*ret_var;
 
 	if (ft_strlen(line) == 0)
 		return (get_exit_status(env_list));
@@ -220,6 +197,9 @@ int				exec_line(char *line, t_list **env_list)
 		else
 			ret = exec_pipe(tmp, env_list);
 		free(tmp);
+		ret_var = ft_itoa(ret);
+		set_env_var("?", ret_var, env_list);
+		free(ret_var);
 	}
 	free_str_arr(commands);
 	free(commands);

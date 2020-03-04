@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 12:10:15 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 15:14:16 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,12 +113,12 @@ t_cmdlist		*get_cmd_params(char *cmd_from_arr)
 	{
 		err = set_fds(cmd, i, new);
 		if (err == -21)
-			return (NULL); // we have to clear list !!!
+			return (NULL); // we have to clear new !!!
 		if (err < 0)
 		{
 			ft_putstr_fd("minishell: ", 2);
 			ft_putendl_fd(strerror(errno), 2);
-			exit(1);
+			return (NULL); // we have to clear list !!!
 		}
 		if (!(cmd = remove_param(cmd, i)))
 			return (NULL); // we have to clear list !!!

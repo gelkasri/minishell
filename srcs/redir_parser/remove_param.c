@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 20:13:20 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 21:12:12 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 15:30:16 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ char	*remove_param(char *cmd, int i)
 	cursors[1] = get_second_cursor(cmd, i);
 	new_len = old_len - (cursors[1] - cursors[0]);
 	final = ft_memalloc(new_len + 1);
+	if (!final)
+	{
+		free(cmd);
+		return (NULL);
+	}
 	ft_strncpy(final, cmd, cursors[0]);
 	ft_strcpy(final + ft_strlen(final), cmd + cursors[1]);
 	free(cmd);
