@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 21:58:51 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 12:10:15 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ static void		get_fd_from_path(int *fd, char *cmd, int type)
 	if (type == '<')
 		*fd = open(cmd, O_RDONLY);
 	else if (type == '>')
-		*fd = open(cmd, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+		*fd = open(cmd, O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	else if (type == '>' + 1)
-		*fd = open(cmd, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);
+		*fd = open(cmd, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 	free(cmd);
 }
 

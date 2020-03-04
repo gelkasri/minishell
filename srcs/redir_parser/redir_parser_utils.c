@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:46:04 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/03 21:57:21 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 11:38:05 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,14 @@ void		set_which_fd(char *cmd, int index, int *which_fd)
 {
 	int		output_to_redir;
 
-	if (index == 0 || cmd[index] == '<')
+	if (cmd[index] == '<')
 	{
 		*which_fd = 0;
 		return ;
 	}
 	*which_fd = 1;
+	if (index == 0)
+		return ;
 	output_to_redir = index - 1;
 	if (ft_isdigit(cmd[output_to_redir]))
 	{
