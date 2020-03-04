@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/03 14:41:59 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/03/04 17:34:30 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = 		minishell
 SRCS =		srcs/minishell.c \
 			srcs/display_prompt.c \
 			srcs/exec_cmd.c \
+			srcs/exec_cmd_utils.c \
 			srcs/signals.c \
 			srcs/builtin_env.c \
 			srcs/str_utils.c \
@@ -39,7 +40,12 @@ SRCS =		srcs/minishell.c \
 			srcs/termios/histo.c \
 			srcs/termios/arrow_keys_actions.c \
 			srcs/termios/copy_paste.c \
-
+			srcs/redir_parser/cmdlist/cmdlist.c \
+			srcs/redir_parser/cmdlist/cmdlist2.c \
+			srcs/redir_parser/redir_parser.c \
+			srcs/redir_parser/redir_parser_utils.c \
+			srcs/redir_parser/remove_param.c \
+			srcs/redir_parser/fd_setter.c \
 
 OBJS =		$(SRCS:%.c=%.o)
 DEP = 		$(OBJS:%.o=%.d)
@@ -48,7 +54,7 @@ INC_DIR = 	includes/
 HEADER = 	$(INC_DIR)minishell.h \
 			$(INC_DIR)term_bonus.h \
 			$(INC_DIR)keys.h \
-
+			$(INC_DIR)cmdlist.h \
 
 CC =		gcc
 CFLAGS =	-Wall -Wextra -Werror

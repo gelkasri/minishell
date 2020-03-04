@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 10:43:42 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/04 16:05:01 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@ void		handle_sigint(int sig)
 
 static int	main_loop(char **line, t_list **env_list, int fd, t_editor *editor)
 {
-	int			i;
-	char		*res;
-	char		*trim;
+	int		i;
+	char	*trim;
 
 	while (1)
 	{
@@ -55,11 +54,8 @@ static int	main_loop(char **line, t_list **env_list, int fd, t_editor *editor)
 			ft_exit(1, NULL, env_list);
 		trim = ft_strtrim(*line, " ");
 		i = exec_line(trim, env_list);
-		res = ft_itoa(i);
-		set_env_var("?", res, env_list);
 		free(trim);
 		free(*line);
-		free(res);
 	}
 	return (0);
 }
