@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 11:01:42 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 17:33:36 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/04 18:08:40 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void					fdlist_add_back(t_fdlist **alst, t_fdlist *new);
 int						get_path_len(char **str);
 void					set_which_fd(char *cmd, int index, int *which_fd);
 
+char					**split_pipes(char *cmd);
 char					*remove_param(char *cmd, int i);
 t_cmdlist				*end_parser(t_cmdlist *cmdlist);
 void					fd_setter(t_cmdlist *new, t_fdsetter *fd, char *cmd,

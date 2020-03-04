@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 11:46:04 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 17:21:52 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 18:27:02 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,41 @@ void		set_which_fd(char *cmd, int index, int *which_fd)
 			*which_fd = -21;
 		}
 	}
+}
+
+/*
+** Parse commands and split in multiple pipes
+** - line : char * of one or more cmds, separated by '|'
+** Return value:
+** - char **, each elem of this array is a piped cmd
+**   array terminated by null value
+*/
+
+char		**split_pipes(char *cmd)
+{
+	char	**res;
+	int		i;
+	int		j;
+	int		prev_delim;
+
+	if (nb_arg(cmd, '|') < 0 ||
+		!(res = ft_memalloc((nb_arg(cmd, '|') + 1) * sizeof(char *))))
+		return (NULL);
+	i = -1;
+	j = 0;
+	prev_delim = 0;
+	while (cmd[++i])
+	{
+		if (cmd[i] == '|')
+		{
+			res[j++] = ft_substr_trim(cmd, prev_delim, i - prev_delim);
+			while (cmd[i + 1] == '|')
+				i++;
+			prev_delim = i + 1;
+		}
+		else if (cmd[i] == '"' || cmd[i] == '\'')
+			i += ft_index(cmd + i + 1, cmd[i]) + 1;
+	}
+	res[j] = ft_substr_trim(cmd, prev_delim, i - prev_delim);
+	return (res);
 }

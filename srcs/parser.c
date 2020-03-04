@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/23 17:50:05 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/25 11:45:31 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 18:11:42 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	raise_error(void)
 	return (-1);
 }
 
-static int	nb_arg(char *line, char delim)
+int			nb_arg(char *line, char delim)
 {
 	int i;
 	int in_quote;
@@ -88,7 +88,7 @@ char		**parse_line(char *line)
 ** Alloc a new char *
 */
 
-static char	*ft_substr_trim(char *str, int start, int len)
+char		*ft_substr_trim(char *str, int start, int len)
 {
 	char	*substr;
 	int		i;

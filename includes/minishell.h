@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/04 17:05:07 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/04 18:11:32 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void			display_prompt(t_list **env_list);
 char			**parse_line(char *line);
 char			**parse_command(char *cmd);
 char			*trim_quotes(char *substr);
+char			*ft_substr_trim(char *str, int start, int len);
+int				nb_arg(char *line, char delim);
 
 char			*apply_env_var(char *str, t_list **env_list);
 

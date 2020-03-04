@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 17:18:52 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/04 18:44:30 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,6 @@ t_cmdlist		*get_cmd_params(char *cmd_from_arr)
 	return (new);
 }
 
-/*
-** replace split(line, '|') to take care of pipes that are in quotes
-*/
-
 t_cmdlist		*cmdparser(char *line)
 {
 	char		**split;
@@ -105,7 +101,7 @@ t_cmdlist		*cmdparser(char *line)
 
 	i = 0;
 	final = NULL;
-	split = ft_split(line, '|');
+	split = split_pipes(line);
 	if (!split)
 		return (NULL);
 	while (split[i])
