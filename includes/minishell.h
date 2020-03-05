@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 17:47:29 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:48:16 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,16 @@ int				ft_export(int ac, char **av, t_list **env_list);
 int				ft_env(int ac, char **av, t_list **env_list);
 int				ft_unset(int ac, char **av, t_list **env_list);
 int				ft_history(int ac, char **av, t_list **env_list);
+
+typedef struct	s_history
+{
+	char		*file_path;
+	int			fd;
+	int			ln_no;
+	char		*line;
+	t_list		*list;
+	t_list		*new;
+}				t_history;
 
 /*
 ** Bonus

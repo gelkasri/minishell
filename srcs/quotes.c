@@ -6,13 +6,11 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 11:22:25 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/25 15:05:11 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:37:03 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-#include <stdio.h>
 
 static int	ft_index_2(char *str, char c, char c2)
 {
