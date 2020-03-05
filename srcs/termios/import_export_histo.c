@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 12:17:59 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 15:05:57 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 16:04:02 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ char	*get_histo_file_path(t_list **env_list)
 	home = get_env_var("HOME", env_list);
 	if (!home)
 		return (NULL);
-	file_path = ft_memalloc(sizeof(char) * (ft_strlen(home) + ft_strlen(HISTO_FILE) + 2));
+	file_path = ft_memalloc(sizeof(char) *
+							(ft_strlen(home) + ft_strlen(HISTO_FILE) + 2));
 	if (!file_path)
 		return (NULL);
 	ft_strcpy(file_path, home);
@@ -71,5 +72,5 @@ void	import_histo(t_editor *editor, t_list **env_list)
 	}
 	close(fd);
 	free(line);
-	free(file_path);	
+	free(file_path);
 }
