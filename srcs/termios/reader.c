@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/04 16:23:36 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 16:45:03 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ static void		key_action(char c, t_coord old_cur_pos, t_editor *editor)
 	int action_res;
 
 	action_res = 0;
+	editor->pos.y = get_cur_pos().y;
+	editor->init_pos.y = get_cur_pos().y;
+	old_cur_pos.y = get_cur_pos().y;
 	if (ft_isprint(c))
 		action_res = add_to_editor_buffer(editor, c);
 	if (c == DEL_KEY)
