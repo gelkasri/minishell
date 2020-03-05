@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/05 16:55:32 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/03/05 17:47:13 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRCS =		srcs/minishell.c \
 			srcs/builtins/export/export_no_param.c \
 			srcs/builtins/env/ft_env.c \
 			srcs/builtins/unset/ft_unset.c \
+			srcs/builtins/history/ft_history.c \
 			srcs/termios/term.c \
 			srcs/termios/term_utils.c \
 			srcs/termios/cursor.c \

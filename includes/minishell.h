@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 14:07:10 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:47:29 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int				ft_exit(int ac, char **av, t_list **env_list);
 int				ft_export(int ac, char **av, t_list **env_list);
 int				ft_env(int ac, char **av, t_list **env_list);
 int				ft_unset(int ac, char **av, t_list **env_list);
+int				ft_history(int ac, char **av, t_list **env_list);
 
 /*
 ** Bonus
