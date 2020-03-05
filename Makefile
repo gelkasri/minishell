@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/04 17:34:30 by gel-kasr         ###   ########.fr        #
+#    Updated: 2020/03/05 12:18:34 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ SRCS =		srcs/minishell.c \
 			srcs/termios/reader.c \
 			srcs/termios/add_delete_in_buffer.c \
 			srcs/termios/histo.c \
+			srcs/termios/import_export_histo.c \
 			srcs/termios/arrow_keys_actions.c \
 			srcs/termios/copy_paste.c \
 			srcs/redir_parser/cmdlist/cmdlist.c \
