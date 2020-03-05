@@ -32,6 +32,14 @@ SRCS =		srcs/minishell.c \
 			srcs/builtins/export/export_no_param.c \
 			srcs/builtins/env/ft_env.c \
 			srcs/builtins/unset/ft_unset.c \
+			srcs/termios/term.c \
+			srcs/termios/term_utils.c \
+			srcs/termios/cursor.c \
+			srcs/termios/reader.c \
+			srcs/termios/add_delete_in_buffer.c \
+			srcs/termios/histo.c \
+			srcs/termios/arrow_keys_actions.c \
+			srcs/termios/copy_paste.c \
 			srcs/redir_parser/cmdlist/cmdlist.c \
 			srcs/redir_parser/cmdlist/cmdlist2.c \
 			srcs/redir_parser/redir_parser.c \
@@ -44,6 +52,8 @@ DEP = 		$(OBJS:%.o=%.d)
 
 INC_DIR = 	includes/
 HEADER = 	$(INC_DIR)minishell.h \
+			$(INC_DIR)term_bonus.h \
+			$(INC_DIR)keys.h \
 			$(INC_DIR)cmdlist.h \
 
 CC =		gcc
@@ -63,7 +73,7 @@ LIBFT_H = 	$(LIBFT_INC)libft.h
 all:		$(NAME)
 
 $(NAME):	$(OBJS) $(LIBFT)
-			$(CC) $(CURRENT_FLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+			$(CC) $(CURRENT_FLAGS) $(OBJS) $(LIBFT) -o $(NAME) -lncurses
 
 .c.o:
 			$(CC) -c $(CURRENT_FLAGS) -MMD -MP $(HFLAGS) $< -o $(<:.c=.o)

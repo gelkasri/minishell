@@ -24,6 +24,7 @@
 # define DEBUG 0
 
 # include "libft.h"
+# include "term_bonus.h"
 # include "cmdlist.h"
 # include <unistd.h>
 # include <sys/types.h>
@@ -49,6 +50,9 @@ int				str_contains(const char *str, const char *lst);
 
 int				exec_line(char *line, t_list **env_list);
 
+/*
+** signals.c
+*/
 void			sub_exec(char *cmd_path, char **argv, char **envp);
 int				free_and_return(char ***ptr, int ret_val);
 int				handle_cmd_error(int error_type, const char *cmd);
@@ -56,8 +60,8 @@ void			trim_path(t_cmdlist *commands);
 int				get_last_fd(t_fdlist *list);
 
 int				get_child_exit_status(int status);
-void			reset_signals();
-void			ignore_signals();
+void			reset_signals(void);
+void			ignore_signals(void);
 int				get_exit_status(t_list **env_list);
 void			set_exit_status_var(int status, t_list **env_list);
 
@@ -88,5 +92,11 @@ int				ft_exit(int ac, char **av, t_list **env_list);
 int				ft_export(int ac, char **av, t_list **env_list);
 int				ft_env(int ac, char **av, t_list **env_list);
 int				ft_unset(int ac, char **av, t_list **env_list);
+
+/*
+** Bonus
+*/
+
+int				get_pos(int *y, int *x);
 
 #endif
