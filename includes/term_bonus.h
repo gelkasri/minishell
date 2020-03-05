@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   term_bonus.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:57:51 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 15:06:32 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 17:44:11 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "keys.h"
 
 # define HISTO_FILE ".minishell_history"
+# define HISTO_FILE_ERR "History file not available"
 
 typedef struct			s_coord
 {
