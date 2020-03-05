@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 16:57:30 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/02 16:57:38 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:35:43 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define ESC_KEY	27
 # define ENTER_KEY	13
 # define DEL_KEY	127
+# define TAB_KEY	9
 
 # define UP_KEY		'A'
 # define DOWN_KEY	'B'

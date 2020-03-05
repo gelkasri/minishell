@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 16:45:03 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:33:36 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void		key_action(char c, t_coord old_cur_pos, t_editor *editor)
 ** ft_putstr("\x1b[K"): to erase current line after cursor
 */
 
-static int		process_key_press(t_editor *editor)
+static int		process_key_press(t_editor *editor, t_list **env_list)
 {
 	char	c;
 	t_coord	old_cur_pos;
@@ -102,11 +102,14 @@ static int		process_key_press(t_editor *editor)
 		ft_putendl("");
 		return (1);
 	}
+	else if (c == TAB_KEY)
+		apply_completion(editor, env_list);
 	key_action(c, old_cur_pos, editor);
 	return (0);
 }
 
-int				termios_read_line(char **line, t_editor *editor)
+int				termios_read_line(char **line, t_editor *editor,
+									t_list **env_list)
 {
 	int		read_n;
 
@@ -115,7 +118,7 @@ int				termios_read_line(char **line, t_editor *editor)
 	editor->init_pos = get_cur_pos();
 	while (1)
 	{
-		if ((read_n = process_key_press(editor)) < 0)
+		if ((read_n = process_key_press(editor, env_list)) < 0)
 			return (-1);
 		if (read_n)
 		{

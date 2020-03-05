@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 15:02:33 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:44:56 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	main_loop(char **line, t_list **env_list, int fd, t_editor *editor)
 			display_prompt(env_list);
 		signal(SIGINT, handle_sigint);
 		if (fd == 0 && isatty(STDIN_FILENO))
-			i = termios_read_line(line, editor);
+			i = termios_read_line(line, editor, env_list);
 		else
 			i = get_next_line(fd, line);
 		if (i <= 0)
