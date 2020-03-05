@@ -6,13 +6,13 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:11:10 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 18:18:50 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 18:33:11 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef _COMPLETION_H
 # define _COMPLETION_H
 
-t_list		*get_file_list(char *buffer);
+t_list		*get_file_list(char *buffer, t_list **env_list);
 
 #endif
