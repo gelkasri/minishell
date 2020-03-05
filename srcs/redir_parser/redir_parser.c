@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/04 18:44:30 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 16:53:37 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <errno.h>
 #include <string.h>
 
-static void		*free_return(void *ptr, void *ptr2, void *ret_val)
+void			*free_return(void *ptr, void *ptr2, void *ret_val)
 {
 	free(ptr);
 	free(ptr2);

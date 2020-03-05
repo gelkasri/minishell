@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/25 15:42:22 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/26 11:01:07 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/05 13:11:18 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char		*apply_env_var(char *str, t_list **env_list)
 	if (ft_strlen(str) == 0)
 		return (NULL);
 	final = ft_strdup(str);
+	final = replace_tilde(final, env_list);
 	if (!final)
 		return (NULL);
 	while ((last_index = get_next_match(final)) != -1)

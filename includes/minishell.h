@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/04 18:11:32 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 14:07:10 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char			*ft_substr_trim(char *str, int start, int len);
 int				nb_arg(char *line, char delim);
 
 char			*apply_env_var(char *str, t_list **env_list);
+char			*replace_tilde(char *str, t_list **env_list);
+void			*free_return(void *ptr, void *ptr2, void *ret_val);
 
 t_cmdlist		*cmdparser(char *line);
 int				str_contains(const char *str, const char *lst);
