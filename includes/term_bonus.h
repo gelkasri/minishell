@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:57:51 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/04 16:19:52 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 15:06:32 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <curses.h>
 # include <term.h>
 # include "keys.h"
+
+# define HISTO_FILE ".minishell_history"
 
 typedef struct			s_coord
 {
@@ -37,6 +39,8 @@ typedef struct			s_editor
 	char				*buf_save;
 	char				*copy_buf;
 }						t_editor;
+
+t_editor				**g_editor;
 
 /*
 ** term.c
@@ -81,6 +85,14 @@ int						get_window_size(t_editor *editor);
 void					add_line_in_histo(char *line, t_editor *editor);
 char					*put_next_histo_in_buf(t_editor *editor);
 char					*put_prev_histo_in_buf(t_editor *editor);
+
+/*
+** import_export_histo.c
+*/
+
+char					*get_histo_file_path(t_list **env_list);
+void					export_histo(t_editor *editor, t_list **env_list);
+void					import_histo(t_editor *editor, t_list **env_list);
 
 /*
 ** arrow_keys_action.c

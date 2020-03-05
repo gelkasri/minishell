@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/04 16:05:01 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/05 15:02:33 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ static int	open_file(char *path)
 
 static int	main_init(char ***line, t_editor *editor, char **envp, int fd)
 {
+	extern t_editor	**g_editor;
+
 	if (!(*line = ft_memalloc(sizeof(char *))))
 		return (MALLOC_ERROR);
 	g_env_list = ft_memalloc(sizeof(t_list **));
@@ -86,6 +88,8 @@ static int	main_init(char ***line, t_editor *editor, char **envp, int fd)
 	if (!fd && isatty(STDIN_FILENO))
 	{
 		*editor = init_editor(*g_env_list);
+		g_editor = ft_memalloc(sizeof(t_editor));
+		*g_editor = editor;
 		ft_printf("%sBienvenue dans Minishell%s\n\n", GREEN, WHITE);
 	}
 	else

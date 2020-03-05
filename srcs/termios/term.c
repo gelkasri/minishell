@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:51:24 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/04 16:20:39 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/05 14:05:54 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ t_editor		init_editor(t_list **env_list)
 	editor.buf = ft_strdup("");
 	editor.histo = ft_memalloc(sizeof(t_list *));
 	editor.histo_pos = NULL;
+	import_histo(&editor, env_list);
 	editor.buf_save = ft_strdup("");
 	editor.copy_buf = ft_strdup("");
 	if (get_window_size(&editor))

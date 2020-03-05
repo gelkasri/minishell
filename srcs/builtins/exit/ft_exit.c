@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 11:43:09 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/26 16:23:05 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/05 15:01:16 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,16 @@ int			exit_body(int ac, char **av, t_list **env_list)
 
 int			ft_exit(int ac, char **av, t_list **env_list)
 {
-	char	*interactive;
+	char			*interactive;
+	extern t_editor	**g_editor;
 
 	interactive = get_env_var("INTERACTIVE", env_list);
 	if (!(interactive && !ft_strcmp(interactive, "NO")))
+	{
 		ft_putendl("exit");
-	free(interactive);
+		if (g_editor && *g_editor)
+			export_histo(*g_editor, env_list);
+		free(interactive);
+	}
 	return (exit_body(ac, av, env_list));
 }
