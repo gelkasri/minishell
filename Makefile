@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/05 17:47:13 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/03/05 18:11:50 by gel-kasr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ HEADER = 	$(INC_DIR)minishell.h \
 			$(INC_DIR)term_bonus.h \
 			$(INC_DIR)keys.h \
 			$(INC_DIR)cmdlist.h \
+			$(INC_DIR)completion.h \
 
 CC =		gcc
 CFLAGS =	-Wall -Wextra -Werror
