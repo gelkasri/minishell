@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 13:12:17 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/05 14:11:52 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/05 16:54:15 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static char	*replace_char_here(char *str, int index, char *new)
 	ok = 0;
 	if (index == 0 && (!str[1] || ft_isspace(str[1] || str[1] == '/')))
 		ok = 1;
-	if (index != 0 && ft_isspace(str[index - 1]) && next_char_ok(str[index + 1]))
+	if (index != 0 && ft_isspace(str[index - 1]) &&
+		next_char_ok(str[index + 1]))
 		ok = 1;
 	if (!ok)
 		return (free_return(new, NULL, str));
