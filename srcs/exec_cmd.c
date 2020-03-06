@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/04 17:04:16 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 12:09:02 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static int		exec_cmd(char *cmd, t_list **env_list)
 	if (ret >= 0)
 		return (free_and_return(&split, ret));
 	if (!(path = find_path(split[0], env_list)))
-		path = check_path(NULL, split[0]);
+		path = (ft_index(split[0], '/') >= 0) ?
+		check_path(NULL, split[0]) : NULL;
 	if (path && !(id_child = fork()))
 		sub_exec(path, split, get_env_array(env_list));
 	ignore_signals();
