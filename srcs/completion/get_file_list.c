@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:29:39 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/06 10:23:23 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 10:32:59 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ t_list		*read_dir(char *req, DIR *dir)
 			continue ;
 		if (ft_strncmp(file->d_name, req, req_len) == 0)
 		{
-			new = ft_lstnew(ft_strdup(file->d_name));
-			if (!new)
+			new = ft_lstnew(get_name(file));
+			if (!new || !new->content)
 			{
 				ft_lstclear(&final, free);
 				return (NULL);
