@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:29:39 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/06 10:53:41 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 12:26:28 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ t_list		*get_file_list(char *buffer, t_list **env_list)
 		return (NULL);
 	dir = opendir(path);
 	if (!dir)
-		return (NULL);
+		return (free_return(req, path, NULL));
 	list = read_dir(req, dir);
 	free(path);
 	free(req);
