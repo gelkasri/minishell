@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/06 15:04:37 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:55:38 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ static int		process_shortcuts(char c, t_editor *editor, t_list **env_list)
 	if (c == 0)
 		return (0);
 	else if (c == ctrl_key('d') && !editor->buf[0])
+	{
+		disable_raw_mode();
 		return (-1);
+	}
 	else if (c == ctrl_key('k'))
 		cut_copy_after_cursor(1, editor);
 	else if (c == ctrl_key('j'))
