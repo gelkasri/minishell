@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 18:11:34 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 07:44:40 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,7 @@ typedef struct	s_history
 */
 
 int				get_pos(int *y, int *x);
+
+t_list			*get_file_list(char *buffer, t_list **env_list);
 
 #endif

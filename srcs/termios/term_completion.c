@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   term_completion.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:30:32 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 19:33:13 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 10:19:52 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_list	*get_file_list(char *buffer, t_list **env_list)
-{
-	t_list *res;
-
-	(void)buffer;
-	(void)env_list;
-	if (buffer[0] != 'F')
-		return (NULL);
-	res = ft_lstnew(ft_strdup("Fichier_1"));
-	if (ft_strncmp(buffer, "Fic", 3))
-		ft_lstadd_front(&res, ft_lstnew(ft_strdup("File_2")));
-	return (res);
-}
 
 void	replace_path_in_buf(char *file_name, t_editor *editor)
 {
