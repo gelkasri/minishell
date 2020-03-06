@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 10:37:52 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/06 11:30:40 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:11:34 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,18 @@ int		case_unsensitive_ncmp(const char *s1, const char *s2, size_t n)
 		i++;
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+}
+
+int		get_max_name_len(t_list *comp_list)
+{
+	int res;
+
+	res = 0;
+	while (comp_list)
+	{
+		if ((int)ft_strlen((char *)comp_list->content) > res)
+			res = (int)ft_strlen((char *)comp_list->content);
+		comp_list = comp_list->next;
+	}
+	return (res);
 }
