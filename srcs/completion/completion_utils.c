@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 10:37:52 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/06 10:58:19 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 11:30:40 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*get_name(struct dirent *file)
 
 	if (file->d_type == DT_DIR)
 	{
-		ret = ft_memalloc(ft_strlen(file->d_name + 2));
+		ret = ft_memalloc(ft_strlen(file->d_name) + 2);
 		if (!ret)
 			return (NULL);
 		ft_strcpy(ret, file->d_name);
