@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:30:32 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/06 10:19:52 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 11:59:16 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,40 @@ void	print_comp_res(t_list *comp_list)
 	ft_putendl("");
 }
 
+char	*find_common_path(t_list *comp_list)
+{
+	int		end;
+	t_list	*lst_ptr;
+	char	c;
+	int		i;
+	char	*res;
+
+	if (!comp_list || !comp_list->next)
+		return (NULL);
+	end = 0;
+	i = -1;
+	while (!end)
+	{
+		lst_ptr = comp_list;
+		c = ((char *)lst_ptr->content)[++i];
+		while (lst_ptr && !end)
+		{
+			if (((char *)lst_ptr->content)[i] == 0 ||
+				c != ((char *)lst_ptr->content)[i])
+				end = 1;
+			lst_ptr = lst_ptr->next;
+		}
+	}
+	res = ft_strdup((char *)comp_list->content);
+	res[i] = 0;
+	return (res);
+}
+
 void	apply_completion(t_editor *editor, t_list **env_list)
 {
 	t_list	*comp_list;
 	int		len;
+	char	*common;
 
 	(void)editor;
 	comp_list = get_file_list(editor->buf, env_list);
@@ -56,9 +86,12 @@ void	apply_completion(t_editor *editor, t_list **env_list)
 		replace_path_in_buf((char *)comp_list->content, editor);
 	else
 	{
+		common = find_common_path(comp_list);
+		replace_path_in_buf(common, editor);
 		ft_putendl("");
 		print_comp_res(comp_list);
 		display_prompt(env_list);
+		free(common);
 	}
 	ft_lstclear(&comp_list, free);
 }
