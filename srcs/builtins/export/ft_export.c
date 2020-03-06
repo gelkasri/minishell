@@ -6,13 +6,13 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/22 14:39:53 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/02/27 12:28:17 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:12:19 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_str_is_alpha_num(const char *str)
+static int	check_chars(const char *str)
 {
 	int	i;
 	int	char_is_ok;
@@ -21,18 +21,20 @@ static int	ft_str_is_alpha_num(const char *str)
 	while (str[i])
 	{
 		char_is_ok = ft_isdigit(str[i]) || ft_isalpha(str[i]);
-		if (!char_is_ok)
+		if (!char_is_ok && str[i] != '_')
 			return (0);
 		i++;
 	}
 	return (1);
 }
 
-static int	check_errors(const char *str, const char *error_param)
+int			check_errors(const char *str, const char *name,
+const char *error_param)
 {
-	if (!str[0] || ft_isdigit(str[0]) || !ft_str_is_alpha_num(str))
+	if (!str[0] || ft_isdigit(str[0]) || !check_chars(str))
 	{
-		ft_putstr_fd("export: `", 2);
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(name, 2);
 		ft_putstr_fd(error_param, 2);
 		ft_putstr_fd("': not a valid identifier\n", 2);
 		return (1);
@@ -53,10 +55,10 @@ int			parse_and_export(char *str, t_list **env_list)
 	char	*old_value;
 
 	if (str[0] == '=')
-		return (check_errors("", str));
+		return (check_errors("", "export: `", str));
 	if (!(split = split_in_2(str, '=')))
 		return (1);
-	if (check_errors(split[0], str))
+	if (check_errors(split[0], "export: `", str))
 	{
 		free_str_arr(split);
 		free(split);
