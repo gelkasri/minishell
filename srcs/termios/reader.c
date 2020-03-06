@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:59:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 19:33:36 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 11:20:24 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,30 @@ static void		key_action(char c, t_coord old_cur_pos, t_editor *editor)
 					old_cur_pos.y, editor);
 }
 
+static int		process_shortcuts(char c, t_editor *editor, t_list **env_list)
+{
+	if (c == 0)
+		return (0);
+	else if (c == ctrl_key('d'))
+		return (-1);
+	else if (c == ctrl_key('k'))
+		cut_copy_after_cursor(1, editor);
+	else if (c == ctrl_key('j'))
+		cut_copy_after_cursor(0, editor);
+	else if (c == ctrl_key('y'))
+		paste_after_cursor(editor);
+	else if (c == ctrl_key('u'))
+		editor->buf[0] = 0;
+	else if (c == ENTER_KEY)
+	{
+		ft_putendl("");
+		return (1);
+	}
+	else if (c == TAB_KEY)
+		apply_completion(editor, env_list);
+	return (-42);
+}
+
 /*
 ** Manage a single key press
 ** - read the pressed key
@@ -83,27 +107,13 @@ static int		process_key_press(t_editor *editor, t_list **env_list)
 {
 	char	c;
 	t_coord	old_cur_pos;
+	int		ret;
 
 	c = read_key(editor);
 	editor->pos = get_cur_pos();
 	old_cur_pos = get_cur_pos();
-	if (c == 0)
-		return (0);
-	else if (c == ctrl_key('d'))
-		return (-1);
-	else if (c == ctrl_key('k'))
-		cut_copy_after_cursor(1, editor);
-	else if (c == ctrl_key('j'))
-		cut_copy_after_cursor(0, editor);
-	else if (c == ctrl_key('y'))
-		paste_after_cursor(editor);
-	else if (c == ENTER_KEY)
-	{
-		ft_putendl("");
-		return (1);
-	}
-	else if (c == TAB_KEY)
-		apply_completion(editor, env_list);
+	if ((ret = process_shortcuts(c, editor, env_list)) != -42)
+		return (ret);
 	key_action(c, old_cur_pos, editor);
 	return (0);
 }
