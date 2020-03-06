@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/06 10:38:36 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/03/06 15:36:36 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRCS =		srcs/minishell.c \
 			srcs/redir_parser/fd_setter.c \
 			srcs/completion/get_file_list.c \
 			srcs/completion/completion_utils.c \
+			srcs/check.c \
 
 OBJS =		$(SRCS:%.c=%.o)
 DEP = 		$(OBJS:%.o=%.d)
