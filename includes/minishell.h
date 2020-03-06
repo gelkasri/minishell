@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/06 13:37:44 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 17:26:10 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef int		(*t_fct_ptr)(int, char **, t_list **);
 
 void			display_prompt(t_list **env_list);
 
+int				check_line(char *str, t_list **env_list);
 char			**parse_line(char *line);
 char			**parse_command(char *cmd);
 char			*trim_quotes(char *substr);
@@ -88,6 +89,8 @@ char			*find_path(char *cmd, t_list **env_list);
 int				export_no_param(t_list **env_list);
 char			**split_in_2(char *str, char sep);
 
+int				check_errors(const char *str, const char *name,
+const char *error_param);
 int				ft_cd(int ac, char **av, t_list **env_list);
 int				ft_echo(int ac, char **av, t_list **env_list);
 int				ft_pwd(int ac, char **av, t_list **env_list);

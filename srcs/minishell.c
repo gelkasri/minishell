@@ -56,7 +56,8 @@ static int	main_loop(char **line, t_list **env_list, int fd, t_editor *editor)
 		if (i <= 0)
 			ft_exit(1, NULL, env_list);
 		trim = ft_strtrim(*line, " ");
-		i = exec_line(trim, env_list);
+		if (!check_line(trim, env_list))
+			i = exec_line(trim, env_list);
 		free(trim);
 		free(*line);
 	}
