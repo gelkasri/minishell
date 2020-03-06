@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:30:32 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/06 11:59:16 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:12:16 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,15 @@ void	replace_path_in_buf(char *file_name, t_editor *editor)
 
 void	print_comp_res(t_list *comp_list)
 {
+	int		dir;
+
 	while (comp_list)
 	{
+		dir = ((char *)comp_list->content)
+		[ft_strlen(comp_list->content) - 1] == '/';
+		ft_putstr((dir) ? RED : WHITE);
 		ft_putstr((char *)comp_list->content);
+		ft_putstr(WHITE);
 		ft_putchar('\t');
 		comp_list = comp_list->next;
 	}
