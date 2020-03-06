@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 10:57:51 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 17:44:11 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/05 19:34:09 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ t_editor				init_editor(t_list **env_list);
 ** termios_reader.c
 */
 
-int						termios_read_line(char **line, t_editor *editor);
+int						termios_read_line(char **line, t_editor *editor,
+											t_list **env_list);
 
 /*
 ** add_delete_in_buffer.c
@@ -107,4 +108,11 @@ int						read_esc_seq(t_editor *editor);
 
 void					cut_copy_after_cursor(int cut, t_editor *editor);
 void					paste_after_cursor(t_editor *editor);
+
+/*
+** term_completion.c
+*/
+
+void					apply_completion(t_editor *editor, t_list **env_list);
+
 #endif

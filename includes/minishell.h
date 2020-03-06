@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 17:48:16 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 13:37:44 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include "libft.h"
 # include "term_bonus.h"
 # include "cmdlist.h"
+# include "completion.h"
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/stat.h>

@@ -6,7 +6,7 @@
 #    By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/21 14:20:54 by gel-kasr          #+#    #+#              #
-#    Updated: 2020/03/05 17:47:13 by mle-moni         ###   ########.fr        #
+#    Updated: 2020/03/06 10:38:36 by mle-moni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,12 +43,15 @@ SRCS =		srcs/minishell.c \
 			srcs/termios/import_export_histo.c \
 			srcs/termios/arrow_keys_actions.c \
 			srcs/termios/copy_paste.c \
+			srcs/termios/term_completion.c \
 			srcs/redir_parser/cmdlist/cmdlist.c \
 			srcs/redir_parser/cmdlist/cmdlist2.c \
 			srcs/redir_parser/redir_parser.c \
 			srcs/redir_parser/redir_parser_utils.c \
 			srcs/redir_parser/remove_param.c \
 			srcs/redir_parser/fd_setter.c \
+			srcs/completion/get_file_list.c \
+			srcs/completion/completion_utils.c \
 
 OBJS =		$(SRCS:%.c=%.o)
 DEP = 		$(OBJS:%.o=%.d)
@@ -58,6 +61,7 @@ HEADER = 	$(INC_DIR)minishell.h \
 			$(INC_DIR)term_bonus.h \
 			$(INC_DIR)keys.h \
 			$(INC_DIR)cmdlist.h \
+			$(INC_DIR)completion.h \
 
 CC =		gcc
 CFLAGS =	-Wall -Wextra -Werror
