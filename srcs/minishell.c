@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 18:44:56 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 15:54:30 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static int	main_loop(char **line, t_list **env_list, int fd, t_editor *editor)
 		if (i <= 0)
 			ft_exit(1, NULL, env_list);
 		trim = ft_strtrim(*line, " ");
-		i = exec_line(trim, env_list);
+		if (!check_line(trim, env_list))
+			i = exec_line(trim, env_list);
 		free(trim);
 		free(*line);
 	}
