@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:29:39 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/06 10:32:59 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 10:53:41 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_list		*read_dir(char *req, DIR *dir)
 		if ((int)ft_strlen(file->d_name) < req_len ||
 		((file->d_name)[0] == '.' && req[0] != '.'))
 			continue ;
-		if (ft_strncmp(file->d_name, req, req_len) == 0)
+		if (case_unsensitive_ncmp(file->d_name, req, req_len) == 0)
 		{
 			new = ft_lstnew(get_name(file));
 			if (!new || !new->content)

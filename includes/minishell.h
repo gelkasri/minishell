@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:16 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/06 10:39:17 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/06 10:53:27 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ int				get_pos(int *y, int *x);
 
 t_list			*get_file_list(char *buffer, t_list **env_list);
 char			*get_name(struct dirent *file);
+int				case_unsensitive_ncmp(const char *s1, const char *s2, size_t n);
 
 #endif
