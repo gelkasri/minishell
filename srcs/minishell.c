@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:26:07 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/05 18:44:56 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 16:32:54 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ t_list		***g_env_list;
 
 void		handle_sigint(int sig)
 {
+	extern t_editor	**g_editor;
+
 	(void)sig;
 	signal(SIGQUIT, SIG_IGN);
 	set_env_var("?", "1", *g_env_list);
+	(*g_editor)->buf[0] = 0;
 	ft_putstr("\n");
 	display_prompt(*g_env_list);
 }
