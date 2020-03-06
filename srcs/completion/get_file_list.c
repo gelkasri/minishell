@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 18:29:39 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/06 12:26:28 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/06 12:58:50 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char		*get_path_and_name(char *buffer, char **req, t_list **env_list)
 	i = i < 0 ? 0 : i;
 	while (i > 0 && path[i] != '/')
 		i--;
-	if (!(*req = ft_strdup(path + i + (i ? 1 : 0))))
+	if (!(*req = ft_strdup(path + i + 1)))
 		free_return(path, NULL, NULL);
 	path[i] = '\0';
 	return (path);
@@ -108,7 +108,6 @@ t_list		*read_dir(char *req, DIR *dir)
 				ft_lstclear(&final, free);
 				return (NULL);
 			}
-			new->next = NULL;
 			ft_lstadd_back(&final, new);
 		}
 	}
@@ -126,6 +125,8 @@ t_list		*get_file_list(char *buffer, t_list **env_list)
 	if (!path)
 		return (NULL);
 	dir = opendir(path);
+	if (!path[0])
+		dir = opendir("/");
 	if (!dir)
 		return (free_return(req, path, NULL));
 	list = read_dir(req, dir);
