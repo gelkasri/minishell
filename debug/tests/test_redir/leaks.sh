@@ -9,3 +9,4 @@ cat Makefile | wc | wc | wc | wc | wc | >> test     wc
 2>            /dev/null grep
 cat < test
 rm -f test truc
+leaks minishell

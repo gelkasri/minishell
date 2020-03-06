@@ -23,4 +23,11 @@ grep "OLDPWD=\"$OLDPWD\"" "${1}/his.log" | sed "s/declare -x //g" >> $hisfile
 grep "?=" "${1}/our.log" >> $myfile
 grep "?=" "${1}/his.log" | sed "s/declare -x //g" >> $hisfile
 
+./minishell ${1}/leaks.sh &> "${1}/leaks.log"
+if [ $? != 0 ]
+then
+	echo "Leaks !! See ${1}/leaks.sh and ${1}/leaks.log for more details"
+	exit 2
+fi
+
 diff $myfile $hisfile
