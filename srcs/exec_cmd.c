@@ -6,12 +6,13 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/06 12:09:02 by mle-moni         ###   ########.fr       */
+/*   Updated: 2020/03/07 18:46:15 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <fcntl.h>
+#include <signal.h>
 
 static int		exec_cmd(char *cmd, t_list **env_list)
 {
@@ -69,26 +70,32 @@ static void		child_exec(t_cmdlist *cmds, int *pipefd,
 static int		pipe_loop(t_cmdlist *cmds, t_list **env_list)
 {
 	int		child_fd[2];
-	pid_t	pid;
+	pid_t	pid[1024];
 	int		pipefd[2];
 	int		ret;
+	int		i = 0;
+	int		last;
 
 	child_fd[0] = -42;
 	while (cmds)
 	{
 		if (DEBUG)
-			ft_printf("command is : %s\n", cmds->command);
+			printf("command is : %s\n", cmds->command);
 		pipe(pipefd);
-		pid = fork();
-		if (pid == 0)
+		pid[i] = fork();
+		if (pid[i] == 0)
 			child_exec(cmds, pipefd, child_fd, env_list);
 		close(pipefd[1]);
 		child_fd[0] = dup(pipefd[0]);
 		close(pipefd[0]);
-		waitpid(pid, &ret, 0);
 		ret = get_child_exit_status(ret);
 		cmds = cmds->next;
+		i++;
 	}
+	last = i;
+	while (--i)
+		waitpid(pid[i - 1], &ret, 0);
+	i = 0;
 	return (ret);
 }
 
