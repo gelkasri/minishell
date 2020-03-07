@@ -6,7 +6,7 @@
 /*   By: gel-kasr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:15:04 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/02/22 16:15:47 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/07 11:34:56 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ void	display_prompt(t_list **env_list)
 		color = RED;
 	else
 		color = GREEN;
-	ft_printf("%s[%s] bébéshell> %s", color, res, WHITE);
+	ft_printf("%s%3s - bébéshell> %s", color, res, WHITE);
 	free(res);
 }
