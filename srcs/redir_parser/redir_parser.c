@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 10:39:13 by mle-moni          #+#    #+#             */
-/*   Updated: 2020/03/05 16:53:37 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/07 11:46:43 by mle-moni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void			*free_return(void *ptr, void *ptr2, void *ret_val)
 	return (ret_val);
 }
 
-static void		get_fd_flat(int *fd, char *cmd, int *index)
+static void		get_fd_flat(t_fdsetter *fd, char *cmd, int *index)
 {
 	int			i;
 	struct stat	buf;
@@ -32,9 +32,14 @@ static void		get_fd_flat(int *fd, char *cmd, int *index)
 		i++;
 	if (ft_isspace(cmd[i]) || cmd[i] == '\0')
 	{
-		*fd = ft_atoi(cmd + (*index));
-		if (fstat(*fd, &buf) == -1)
-			*fd = -10;
+		fd->fd = ft_atoi(cmd + (*index));
+		if (fd->fd == 1 || (fd->fd == 2 && fd->which == 2))
+		{
+			fd->fd = -15;
+			return ;
+		}
+		if (fstat(fd->fd, &buf) == -1)
+			fd->fd = -10;
 	}
 }
 
@@ -50,7 +55,9 @@ static int		set_fds(char *cmd, int index, t_cmdlist *new)
 	while (cmd[index] == '<' || cmd[index] == '>')
 		index++;
 	if (cmd[index] == '&')
-		get_fd_flat(&(fd.fd), cmd, &index);
+		get_fd_flat(&fd, cmd, &index);
+	if (fd.fd == -15)
+		return (0);
 	if (cmd[fd.redir] == '<')
 		fd_setter(new, &fd, cmd + index, '<');
 	else if (cmd[fd.redir] == '>')
