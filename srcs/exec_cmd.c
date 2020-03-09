@@ -6,7 +6,7 @@
 /*   By: mle-moni <mle-moni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/21 14:57:20 by gel-kasr          #+#    #+#             */
-/*   Updated: 2020/03/07 18:46:15 by gel-kasr         ###   ########.fr       */
+/*   Updated: 2020/03/09 11:57:35 by gel-kasr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static int		pipe_loop(t_cmdlist *cmds, t_list **env_list)
 {
 	int		child_fd[2];
 	pid_t	pid[1024];
+	pid_t	p;
 	int		pipefd[2];
 	int		ret;
 	int		i = 0;
@@ -83,19 +84,41 @@ static int		pipe_loop(t_cmdlist *cmds, t_list **env_list)
 			printf("command is : %s\n", cmds->command);
 		pipe(pipefd);
 		pid[i] = fork();
+		p = pid[i];
+		ft_printf("i=%d, cmd=%s, pid=%d\n", i, cmds->command, pid[i]);
 		if (pid[i] == 0)
 			child_exec(cmds, pipefd, child_fd, env_list);
-		close(pipefd[1]);
-		child_fd[0] = dup(pipefd[0]);
-		close(pipefd[0]);
-		ret = get_child_exit_status(ret);
-		cmds = cmds->next;
-		i++;
+		else 
+		{
+			close(pipefd[1]);
+			child_fd[0] = dup(pipefd[0]);
+			close(pipefd[0]);
+			ret = get_child_exit_status(ret);
+			cmds = cmds->next;
+			i++;
+		}
 	}
-	last = i;
-	while (--i)
-		waitpid(pid[i - 1], &ret, 0);
-	i = 0;
+	if (p)
+	{
+		i--;
+		last = i;
+		ft_printf("wait of %d(%d) return %d, %s\n", pid[last], last,  waitpid(last, &ret, 0), strerror(errno));
+		ft_printf("%d finished pid %d\n", last, pid[last]);
+		last--;
+		while (last >= 0)
+		{
+			ft_printf("kill %d pid %d\n", last, pid[last]);
+			//kill(pid[last--], SIGKILL);
+			last--;
+		}
+		i--;
+		while (i >= 0)
+		{
+			ft_printf("wait %d pid %d\n", i, pid[i]);
+			waitpid(pid[i--], &ret, 0);
+		}
+		i = 0;
+	}
 	return (ret);
 }
 
