@@ -31,4 +31,4 @@ Like the others shells, your commands are stored in a file in your home director
 If you want to contribute to this repo, make sure to run `make test` after your modifications
 
 If your modifs did not break anything, you should get something like:
-![tests success image](https://github.com/mle-moni/minishell/debug/tests/tests.png)
+![tests success image](https://github.com/mle-moni/minishell/blob/master/debug/tests/tests.png?raw=true)
